@@ -14,7 +14,7 @@
 		<li class="side-nav-title side-nav-item">Navigation</li>
 
 		<li class="side-nav-item active">
-			<a href="survey_info.php" id="dashboard_link" class="side-nav-link " aria-expanded="false">
+			<a href="main.php" id="dashboard_link" class="side-nav-link " aria-expanded="false">
 			<i class="fa-solid fa-square-poll-horizontal"></i>
 				<span>Survey Information</span>
 			</a>
