@@ -1,0 +1,182 @@
+
+<style type="text/css">
+  #sidebar_container {
+    transition: all .3s ease;
+    width: 20%; 
+    margin: 0;
+  }
+  #arrow_right_sidebar {
+    display: none; 
+    color: white; 
+    padding: 8px; 
+    width: fit-content; 
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    font-size: 18px; 
+    cursor: pointer; 
+    text-shadow: 2px 2px 5px black;
+  }
+
+  #profile_img_sidebar {
+    transition: all .5s ease;
+    border-radius: 150px;
+    height: 150px;
+    width: 150px;
+    margin: 20px;
+  }
+
+  #user_display_name {
+    font-size: 18px;
+  }
+
+  .selection_sidebar {
+    border: 2px solid white; 
+    border-left-style: none; 
+    border-right-style: none; 
+    border-bottom-style: none;
+    padding: 10px; 
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    text-decoration: none;
+    position: relative;
+  }
+  .selection_sidebar:hover {
+    background: white;
+    color: #007bff;
+  }
+
+/* SIDEBAR SELECTION */
+
+
+/* SURVEY INFORMATION */
+  /* icons */
+  #icon_sidebar {
+    font-size: 30px;
+    display: none;
+    text-align: center;
+  }
+
+  /* title names */
+  #titles_name_sidebar {
+    position: relative;
+    display: block;
+  }
+
+/* USER MANAGEMENT */
+  /* icons */
+  #icon_sidebar_2 {
+    font-size: 30px;
+    display: none;
+    text-align: center;
+  }
+
+  /* title names */
+  #titles_name_sidebar_2 {
+    position: relative;
+    display: block;
+  }
+</style>
+
+
+
+
+
+<!-- SIDEBAR -->
+
+<div id="sidebar_container" class="border-0 bg-primary bg-gradient">
+
+  <!-- ARROW -->
+  <div style="position: relative;">
+
+    <!-- arrow-left-menu -->
+    <div id="arrow_left_sidebar" onclick="minimize_side_bar()" class="arrow_left_slidebar" style="color: white; padding: 8px; width: fit-content; position: absolute; top: 0; right: 0; font-size: 18px; cursor: pointer; text-shadow: 2px 2px 5px black;">
+      <i class="fa-solid fa-angles-left"></i> <!-- LEFT -->
+    </div>
+
+    <!-- arrow-right-menu -->
+    <div id="arrow_right_sidebar" onclick="maximize_side_bar()" class="arrow_left_slidebar">
+      <i class="fa-solid fa-angles-right"></i> <!-- RIGHT -->
+    </div>
+
+  </div>
+    
+
+  <!-- image & name -->
+  <img src="<?php echo BASE_URL;?>images/placeholder.png" id="profile_img_sidebar" class="mx-auto d-block">
+  <div id="user_display_name" class="text-light text-center"><?php echo $g_first_name; ?></div>
+
+
+  <!-- SELECTION -->
+  <div class="selection_sidebar" onclick="window.location.href = 'main.php';">
+    <div id="titles_name_sidebar">Survey Information</div>
+    <!-- icon -->
+    <div><i class="fa-solid fa-square-poll-vertical" id="icon_sidebar"></i></div>
+  </div>
+
+  <div class="selection_sidebar" onclick="window.location.href = 'admin_user.php';">
+    <div id="titles_name_sidebar_2">User Management</div>
+    <!-- icon -->
+    <div><i class="fa-solid fa-users-gear" id="icon_sidebar_2"></i></div>
+  </div>
+  <!-- END SELECTION -->
+  
+</div>
+
+
+<!-- END SIDEBAR -->
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+  // MINIMIZE SIDE BAR
+  function minimize_side_bar() {
+    sidebar_container.style.width = "100px"; // sidebar
+    survey_info_container.style.width = "100%"; // contents
+
+    arrow_right_sidebar.style.display = "block"; // display arrow-right button
+    arrow_left_sidebar.style.display = "none"; // hide arrow-left button
+
+    profile_img_sidebar.style.width = "50px"; // resize img to smaller icon
+    profile_img_sidebar.style.height = "50px";
+    profile_img_sidebar.style.marginTop = "30px"; // margin top
+
+    user_display_name.style.display = "none"; // do not display uer name
+
+    // CHANGE ICON SIZE & DISPLAY - TEXT CENTER
+    icon_sidebar.style.display = "block"; // display icons
+    icon_sidebar_2.style.display = "block"; // display icons
+
+    titles_name_sidebar.style.display = "none"; // hide title names
+    titles_name_sidebar_2.style.display = "none"; // hide title names
+  }
+
+  // MAXIMIZE SIDE BAR
+  function maximize_side_bar() {
+    sidebar_container.style.width = "20%"; // sidebar
+    survey_info_container.style.width = "80%"; // contents
+
+    arrow_right_sidebar.style.display = "none"; // hide arrow-right button
+    arrow_left_sidebar.style.display = "block"; // display arrow-left button
+
+    profile_img_sidebar.style.width = "150px"; // resize img to original size
+    profile_img_sidebar.style.height = "150px";
+    profile_img_sidebar.style.marginTop = "20px"; // margin top
+
+    user_display_name.style.display = "block"; // display uer name
+
+    // CHANGE ICON SIZE & DISPLAY - TEXT CENTER
+    icon_sidebar.style.display = "none"; // hide icons
+    icon_sidebar_2.style.display = "none"; // hide icons
+
+    titles_name_sidebar.style.display = "block"; // display title names
+    titles_name_sidebar_2.style.display = "block"; // display title names
+  }
+</script>

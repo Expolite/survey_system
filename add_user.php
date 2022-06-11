@@ -10,25 +10,26 @@ if($get_id > 0)	{
 <span style="color: red">**identification no. is the default Username and Password</span>
 </div>
 <form id="form_submit" method="post">
+
+<!-- SELECT ROLE -->
 <div class="form-group">
-<label>Select Role</label>
-<select class="form-control"  name ="user_role"  placeholder="User Role" required>
-<option></option>
-<?php
+	<label>Select Role</label>
+	<select class="form-control" name ="user_role" placeholder="User Role" required>
+		<option></option>
+		<?php
 
-$user_role =array(1=>"Admin",2=>"QA Staff",3=>"VPAA");
-foreach($user_role as $id => $text) {
-$selected ="";
-if($id==$input['user_role']){
-$selected ="selected";
-}
-echo "<option value='".$id."' ".$selected .">".$text."</option>";
-}
-
-
-?>
-</select>
+			$user_role =array(1=>"Admin",2=>"Depart 1",3=>"Depart 2");
+			foreach($user_role as $id => $text) {
+			$selected ="";
+			if($id==$input['user_role']){
+			$selected ="selected";
+			}
+			echo "<option value='".$id."' ".$selected .">".$text."</option>";
+			}
+		?>
+	</select>
 </div>
+
 <div class="form-group">
 <label>ID Number</label>
 <input type="text" class="form-control" name="id_no" value="<?php echo $input['id_no'];?>" required>

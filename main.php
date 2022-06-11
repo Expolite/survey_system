@@ -11,6 +11,20 @@ if(!($g_user_role[0] == "ADMIN")){
 	exit();
 }
 
+
+// DISPLAY NUMBER OF SURVEYS
+// $sql_display_num_surveys = "SELECT * FROM tbl_surveys_records WHERE date_log = ''";
+// $res_display_num_surveys = mysqli_query($conn, $sql_display_num_surveys);
+
+// if (mysqli_num_rows($res_display_num_surveys) > 0) {
+//   // output data of each row
+//   while($row = mysqli_fetch_assoc($res_display_num_surveys)) {
+//     echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+//   }
+// } else {
+//   echo "0 results";
+// }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,62 +34,38 @@ if(!($g_user_role[0] == "ADMIN")){
     include DOMAIN_PATH."/app/global/include_top.php";
 ?>
 
+<style type="text/css">
+    #survey_info_container {
+        width: 80%; 
+        padding: 10px;
+        transition: all .3s ease;
+    }
+</style>
+
 </head>
 
-<body data-layout="detached">
+<body>
     <!-- HEADER -->
     <!-- NAVBAR -->
     <?php include DOMAIN_PATH."/app/global/top_bar.php"; ?>   <!--topbar -->
     <!-- END NAVBAR -->
 
-    <div class="container-fluid active">
-        <div class="wrapper in">
-            <!-- BEGIN CONTENT -->
+    <div class="" style="padding: 0;">
+        <div align="left" class="d-flex" style="margin-left: 0px; position: relative; left: 0px; width: 100%;">
 
+            <!-- BEGIN CONTENT -->
             <!-- SIDEBAR -->
             <?php
-                include DOMAIN_PATH."/app/global/sidebar.php";
+                include DOMAIN_PATH."/app/global/side_bar.php";
 			?>
-            <!--END SIDEBAR-->
 
             <!-- PAGE CONTAINER-->
-            <div class="content-page">
-                <div class="content">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        
-                                        <div class="d-flex justify-content-center">
-                                            <!-- Total of Surveys of <year> -->
-                                            <div class="border border-dark p-1"
-                                                 style="width: fit-content;">
-                                                <span>Total of Surveys
-                                                <div class="text-center"><?php echo YEAR; ?></span></div>
-                                                <h3 class="text-center">228</h3>
-                                            </div>
-
-                                            <div class="p-5"></div>
-
-                                            <!-- Total of Surveys of <month> -->
-                                            <div class="border border-dark p-1"
-                                                 style="width: fit-content;">
-                                                <span>Total of Surveys
-                                                <div class="text-center"><?php echo MONTH; ?></span></div>
-                                                <h3 class="text-center">228</h3>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div> <!-- end col-->
-                        </div>
-
-                    <!-- END PLACE PAGE CONTENT HERE -->
-                </div>
+            <div id="survey_info_container" class="bg-secondary bg-gradient border-0">
+                <!-- CONTENTS... -->
+                To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.
             </div>
             <!-- END CONTENT -->
+
         </div>
     </div>
 

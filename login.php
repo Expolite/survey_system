@@ -125,7 +125,7 @@ if(isset($_POST['username']) AND isset($_POST['password']) AND isset($_POST['sub
 					$fingerprint = $session_class->getValue('fingerprint');
 					$session_class->setValue('browser_fingerprint',$fingerprint);
 					
-					$session_class->setValue('success',"Welcome to e-GURO"); // login 
+					$session_class->setValue('success',"Welcome to Survey Management System"); // login 
 					$session_class->dropValue('browser_attempt_login');
 					user_log("LOGIN",$agent);
 					header('Location: '.BASE_URL.'main.php');

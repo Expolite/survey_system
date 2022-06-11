@@ -224,14 +224,19 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
                                         <h4 class="header-title mb-3">ADD USER</h4>
                                         <div class="table-responsive-sm mt-4">
                                         <div class="row ">
+
+                                        	<!-- ADD USER -->
                                             <div class="col-xl-4">
                                                 <div class="card">
                                                     <div class="card-body">
+
+                                                    	<!-- INCLUDE -->
                                                        <?php include ('add_user.php'); ?>
                                                                 
                                                     </div> <!-- end card body-->
                                                 </div> <!-- end card -->
                                             </div>
+
                                         <div class="col-xl-8">
                                             <div class="card">
                                                 <div class="card-body">
