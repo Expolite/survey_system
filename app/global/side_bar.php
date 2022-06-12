@@ -2,7 +2,7 @@
 <style type="text/css">
   #sidebar_container {
     transition: all .3s ease;
-    width: 20%; 
+    width: 300px; 
     margin: 0;
   }
   #arrow_right_sidebar {
@@ -77,6 +77,53 @@
     position: relative;
     display: block;
   }
+
+
+  /* RESPONSIVE */
+  @media screen and (max-width: 480px){
+    /* sidebar layout */
+    /* minimize sidebar */
+    #sidebar_container {
+      /*width: 100px;*/
+
+      width: 100px;
+
+      /*position: absolute;*/
+    }
+    #survey_info_container { /* contents size */
+      width: 100%;
+    }
+    #profile_img_sidebar { /* profile img size */
+      width: 50px;
+      height: 50px;
+      margin-top: 30px;
+    }
+    /* ARROWS */
+    #arrow_right_sidebar { /* display arrow right */
+      display: block;
+    }
+    #arrow_left_sidebar { /* hide arrow left */
+      display: none;
+    }
+
+    #user_display_name { /* hide user first name */
+      display: none;
+    }
+
+    #icon_sidebar {
+      display: block;
+    }
+    #icon_sidebar_2 {
+      display: block;
+    }
+    #titles_name_sidebar {
+      display: none;
+    }
+    #titles_name_sidebar_2 {
+      display: none;
+    }
+  }
+
 </style>
 
 
@@ -160,8 +207,8 @@
 
   // MAXIMIZE SIDE BAR
   function maximize_side_bar() {
-    sidebar_container.style.width = "20%"; // sidebar
-    survey_info_container.style.width = "80%"; // contents
+    sidebar_container.style.width = "300px"; // sidebar
+    // survey_info_container.style.width = "80%"; // contents
 
     arrow_right_sidebar.style.display = "none"; // hide arrow-right button
     arrow_left_sidebar.style.display = "block"; // display arrow-left button

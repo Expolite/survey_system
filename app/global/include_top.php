@@ -20,6 +20,7 @@
 <link href="<?php echo BASE_URL;?>css/fullcalendar.css?v=<?php echo FILE_VERSION;?>" rel="stylesheet" type="text/css">
 <link href="<?php echo BASE_URL;?>css/selectize.bootstrap3.css?v=<?php echo FILE_VERSION;?>" rel="stylesheet" type="text/css">
 <link href="<?php echo BASE_URL;?>css/used.css?v=<?php echo FILE_VERSION;?>" rel="stylesheet" type="text/css">
+
 <!-- Bootstrap 5 - include if needed -->
 
 <!-- font awesome -->

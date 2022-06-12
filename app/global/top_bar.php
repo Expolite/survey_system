@@ -56,13 +56,13 @@ $badge_count = '';
     </li>
 
 </ul>
-<a class="button-menu-mobile disable-btn">
+<!-- <a class="button-menu-mobile disable-btn">
     <div class="lines">
         <span></span>
         <span></span>
         <span></span>
     </div>
-</a>
+</a> -->
 <div class="visit_website" >
 	<!--
     <h4 style="color: #fff; float: left;font-family:inkfree;"> <span>e-GURO (Learning Management System)</span></h4>
