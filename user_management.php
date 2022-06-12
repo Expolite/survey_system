@@ -110,7 +110,7 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
                 activity_log_new("Add User ".$username." Details::".$log);
                 $response_msg ="Successfully Saved!";
                 $session_class->setValue('success',"Successfully Saved!");
-                header("Location: admin_user.php");
+                header("Location: user_management.php");
                 exit();
             }
     }
@@ -188,7 +188,7 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 					activity_log_new("Update User ".$id_no." USER_ID:".$get_id." - FROM Details ".json_encode($change_array['old_data'])." TO ".json_encode($change_array['new_data']));
 					$response_msg ="Successfully Saved!";
 					$session_class->setValue('success',"Successfully Saved!");
-					header("Location: admin_user.php");
+					header("Location: user_management.php");
 					exit();
 				}
             }
@@ -254,7 +254,7 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 
             <!-- ADD/EDIT USER SECTION -->
 			<div class="add_edit_section bg-light rounded shadow">
-				<h3>ADD USER</h3>
+				<h3 class="header-title">ADD USER</h3>
 				<?php if($get_id > 0) { ?>
 				<a href="admin_user.php"></a>
 				<?php } ?>
@@ -304,11 +304,11 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 
 			<!-- USER LIST -->
 			<div class="user_list_container bg-light rounded shadow">
-				<h3>USER LIST</h3>
+				<h3 class="header-title">USER LIST</h3>
 
 				<div class="border-2">
-					<a href="#" id="add_new" class="btn btn-primary"><i class="fas fa-plus" ></i> Add</a>
-					<a href="#" id="delete_sel_btn" class="btn btn-danger"><i class="fas fa-trash" ></i> Delete</a>
+					<a href="#" id="add_new" class="btn btn-primary" style="margin-right: 10px;"><i class="fas fa-plus"></i> Add</a>
+					<a href="#" id="delete_sel_btn" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
 				</div>
 				<br>
 
@@ -493,7 +493,7 @@ function buttonReset(cell,formatterParams){
     var cellEl = cell.getElement(); //get cell DOM element
 	var linkBut = document.createElement("span");
 	var id = cell.getData().id; 
-	linkBut.innerHTML = "<a href='#' class='btn btn-outline-dark btn-rounded btn-sm ml-1' >RESET PASSWORD</a>";
+	linkBut.innerHTML = "<a href='#' class='btn btn-outline-dark btn-rounded btn-sm ml-1' ><i class='fa-solid fa-rotate-right'></i> RESET PASSWORD</a>";
 	addListener(linkBut,"click", function(){
 		Swal.fire({
 		  title: 'Are you sure to Reset Password?',
@@ -556,7 +556,7 @@ function buttonFormatter(cell,formatterParams){
     var cellEl = cell.getElement(); //get cell DOM element
 	var linkBut = document.createElement("span");
 	var id = cell.getData().id; 
-	linkBut.innerHTML = "<a href='#' class='btn btn-outline-dark btn-rounded btn-sm ml-1' ><i class='fas fa-pencil-alt' title='update'></i> EDIT</a>";
+	linkBut.innerHTML = "<a href='#' class='btn btn-outline-dark btn-rounded btn-sm ml-1' ><i class='fa-solid fa-pen-to-square'></i> EDIT</a>";
 	addListener(linkBut,"click", function(){
 		var username = document.querySelector('input[name=id_no]');
 		var firstname = document.querySelector('input[name=firstname]');
