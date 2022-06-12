@@ -9,6 +9,7 @@ if(!($g_user_role[0] == "ADMIN")){
     header("Location: ".BASE_URL); //balik sa login then sa login aalamain kung anung role at saang page landing dapat
     exit();
 }
+
 $page_title ="ADD USER";
 
 $error = false;
@@ -246,8 +247,11 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 														<a href="#" id="delete_sel_btn"  class="btn btn-outline-dark btn-rounded btn-sm ml-1" > <i class="fas fa-trash" ></i> Delete</a>
 														<a href="import_user.php"  class="btn btn-outline-primary btn-rounded alignToTitle"><i class=""></i>Bulk Add/Update User</a>
 														</div>
-                                                       <div id="example-table"></div>
-                                                         <button id="download-csv">Download CSV</button>
+
+														<!-- TABLE DATABASE RECORDS -->
+                                                        <div id="example-table"></div>
+
+                                                        <button id="download-csv">Download CSV</button>
                                                         <button id="download-json">Download JSON</button>
                                                         <button id="download-xlsx">Download XLSX</button>
                                                         <button id="print-table">Print</button>
@@ -274,7 +278,9 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
     <!-- bundle -->
 <?php  include FOOTER_PATH; ?>
 </body>
+<!-- js bundles -->
 <?php include DOMAIN_PATH."/app/global/include_bottom.php"; ?>
+
 <script>
 (function(){
 var total_record =0;

@@ -51,7 +51,7 @@ if(!($g_user_role[0] == "ADMIN")){
     <?php include DOMAIN_PATH."/app/global/top_bar.php"; ?>   <!--topbar -->
     <!-- END NAVBAR -->
 
-    <div class="" style="padding: 0;">
+    <div style="padding: 0;">
         <div align="left" class="d-flex" style="margin-left: 0px; position: relative; left: 0px; width: 100%;">
 
             <!-- BEGIN CONTENT -->
@@ -82,9 +82,6 @@ if(!($g_user_role[0] == "ADMIN")){
 <!-- all linked js -->
 <?php include DOMAIN_PATH."/app/global/include_bottom.php"; ?>
 
-<!-- Bootstrap JS -->
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
 <script>
 <?php

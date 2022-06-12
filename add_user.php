@@ -1,9 +1,9 @@
 <?php 
-if($get_id > 0)	{
+	if($get_id > 0)	{
 ?>
-<a href="admin_user.php"></a>
+	<a href="admin_user.php"></a>
 <?php 
-}
+	}
 ?>
 
 <div id="profile_form_msg" class="alert alert-warning alert-dismissable" style="display: block;"> <?php //<!-- id='add_instructor_form_msg' - id ng msg div - change_this --> ?>
@@ -20,11 +20,11 @@ if($get_id > 0)	{
 
 			$user_role =array(1=>"Admin",2=>"Depart 1",3=>"Depart 2");
 			foreach($user_role as $id => $text) {
-			$selected ="";
-			if($id==$input['user_role']){
-			$selected ="selected";
-			}
-			echo "<option value='".$id."' ".$selected .">".$text."</option>";
+				$selected ="";
+				if($id==$input['user_role']){
+					$selected ="selected";
+				}
+				echo "<option value='".$id."' ".$selected .">".$text."</option>";
 			}
 		?>
 	</select>
