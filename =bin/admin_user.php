@@ -201,135 +201,78 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 	    include DOMAIN_PATH."/app/global/meta_data.php";
 	    include DOMAIN_PATH."/app/global/include_top.php";
 	?>
-
-<style type="text/css">
-    #survey_info_container {
-        width: 80%; 
-        transition: all .3s ease;
-        background-color: #B3B6B7;
-        padding: 10px; /* temp */
-    }
-
-	/* Add / Edit Section */
-	.add_edit_section {
-		padding: 10px; /* temp */
-		width: 50%;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-	}
-	/* User List */
-	.user_list_container {
-		padding: 10px;
-		width: 90%;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-	}
-</style>
-
 </head>
 
-<body style="padding-bottom: 0;">
+<body data-layout="detached">
     <!-- HEADER -->
   <?php include DOMAIN_PATH."/app/global/top_bar.php"; ?>     <!--topbar -->
   
-  	<!-- CONTAINER -->
-    <div style="padding: 0;">
-    	<div align="left" class="d-flex" style="margin-left: 0px; position: relative; left: 0px; width: 100%;">
-    		
-    		<!-- SIDEBAR -->
-        	<?php include DOMAIN_PATH."/app/global/side_bar.php"; ?>
+    <div class="container-fluid active">
+        <div class="wrapper in">
+            <!-- BEGIN CONTENT -->
+            <!-- SIDEBAR -->
+            <?php include DOMAIN_PATH."/app/global/sidebar.php"; ?>
+            <!--END SIDEBAR-->
+            <!-- PAGE CONTAINER-->
+            <div class="content-page">
+                <div class="content">
+                    <!-- BEGIN PlACE PAGE CONTENT HERE -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mb-3">ADD USER</h4>
+                                        <div class="table-responsive-sm mt-4">
+                                        <div class="row ">
+
+                                        	<!-- ADD USER -->
+                                            <div class="col-xl-4">
+                                                <div class="card">
+                                                    <div class="card-body">
+
+                                                    	<!-- INCLUDE -->
+                                                       <?php include ('add_user.php'); ?>
+                                                                
+                                                    </div> <!-- end card body-->
+                                                </div> <!-- end card -->
+                                            </div>
+
+                                        <div class="col-xl-8">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                       <h4 class="mb-3 header-title">USER LIST</h4>
+                                                        <div class="m-2">
+														<a href="#" id="add_new"  class="btn btn-outline-dark btn-rounded btn-sm ml-1" > <i class="fas fa-plus" ></i> Add</a>
+														<a href="#" id="delete_sel_btn"  class="btn btn-outline-dark btn-rounded btn-sm ml-1" > <i class="fas fa-trash" ></i> Delete</a>
+														<a href="import_user.php"  class="btn btn-outline-primary btn-rounded alignToTitle"><i class=""></i>Bulk Add/Update User</a>
+														</div>
+
+														<!-- TABLE DATABASE RECORDS -->
+                                                        <div id="example-table"></div>
+
+                                                        <button id="download-csv">Download CSV</button>
+                                                        <button id="download-json">Download JSON</button>
+                                                        <button id="download-xlsx">Download XLSX</button>
+                                                        <button id="print-table">Print</button>
+                                                </div>
+											</div>
+                                        </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> <!-- end col-->
+                        </div>
 
 
-        <!-- CONTENTS PAGE -->
-        <div id="survey_info_container">
 
-            <!-- ADD/EDIT USER SECTION -->
-			<div class="add_edit_section bg-light rounded shadow">
-				<h3 class="header-title">ADD USER</h3>
-				<?php if($get_id > 0) { ?>
-				<a href="admin_user.php"></a>
-				<?php } ?>
-
-				<form id="form_submit" method="post">
-
-					<label>Select Role</label>
-					<select class="form-control" name ="user_role" placeholder="User Role" required>
-						<option></option>
-						<?php
-							$user_role =array(1=>"Admin",2=>"Depart 1",3=>"Depart 2");
-							foreach($user_role as $id => $text) {
-								$selected ="";
-								if($id==$input['user_role']){
-									$selected ="selected";
-								}
-								echo "<option value='".$id."' ".$selected .">".$text."</option>";
-							}
-						?>
-					</select>
-					<!-- id number -->
-					<label for="">ID Number</label>
-					<input type="text" class="form-control" name="id_no" value="<?php echo $input['id_no'];?>" required>
-					<!-- first name -->
-					<label>First Name</label>
-					<input type="text" class="form-control" name="firstname" value="<?php echo $input['firstname'];?>" required>
-					<!-- last name -->
-					<label>Last Name</label>
-					<input type="text" class="form-control" name="lastname" value="<?php echo $input['lastname'];?>" required="">
-					<!-- email address -->
-					<label>Email Address</label>
-					<input type="email" class="form-control" name="email" value="<?php echo $input['email'];?>" required="">
-					
-					<!-- get id -->
-					<input type="hidden" value="" id="get_id" name="get_id">
-
-					<br>
-					<!-- button -->
-					<button name="save" value ="<?php echo $action_form;?>"  class="btn btn-outline-primary btn-rounded btn-sm ml-1">Add New User</button>
-
-				</form>
-
-			</div>
-			<!-- END - ADD/EDIT USER SECTION -->
-
-			<br>
-
-			<!-- USER LIST -->
-			<div class="user_list_container bg-light rounded shadow">
-				<h3 class="header-title">USER LIST</h3>
-
-				<div class="border-2">
-					<a href="#" id="add_new" class="btn btn-primary" style="margin-right: 10px;"><i class="fas fa-plus"></i> Add</a>
-					<a href="#" id="delete_sel_btn" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
-				</div>
-				<br>
-
-				<!-- TABLE DATABASE RECORDS -->
-                <div id="example-table"></div>
-
-                <br>
-                <!-- Save / Download Table -->
-                <div>
-                	<button id="download-csv" class="btn btn-outline-dark btn-sm">Download CSV</button>
-                    <button id="download-json" class="btn btn-outline-dark btn-sm">Download JSON</button>
-                    <button id="download-xlsx" class="btn btn-outline-dark btn-sm">Download XLSX</button>
-                    <button id="print-table" class="btn btn-outline-dark btn-sm">Print</button>
+                    <!-- END PLACE PAGE CONTENT HERE -->
                 </div>
-			</div>
-			<!-- END USER LIST -->
-
+            </div>
+            <!-- END CONTENT -->
         </div>
-        <!-- END CONTENTS -->
-
-    	</div>
-    	<br>
     </div>
-    <!-- END - CONTAINER -->
-
-
-
-
     <!-- all the js files -->
     <!-- bundle -->
 <?php  include FOOTER_PATH; ?>

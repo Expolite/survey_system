@@ -19,7 +19,7 @@ require ISLOGIN;// check kung nakalogin
 <body>
 
     <!-- NAVBAR -->
-    <?php include DOMAIN_PATH."/app/global/top_bar.php"; ?>   <!--topbar -->
+    <?php include DOMAIN_PATH."/app/global/topbar.php"; ?>   <!--topbar -->
     <!-- END NAVBAR -->
 
 

@@ -1,6 +1,0 @@
-// USER ROLE
-
-location: 
- admin_user.php
- - 57
- - 139

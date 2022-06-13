@@ -48,7 +48,7 @@ if(!($g_user_role[0] == "ADMIN")){
 <body>
     <!-- HEADER -->
     <!-- NAVBAR -->
-    <?php include DOMAIN_PATH."/app/global/top_bar.php"; ?>   <!--topbar -->
+    <?php include DOMAIN_PATH."/app/global/topbar.php"; ?>   <!--topbar -->
     <!-- END NAVBAR -->
 
     <div style="padding: 0;">

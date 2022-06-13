@@ -1,19 +1,15 @@
-<?php  
-// user_management.php
-
+<?php
 require 'config/config.php';
 require GLOBAL_FUNC;
 require CL_SESSION_PATH;
 require CONNECT_PATH;
 require ISLOGIN;// check kung nakalogin
 
-// IF ROLE == ADMIN
 if(!($g_user_role[0] == "ADMIN")){ 
     header("Location: ".BASE_URL); //balik sa login then sa login aalamain kung anung role at saang page landing dapat
     exit();
 }
 
-// NOT SURE YET
 $page_title ="ADD USER";
 
 $error = false;
@@ -28,7 +24,7 @@ $input['id_no'] = "";
 $input['lastname'] = "";
 $input['firstname'] = "";
 $input['user_role'] = "";
-// END - NOT SURE YET
+
 
 if (isset($_POST['save']) AND $_POST['save']=="save"){
 	$required_field = array("get_id","id_no","firstname","lastname","user_role","email");
@@ -59,12 +55,15 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 		$email = $input['email'] = $_POST['email'];
 
 		/*$password = $_POST['password'];*/
+
+		// Check User Role
 		if(!in_array($userrole, array(1,2,3))){
 			$error =true;
 			$session_class->setValue('error',"User Role Invalid!");
 			$response_msg ="User Role Invalid<br>";
 		}
 
+		// Check User ID if already exist
 		$query1 = call_mysql_query("SELECT Username FROM users WHERE username = '".escape($db_connect,$username)."'");
 		$count1 = call_mysql_num_rows($query1);
 		if ($count1 > 0){
@@ -73,6 +72,7 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 			$msg ="Already Exist<br>";
 		}
 
+		// Check User Name and ID if Already Exist
 		$query = call_mysql_query("SELECT username,firstname,lastname FROM users WHERE username = '".escape($db_connect,$username)."' AND lastname = '".escape($db_connect,$lastname)."' AND firstname = '".escape($db_connect,$firstname)."'");
 		$count = call_mysql_num_rows($query);
 		if ($count > 0){
@@ -82,7 +82,7 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 		}
 
 		
-
+		// Email Validation
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$error = true;
 			$session_class->setValue('error',"Email Invalid Format!");
@@ -96,6 +96,7 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 			$msg = "Email Already Exist!";
 		}	
     }
+    // If no error -> Insert new data
     if($error!=true){
             $password = set_password($username);
             $nusername = escape($db_connect,$username);
@@ -196,16 +197,15 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 
 }
 
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   
-    <?php 
-        include DOMAIN_PATH."/app/global/meta_data.php";
-        include DOMAIN_PATH."/app/global/include_top.php";
-    ?>
+	<?php
+	    include DOMAIN_PATH."/app/global/meta_data.php";
+	    include DOMAIN_PATH."/app/global/include_top.php";
+	?>
 
 <style type="text/css">
     #survey_info_container {
@@ -234,19 +234,17 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 </style>
 
 </head>
+
 <body style="padding-bottom: 0;">
-
-    <!-- NAVBAR -->
-    <?php include DOMAIN_PATH."/app/global/top_bar.php"; ?>   <!--topbar -->
-    <!-- END NAVBAR -->
-
+    <!-- HEADER -->
+  <?php include DOMAIN_PATH."/app/global/topbar.php"; ?>     <!--topbar -->
+  
+  	<!-- CONTAINER -->
     <div style="padding: 0;">
-        <div align="left" class="d-flex" style="margin-left: 0px; position: relative; left: 0px; width: 100%;">
-        <!-- CONTENTS -->
-
-        <!-- SIDEBAR -->
-        <?php include DOMAIN_PATH."/app/global/side_bar.php"; ?>
-
+    	<div align="left" class="d-flex" style="margin-left: 0px; position: relative; left: 0px; width: 100%;">
+    		
+    		<!-- SIDEBAR -->
+        	<?php include DOMAIN_PATH."/app/global/side_bar.php"; ?>
 
 
         <!-- CONTENTS PAGE -->
@@ -256,7 +254,7 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 			<div class="add_edit_section bg-light rounded shadow">
 				<h3 class="header-title">ADD USER</h3>
 				<?php if($get_id > 0) { ?>
-				<a href="admin_user.php"></a>
+				<a href="user_management.php"></a>
 				<?php } ?>
 
 				<form id="form_submit" method="post">
@@ -265,7 +263,7 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 					<select class="form-control" name ="user_role" placeholder="User Role" required>
 						<option></option>
 						<?php
-							$user_role =array(1=>"Admin",2=>"Depart 1",3=>"Depart 2");
+							$user_role =array(1=>"Admin",2=>"Manager",3=>"Department");
 							foreach($user_role as $id => $text) {
 								$selected ="";
 								if($id==$input['user_role']){
@@ -327,39 +325,20 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 			<!-- END USER LIST -->
 
         </div>
-        <!-- END CONTENTS PAGE -->
+        <!-- END CONTENTS -->
 
-        </div>
-    <br>
+    	</div>
+    	<br>
     </div>
+    <!-- END - CONTAINER -->
 
 
 
-    <!-- all linked js -->
-    <?php include DOMAIN_PATH."/app/global/include_bottom.php"; ?>
 
-<script>
-<?php
-		$msg_success =$session_class->getValue('success');
-    	if(isset($msg_success) AND $msg_success !=""){
-			echo "success_notif('".$msg_success."');";
-			$session_class->dropValue('success');
-    	}
-
-    	$msg_error =$session_class->getValue('error');
-    	if(isset($msg_error) AND $msg_error !=""){
-			echo "error_notif('".$msg_error."');";
-			$session_class->dropValue('error');
-    	}
-?>
-</script>
-    
-
-<!-- FOOTER -->
+    <!-- all the js files -->
+    <!-- bundle -->
 <?php  include FOOTER_PATH; ?>
-
 </body>
-
 <!-- js bundles -->
 <?php include DOMAIN_PATH."/app/global/include_bottom.php"; ?>
 
@@ -373,8 +352,14 @@ var collection_select = [];
 function user_role(cell,formatterParams,onRendered){
         if(cell.getValue() == 1){
              return "Admin"
-        }else{
-            return "Registrar"
+        }
+
+        if(cell.getValue() == 2){
+             return "Manager"
+        }
+
+        if(cell.getValue() == 3){
+        	return "Department";
         }
     }
 	
@@ -415,7 +400,7 @@ var table = new Tabulator("#example-table", {
 
         {title:"Name", field:"name",formatter:"textarea",bottomCalc:record_details, titlePrint:"Name", sorter:"string",headerFilter:"input",headerFilterLiveFilter: false},
         {title:"Username", field:"username", titlePrint:"ID Number", sorter:"string",headerFilter:"input",headerFilterLiveFilter: false}, 
-        {title:"User Type", field:"user_role", titlePrint:"User Type", sorter:"string",headerFilter:"select",headerFilterParams:{0:"",1:"Admin",2:"Registrar"},formatter:user_role}, 
+        {title:"User Type", field:"user_role", titlePrint:"User Type", sorter:"string",headerFilter:"select",headerFilterParams:{0:"",1:"Admin",2:"Manager",3:"Department"},formatter:user_role}, 
 		{title:"Email Address", field:"email_address", titlePrint:"Email Address", sorter:"string",headerFilter:"input",headerFilterLiveFilter: false},
          {formatter:buttonFormatter, width:100, headerSort: false,headerFilter: false,download:false,print:false,hozAlign:"center",cellClick:function(e, cell){
              cell.getRow().toggleSelect();
@@ -493,7 +478,7 @@ function buttonReset(cell,formatterParams){
     var cellEl = cell.getElement(); //get cell DOM element
 	var linkBut = document.createElement("span");
 	var id = cell.getData().id; 
-	linkBut.innerHTML = "<a href='#' class='btn btn-outline-dark btn-rounded btn-sm ml-1' ><i class='fa-solid fa-rotate-right'></i> RESET PASSWORD</a>";
+	linkBut.innerHTML = "<a href='#' class='btn btn-outline-dark btn-rounded btn-sm ml-1' >RESET PASSWORD</a>";
 	addListener(linkBut,"click", function(){
 		Swal.fire({
 		  title: 'Are you sure to Reset Password?',
@@ -556,7 +541,7 @@ function buttonFormatter(cell,formatterParams){
     var cellEl = cell.getElement(); //get cell DOM element
 	var linkBut = document.createElement("span");
 	var id = cell.getData().id; 
-	linkBut.innerHTML = "<a href='#' class='btn btn-outline-dark btn-rounded btn-sm ml-1' ><i class='fa-solid fa-pen-to-square'></i> EDIT</a>";
+	linkBut.innerHTML = "<a href='#' class='btn btn-outline-dark btn-rounded btn-sm ml-1' ><i class='fas fa-pencil-alt' title='update'></i> EDIT</a>";
 	addListener(linkBut,"click", function(){
 		var username = document.querySelector('input[name=id_no]');
 		var firstname = document.querySelector('input[name=firstname]');
@@ -755,5 +740,5 @@ $(document).on({
 
 ?>
 </script>
-
 </html>
+

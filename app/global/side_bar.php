@@ -162,7 +162,7 @@
     <div><i class="fa-solid fa-square-poll-vertical" id="icon_sidebar"></i></div>
   </div>
 
-  <div class="selection_sidebar" onclick="window.location.href = 'admin_user.php';">
+  <div class="selection_sidebar" onclick="window.location.href = 'user_management.php';">
     <div id="titles_name_sidebar_2">User Management</div>
     <!-- icon -->
     <div><i class="fa-solid fa-users-gear" id="icon_sidebar_2"></i></div>

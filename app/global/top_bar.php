@@ -20,15 +20,15 @@ $badge_count = '';
 
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <span class="account-user-avatar">
-                    <img src="<?php echo $global_profile_pic;?>" alt="user-image" class="rounded-circle">
-					<?php echo '<span class="badge badge-notify-name">'.$badge_count.'</span>'; ?>
-                </span>
-                <span style="color: #fff;">
-                    <span class="account-user-name"><?php  echo $g_user_name; ?></span>
-                    <span class="account-position"><?php echo $g_user_role[0]; ?></span>
-                </span>
-            </a>
+                    <span class="account-user-avatar">
+                        <img src="<?php echo $global_profile_pic;?>" alt="user-image" class="rounded-circle">
+    					<?php echo '<span class="badge badge-notify-name">'.$badge_count.'</span>'; ?>
+                    </span>
+                    <span style="color: #fff;">
+                        <span class="account-user-name"><?php  echo $g_user_name; ?></span>
+                        <span class="account-position"><?php echo $g_user_role[0]; ?></span>
+                    </span>
+                </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
             <!-- item-->
             <div class=" dropdown-header noti-title" style="display:none;">
@@ -63,7 +63,7 @@ $badge_count = '';
         <span></span>
     </div>
 </a> -->
-<div class="visit_website" >
+<div class="visit_website">
 	<!--
     <h4 style="color: #fff; float: left;font-family:inkfree;"> <span>e-GURO (Learning Management System)</span></h4>
 	 <h6 style="font-family: Arial, sans-serif;color: #fff; float: right;"><span id="clock"><?php //echo date('D | F j, Y h:i:s A') ?></span></h6>
@@ -74,3 +74,4 @@ $badge_count = '';
 </div>
 </div>
 <!-- end Topbar -->
+
