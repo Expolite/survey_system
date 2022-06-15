@@ -2,7 +2,15 @@
 <?php
 $badge_count = '';
 ?> 
-<div class="navbar-custom topnav-navbar topnav-navbar-dark">
+
+<style type="text/css">
+    .option_topbar:hover {
+        background: #007bff;
+    }
+</style>
+
+
+<div class="navbar-custom topnav-navbar topnav-navbar-dark bg-primary">
     <div class="container-fluid">
 
         <!-- LOGO -->
@@ -18,9 +26,9 @@ $badge_count = '';
 
         <ul class="list-unstyled topbar-right-menu float-right mb-0">
 
-    <li class="dropdown notification-list" style="padding: 0;">
+    <li class="dropdown notification-list" style="padding: 0; padding-top: 20px; padding-bottom: 10px;">
 
-        <a class="nav-link dropdown-toggle nav-user arrow-none m-0 text-center border-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="width: fit-content; padding: 0;">
+        <a class="nav-link dropdown-toggle arrow-none m-1 text-center bg-primary" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="width: fit-content; padding: 0;">
             <!-- <span class="account-user-avatar">
                 <img src="<?php //echo $global_profile_pic;?>" alt="user-image" class="rounded-circle">
     			<?php //echo '<span class="badge badge-notify-name">'.$badge_count.'</span>'; ?>
@@ -31,8 +39,8 @@ $badge_count = '';
                 <span class="account-position"><?php //echo $g_user_role[0]; ?></span>
             </span> -->
 
-            <div style="color: #fff; margin: 0;">
-                <span style="font-size: 20px;">
+            <div align="right" class="option_topbar" style="color: #fff;">
+                <span style="font-size: 18px;">
                     <i class="fa-solid fa-gear"></i> Options
                 </span>
             </div>

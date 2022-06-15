@@ -67,7 +67,6 @@ if($result_survey_records_byMon) {
         width: 80%; 
         padding: 10px;
         transition: all .3s ease;
-        background-color: grey;
     }
 </style>
 
@@ -89,15 +88,15 @@ if($result_survey_records_byMon) {
 			?>
 
             <!-- PAGE CONTAINER-->
-            <div id="survey_info_container" class="border-0">
+            <div id="survey_info_container" class="border-0 shadow">
                 <!-- CONTENTS... -->
-                <div class="py-5 bg-light">
+                <div class="py-5 bg-light rounded shadow">
                     <div class="container">
                         <div class="row">
 
                             <!-- BOX START -->
                             <div class="col-md-6">
-                                <div class="card mb-4 shadow">
+                                <div class="card mb-4 shadow border">
 
                                     <!-- body -->
                                     <div class="card-body">
@@ -105,14 +104,14 @@ if($result_survey_records_byMon) {
                                         <h2 class="text-center"><?php echo $row_survey_records_byYr; ?></h2>
                                         
                                         <h4 class="card-text text-center">
-                                            Number of Survey on this <?php echo MONTH_v2; ?>
+                                            Number of Survey on this <?php echo YEAR; ?>
                                         </h4>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                                <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
                                             </div>
-                                            <small class="text-muted">Last Update</small>
+                                            <!-- <small class="text-muted">Last Update</small> -->
                                         </div>
                                     </div>
 
@@ -122,7 +121,7 @@ if($result_survey_records_byMon) {
 
                             <!-- BOX START -->
                             <div class="col-md-6">
-                                <div class="card mb-4 shadow">
+                                <div class="card mb-4 shadow border">
 
                                     <!-- body -->
                                     <div class="card-body">
@@ -135,9 +134,9 @@ if($result_survey_records_byMon) {
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                                <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
                                             </div>
-                                            <small class="text-muted">Last Update</small>
+                                            <!-- <small class="text-muted">Last Update</small> -->
                                         </div>
                                     </div>
 
