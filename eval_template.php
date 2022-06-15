@@ -3,13 +3,13 @@ require 'config/config.php';
 require CONNECT_PATH;
 require CL_SESSION_PATH;
 require GLOBAL_FUNC;
-// require ISLOGIN;
+require ISLOGIN;
 define('PAGE_TITLE', 'EVALUATION');
 
-// if(!($g_user_role[0] == "ADMIN" OR  $g_user_role[0] == "VPAA")){  
-// 	include HTTP_404;
-// 	exit();
-// }
+if(!($g_user_role[0] == "ADMIN")){  
+	include HTTP_404;
+	exit();
+}
 
 $csrf = new CSRF($session_class); // generate ng bagong csrf token
 $fingerprint = $session_class->getValue('browser_fingerprint');
@@ -253,7 +253,8 @@ if(isset($_POST['action']) AND $_POST['action'] =='add_eval'){
 			activity_log_new("Add Evaluation Template  - Details::".$log);
 						
 			$session_class->setValue('success','Successfully saved.');
-			header("Location: eval_list.php");
+			// header("Location: eval_list.php");
+			header("Location: eval_template.php");
 			exit();
 		}
 		
@@ -304,7 +305,7 @@ if(isset($_GET['edit']) AND is_digit($_GET['edit'])){
 	
 	
 	
-	if(isset($_POST['action']) AND$_POST['action'] =='edit_eval' ){
+	if(isset($_POST['action']) AND $_POST['action'] =='edit_eval' ){
 		
 		$uform['criteria'] = isset($_POST['table_criteria']) ? trim($_POST['table_criteria']) : '[]';
 		$uform['page_title'] = isset($_POST['page_title']) ? trim($_POST['page_title']) : '';
@@ -371,6 +372,11 @@ $object_js =  output($list_data);
 </style>
 
 <body class="" data-layout="detached">
+
+    <!-- NAVBAR -->
+    <?php include DOMAIN_PATH."/app/global/topbar.php"; ?>   <!--topbar -->
+    <!-- END NAVBAR -->
+
     <!-- HEADER -->
     <div class="container-fluid active p-0">
         <div class="wrapper in p-0">
@@ -485,12 +491,16 @@ $object_js =  output($list_data);
 													</div>
 												</div>
 											</div>
-											 <?php echo $csrf->input('add_eval_form','token',3600,1); ?>
+
+											<!-- Token -->
+											<?php echo $csrf->input('add_eval_form','token',3600,1); ?>
+
 											<div class="row pl-4 pr-4">
 												<div class="col-sm-12 col-xl-12">
 													<div id="table_list_ques" class="table-bordered"></div>
 												</div>
-											</div>		
+											</div>	
+
 											<div class="row">
 												<div class="col-sm-12 col-xl-12  p-3 pr-5" >
 													<button class="btn btn-lg btn-primary float-right" id="btn_submit" type="submit"> SAVE </button>

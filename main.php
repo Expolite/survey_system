@@ -24,6 +24,34 @@ if(!($g_user_role[0] == "ADMIN")){
 // } else {
 //   echo "0 results";
 // }
+// $org_date_time = date("Y-m-d h:i:s");
+// $num = strtotime($org_date_time);
+// $tepp = date('Y-m-d', $num);
+
+
+
+// DISPLAY SURVEY RECORDS OF THIS YEAR AND MONTH
+
+// Year
+$sql_survey_records_byYr = "SELECT DATE_FORMAT(date_log, '%Y') FROM tbl_surveys_records WHERE DATE_FORMAT(date_log, '%Y') = '".YEAR."'";
+
+$result_survey_records_byYr = mysqli_query($db_connect, $sql_survey_records_byYr);
+
+if($result_survey_records_byYr) {
+	$row_survey_records_byYr = mysqli_num_rows($result_survey_records_byYr);
+}
+
+// Month
+$sql_survey_records_byMon = "SELECT DATE_FORMAT(date_log, '%m') FROM tbl_surveys_records WHERE DATE_FORMAT(date_log, '%m') = '".MONTH."'";
+
+$result_survey_records_byMon = mysqli_query($db_connect, $sql_survey_records_byMon);
+
+if($result_survey_records_byMon) {
+    $row_survey_records_byMon = mysqli_num_rows($result_survey_records_byMon);
+}
+// END of Getting this year
+
+
 
 ?>
 <!DOCTYPE html>
@@ -63,7 +91,65 @@ if(!($g_user_role[0] == "ADMIN")){
             <!-- PAGE CONTAINER-->
             <div id="survey_info_container" class="border-0">
                 <!-- CONTENTS... -->
-                To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.To add more than one shadow to the text, add a comma-separated list of shadows.
+                <div class="py-5 bg-light">
+                    <div class="container">
+                        <div class="row">
+
+                            <!-- BOX START -->
+                            <div class="col-md-6">
+                                <div class="card mb-4 shadow">
+
+                                    <!-- body -->
+                                    <div class="card-body">
+                                        <!-- Header -->
+                                        <h2 class="text-center"><?php echo $row_survey_records_byYr; ?></h2>
+                                        
+                                        <h4 class="card-text text-center">
+                                            Number of Survey on this <?php echo MONTH_v2; ?>
+                                        </h4>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                            </div>
+                                            <small class="text-muted">Last Update</small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- END BOX -->
+
+                            <!-- BOX START -->
+                            <div class="col-md-6">
+                                <div class="card mb-4 shadow">
+
+                                    <!-- body -->
+                                    <div class="card-body">
+                                        <!-- Header -->
+                                        <h2 class="text-center"><?php echo $row_survey_records_byMon; ?></h2>
+                                        
+                                        <h4 class="card-text text-center">
+                                            Number of Survey on this <?php echo MONTH_v2; ?>
+                                        </h4>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                            </div>
+                                            <small class="text-muted">Last Update</small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- END BOX -->
+
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- END CONTENT -->
 

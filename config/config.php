@@ -33,6 +33,7 @@ date_default_timezone_set(DEFAULT_TIMEZONE);
 define("FILE_LIMIT",$config['filesize_limit']);
 define('YEAR',date('Y'));
 define('MONTH',date('m'));
+define('MONTH_v2',date('M'));
 define('DAY',date('d'));
 define('DATE_NOW',date('Y-m-d'));
 define('TIME_NOW',date('H:i:s'));

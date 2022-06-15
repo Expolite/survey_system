@@ -7,7 +7,7 @@ require ISLOGIN;// check kung nakalogin
 
 $page_title ="ACTIVITY LOG";
 
-if(!($g_user_role[0] == "ADMIN" OR $g_user_role[0] == "REGISTRAR" )){ 
+if(!($g_user_role[0] == "ADMIN")){ 
     header("Location: ".BASE_URL); //balik sa login then sa login aalamain kung anung role at saang page landing dapat
     exit();
 }
@@ -26,46 +26,46 @@ if(!($g_user_role[0] == "ADMIN" OR $g_user_role[0] == "REGISTRAR" )){
 
 </head>
 
-<body data-layout="detached">
+<body>
     <!-- HEADER -->
-  <?php include DOMAIN_PATH."/app/global/top_bar.php"; ?>     <!--topbar -->
-    <div class="container-fluid active">
-        <div class="wrapper in">
+  <?php include DOMAIN_PATH."/app/global/top_bar.php"; ?> <!--topbar -->
+
+    <div style="padding: 0;">
+        <div align="left" class="d-flex" style="margin-left: 0px; position: relative; left: 0px; width: 100%;">
+
             <!-- BEGIN CONTENT -->
             <!-- SIDEBAR -->
-            <?php include DOMAIN_PATH."/app/global/sidebar.php"; ?>
-            <!--END SIDEBAR-->
+            <?php
+                include DOMAIN_PATH."/app/global/side_bar.php";
+            ?>
+
             <!-- PAGE CONTAINER-->
-            <div class="content-page">
-                <div class="content">
-                    <!-- BEGIN PlACE PAGE CONTENT HERE -->
-                  
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="page-title"> <i class="mdi mdi-apple-keyboard-command title_icon"></i> <?php echo $page_title; ?></h4>
-                                        
-                                        <div id="example-table"></div>
-                                        
-                                        <button id="download-csv">Download CSV</button>
-                                        <button id="download-json">Download JSON</button>
-                                        <button id="download-xlsx">Download XLSX</button>
-                                        <button id="print-table">Print</button>
-                                    </div>
-                                </div>
-
-                            </div> <!-- end col-->
+            <div id="survey_info_container" class="border-0">
+                
+                <!-- table -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-12" style="border: 1px solid black; width: 100%;">
+                            <div id="example-table"></div>
                         </div>
-
-
-
-                    <!-- END PLACE PAGE CONTENT HERE -->
+                    </div>
                 </div>
+
+                <!-- Download button -->
+                <div>
+                    <button id="download-csv" class="btn btn-outline-dark btn-sm">Download CSV</button>
+                    <button id="download-json" class="btn btn-outline-dark btn-sm">Download JSON</button>
+                    <button id="download-xlsx" class="btn btn-outline-dark btn-sm">Download XLSX</button>
+                    <button id="print-table" class="btn btn-outline-dark btn-sm">Print</button>
+                </div>
+
             </div>
             <!-- END CONTENT -->
+
         </div>
+        <br>
     </div>
+
     <!-- all the js files -->
     <!-- bundle -->
 <?php  include FOOTER_PATH; ?>

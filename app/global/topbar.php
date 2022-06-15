@@ -38,7 +38,7 @@ $badge_count = '';
             </div>
         </a>
 
-        <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown shadow" aria-labelledby="topbar-userdrop" style="border: 1px solid #5c757d; border-radius: 0 0 5px 5px;">
         
         <!-- item-->
         <div class=" dropdown-header noti-title" style="display:none;">
@@ -48,23 +48,21 @@ $badge_count = '';
         <!-- Account -->
 
 		<a href="user_profile.php" class="dropdown-item notify-item">
-            <i class="fas fa-user-circle mr-1"></i>
-            <span>My account</span>
+            <i class="fa-solid fa-circle-user"></i> <span>My account</span>
         </a>
 
-		<a href="notif.php" class="dropdown-item notify-item">
-    		<i class="fas fa-bell mr-1"></i>
+        <!-- Notification -->
+		<!-- <a href="notif.php" class="dropdown-item notify-item">
             <span>Notification</span>
-    		<span class="badge badge-notify"></span>
+    		<span class="badge badge-notify"></span> <-- notif -->
             <!-- Logout-->
-		</a>
+		<!-- </a> -->
 
 		<a href="<?php echo BASE_URL;?>logout.php" class="dropdown-item notify-item">
-            <i class="fas fa-sign-out-alt mr-1"></i>
-            <span>Logout</span>
+            <i class="fa-solid fa-power-off"></i> <span>Logout</span>
         </a>
 
-    </div>
+        </div>
     </li>
 
 
