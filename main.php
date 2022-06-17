@@ -70,6 +70,9 @@ if($result_survey_records_byMon) {
     }
 </style>
 
+<!-- CHART -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
 </head>
 
 <body>
@@ -144,7 +147,18 @@ if($result_survey_records_byMon) {
                             </div>
                             <!-- END BOX -->
 
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- GRAPH - START -->
+                                <div class="container bg-light d-flex justify-content-center" style="border: 1px solid black;">
+
+                                    <canvas id="myChart" style="width:100%; max-width: 80%;"></canvas>
+
+                                </div>
+                                <!-- GRAPH - END -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,6 +181,31 @@ if($result_survey_records_byMon) {
 <!-- all linked js -->
 <?php include DOMAIN_PATH."/app/global/include_bottom.php"; ?>
 
+<!-- CHART JS - START -->
+<script>
+var xValues = ["Cashier", "Registrar", "MISD", "Guidance", "Health Office", " ", "Cashier", "Registrar", "MISD", "Guidance", "Health Office", " ", "Cashier", "Registrar", "MISD", "Guidance", "Health Office", " ", "Cashier", "Registrar", "MISD", "Guidance", "Health Office"];
+var yValues = [55, 49, 44, 30, 10, "", 55, 49, 44, 30, 10, "", 55, 49, 44, 30, 10, "", 55, 49, 44, 30, 10];
+var barColors = ["black", "red", "green","blue","orange", "none", "black", "red", "green","blue","orange", "none", "black", "red", "green","blue","orange", "none", "black", "red", "green","blue","orange"];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "World Wine Production 2018"
+    }
+  }
+});
+</script>
+<!-- CHART JS - END -->
 
 <script>
 <?php
