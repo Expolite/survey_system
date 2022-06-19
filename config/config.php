@@ -9,6 +9,9 @@
  Description : Configuration
  =================================================================
 **/
+
+// my default: PROG
+// for debugging: DEV
 $envi = 'PROG';
 $before_memory = 0;
 //default settings values

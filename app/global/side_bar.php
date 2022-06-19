@@ -248,7 +248,7 @@
 
   <!-- image & name -->
   <img src="<?php echo BASE_URL;?>images/placeholder.png" id="profile_img_sidebar" class="mx-auto d-block">
-  <div id="user_display_name" class="text-light text-center"><?php echo $g_first_name; ?></div>
+  <div id="user_display_name" class="text-light text-center"><?php echo $g_first_name." ".$g_last_name; ?></div>
 
 <!-- SURVEY INFORMATION -->
   <!-- SELECTION -->

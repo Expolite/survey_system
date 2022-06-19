@@ -92,8 +92,15 @@ if($result_survey_records_byMon) {
 
             <!-- PAGE CONTAINER-->
             <div id="survey_info_container" class="border-0 shadow">
+
+                <!-- HEADER TITLE -->
+                <div class="container bg-light pt-1 pb-1 mb-3 shadow rounded">
+                    <h3>Survey Information</h3>
+                </div>
+
                 <!-- CONTENTS... -->
                 <div class="py-5 bg-light rounded shadow">
+
                     <div class="container">
                         <div class="row">
 
@@ -154,12 +161,26 @@ if($result_survey_records_byMon) {
                                 <!-- GRAPH - START -->
                                 <div class="container bg-light d-flex justify-content-center" style="border: 1px solid black;">
 
-                                    <canvas id="myChart" style="width:100%; max-width: 80%;"></canvas>
+                                    <canvas id="myChart" style="width:100%; max-width: 80%; border: 1px solid red;"></canvas>
 
                                 </div>
                                 <!-- GRAPH - END -->
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="container d-flex justify-content-center" style="border: 1px solid red;">
+                                    <div class="d-flex justify-content-between" style="border: 1px solid blue; width: 100%; max-width: 70%;">
+                                        <div>Very Satisfied</div>
+                                        <div>Satisfied</div>
+                                        <div>Disatisfied</div>
+                                        <div>Very Disatisfied</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -200,7 +221,7 @@ new Chart("myChart", {
     legend: {display: false},
     title: {
       display: true,
-      text: "World Wine Production 2018"
+      text: "Survey Chart"
     }
   }
 });

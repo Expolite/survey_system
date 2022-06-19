@@ -396,7 +396,7 @@ $object_js =  output($list_data);
 										<div class="row p-2 pl-4">
 											<div  class="form-group  col-sm-12 col-lg-12 font-weight-bold">
 												<label for="content_time">Title of Page:</label><br>
-												<input type="text" class="form-control" name="page_title" id="page_title" value="<?php echo $uform['page_title'];?>"  required >
+												<input type="text" class="form-control" name="page_title" id="page_title" value="<?php echo $uform['page_title'];?>"  required>
 											</div>
 										</div>                                       
 									   <div class="row text-center p-1 pl-4 pr-4"> 
