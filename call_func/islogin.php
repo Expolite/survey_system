@@ -48,6 +48,7 @@ if (!isset($global_profile_pic) OR empty($global_profile_pic)) { /* is the locat
 
 $global_fy = array();
 $global_my_class = array();
+$g_user_id = $session_class->getValue('user_id'); // user fullname
 $g_user_name = $session_class->getValue('name'); // user fullname
 $g_first_name = $session_class->getValue('fname'); // user first name
 $g_middle_name = $session_class->getValue('mname'); // user middle name

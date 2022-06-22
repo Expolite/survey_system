@@ -3,11 +3,11 @@ require 'config/config.php';
 require CONNECT_PATH;
 require CL_SESSION_PATH;
 require GLOBAL_FUNC;
-// require ISLOGIN;// check kung nakalogin
+require ISLOGIN;// check kung nakalogin
 require VALIDATOR_PATH;
 require PASSWORD_HELPER;
 
-$page_title ="Manage Profile";
+$page_title ="Profile Settings";
 $error_encounter = false;
 
 
@@ -20,12 +20,14 @@ $error_encounter = false;
 include DOMAIN_PATH."/app/update_password.php";
 // $g_fy = get_school_year();
 
-if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profile"  AND is_digit($s_user_id)){ // update 
-
+if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profile" AND is_digit($s_user_id)){ // update 
+  
+  // trim(); all
   foreach ($_POST as $key => $value) {
         $_POST[$key] = trim($value);
     }
 
+    // EMAIL
     $email = isset($_POST['email_add']) ? $_POST['email_add'] :'' ;
 	$email_query="";
 	if ($email !== ""){	
@@ -37,15 +39,63 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
 			$message['result']= 'error'; 
 		}
 
-
-		$where = " email_address = '".escape($db_connect,$email)."' AND user_id != '".$s_user_id."'";
-		if(isduplicate_where('users','email_address',$where)){  
-			$error_encounter=true;
-			$message['msg'] = '';
-			$message['errors'] = 'Email Already Exist!';
-			$message['result']= 'error';
-		}
+        // looking for duplication
+		// $where = " email_address = '".escape($db_connect,$email)."' AND user_id != '".$s_user_id."'";
+		// if(isduplicate_where('users','email_address',$where)){  
+		// 	$error_encounter=true;
+		// 	$message['msg'] = '';
+		// 	$message['errors'] = 'Email Already Exist!';
+		// 	$message['result']= 'error';
+		// }
 	}
+
+    // First Name
+    $fname = isset($_POST['fname']) ? $_POST['fname'] :'' ;
+    $fname_query="";
+
+    if ($fname !== ""){ 
+
+        $fname_query = "firstname='".escape($db_connect,$fname)."'";
+
+        // if empty
+        // if ($fname == "") {
+        //     $error_encounter=true;
+        //     $message['msg'] = '';
+        //     $message['errors'] = 'Invalid First Name!';
+        //     $message['result']= 'error'; 
+        // }
+
+        // Looking for duplication
+        // $fname_where = "firstname = '".escape($db_connect,$fname)."' AND user_id != '".$s_user_id."'";
+        // if(isduplicate_where('users','firstname',$fname_where)){  
+        //     $error_encounter=true;
+        //     $message['msg'] = '';
+        //     $message['errors'] = 'First Name Already Exist!';
+        //     $message['result']= 'error';
+        // }
+    }
+
+    // Last Name
+    $lname = isset($_POST['lname']) ? $_POST['lname'] :'' ;
+    $lname_query="";
+    if ($lname !== ""){ 
+        $lname_query = "lastname='".escape($db_connect,$lname)."'";
+        if ($lname = "") {
+            $error_encounter=true;
+            $message['msg'] = '';
+            $message['errors'] = 'Invalid Last Name!';
+            $message['result']= 'error'; 
+        }
+
+        // Looking for duplication
+        // $lname_where = "lastname = '".escape($db_connect,$lname)."' AND user_id != '".$s_user_id."'";
+        // if(isduplicate_where('users','lastname',$lname_where)){  
+        //     $error_encounter=true;
+        //     $message['msg'] = '';
+        //     $message['errors'] = 'Last Name Already Exist!';
+        //     $message['result']= 'error';
+        // }
+    }
 
     $target_file='';
 	$acceptable = array(
@@ -54,6 +104,10 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
         'image/gif',
         'image/png'
     );
+
+    // if empty
+    // if(empty($_FILES['user_image']))
+
     if(!empty($_FILES['user_image']['tmp_name'])){
         $target_dir = DOMAIN_PATH.DIRECTORY_SEPARATOR."upload";
         $target_name= "user_image_".uniqid().$s_user_id.".tmp";
@@ -89,10 +143,38 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
                 }
             }
 
+            // Select location
+            $sql_get_location = "SELECT location FROM users WHERE user_id = '".$s_user_id."'";
+            $result_get_location = mysqli_query($db_connect, $sql_get_location);
 
+            if (mysqli_num_rows($result_get_location) > 0) {
+              // output data of each row
+              while($row_get_location = mysqli_fetch_assoc($result_get_location)) {
+
+                $get_location = $row_get_location["location"];
+              }
+            }
+
+            // UPDATE data
             if($error_encounter ==  false){
-				$email_query .= ($email_query!="" AND $upload_query!="") ? ",":'';
-                $update = "UPDATE users SET ".$email_query."  ".$upload_query."  WHERE user_id = '".$s_user_id."' ";
+
+                // check if the value is empty or not
+				$email_query .= ($email_query!="" AND $upload_query!="" AND $fname_query!="" AND $lname_query!="") ? ",":'';
+
+                $fname_query .= ($fname_query!="" AND $email_query!="" AND $upload_query!="" AND $lname_query!="") ? ",":'';
+
+                $lname_query .= ($lname_query!="" AND $email_query!="" AND $upload_query!="" AND $fname_query!="") ? ",":'';
+
+                $email_query .= ($email_query!="" AND $lname_query!="" AND $upload_query!="" AND $fname_query!="") ? ",":'';
+
+                // $upload_query = $upload_query."";
+
+                if(empty($upload_query)){
+                    $upload_query = $upload_query."";
+                }
+
+
+                $update = "UPDATE users SET ".$fname_query." ".$lname_query." ".$email_query." ".$upload_query." WHERE user_id = '".$s_user_id."'";
 				
                  if(mysqli_query($db_connect, $update)){
                         $message['msg']="";
@@ -263,58 +345,76 @@ if(isset($_POST['submit_password']) AND $_POST['submit_password'] =="update_pass
                     <!-- BEGIN PlACE PAGE CONTENT HERE -->
                     <div class="row">
                         <div class="col-xl-12">
-                            <div class="card">
-                                <div class="card-body" style="padding-left: 10px; padding-top: 0; padding-bottom: 0; padding-right: 10px;">
-                                    <h4 class="page-title"> <i class="mdi mdi-apple-keyboard-command title_icon"></i> <?php echo $page_title; ?></h4>
-                                </div> <!-- end card body-->
-                            </div> <!-- end card -->
+
+                            <!-- HEADER TITLE -->
+                            <div class="container-fluid bg-light pt-1 pb-1 mb-3 shadow rounded">
+                                <h3><?php echo $page_title; ?></h3>
+                            </div>
+
                         </div><!-- end col-->
                     </div>
 
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
-                                    <div class="card-body" style="padding: 10px;">
+                                    <div class="card-body shadow" style="padding: 10px;">
 									
                                         <h4 class="mb-3 header-title"></h4>
-                                        <div class="table-responsive-sm mt-4">
+                                        <div class="table-responsive-sm">
 										
 										
                                         <div class="row ">
                                             <div class="col-xl-7">
                                                 <div class="card">
                                                     <div class="card-body" style="padding: 10px;">
-                                                        <h4 class="header-title mb-3">Basic info</h4>
-                                                         <div id="profile_form_msg" class="alert  <?php echo isset($message['errors'])  ? 'alert-warning' : '';?> alert-dismissable" style="display: block;"> <?php //<!-- id='add_instructor_form_msg' - id ng msg div - change_this --> ?>
+
+                                                        <h4>Edit Profile Info</h4>
+
+                                                        <div id="profile_form_msg" class="alert  <?php echo isset($message['errors'])  ? 'alert-warning' : '';?> alert-dismissable" style="display: block;"> <?php //<!-- id='add_instructor_form_msg' - id ng msg div - change_this --> ?>
                                                             <?php echo isset($message['errors']) ? $message['errors']:''; //kung may error sa saving?>
                                                         </div>
                                                             <form action="manage_profile.php" id="profile_form" class="form-horizontal form-groups-bordered validate" target="_top" enctype="multipart/form-data" method="POST" accept-charset="utf-8">
-															<div class="form-group">
-																<label>Email (For Recovery):</label>
-																<input type="email" class="form-control" name="email_add" id="email_add" value="" >
-															</div>
-                                                           
-                                                            <div class="form-group">
-                                                                <label> Photo <small>(The image size should be any square image)</small> </label>
-                                                                <div class="d-flex mt-2">
-                                                                    <div class="">
-                                                                        <img class="rounded-circle img-thumbnail" src="<?php echo BASE_URL;?>images/placeholder.png" alt="" style="height: 50px; width: 50px;">
-                                                                    </div>
-                                                                    <div class="flex-grow-1 pl-2">
-                                                                        <div class="input-group">
-                                                                            <div class="custom-file">
-                                                                                <input type="file" class="custom-file-input" name="user_image" id="user_image" onchange="changeTitleOfImageUploader(this)" accept="image/*">
-                                                                                <label class="custom-file-label ellipsis" for="">Choose file</label>
+															     
+                                                               <!-- Change Profile -->
+                                                                <div class="form-group">
+                                                                    <label> Photo <small>(The image size should be any square image)</small> </label>
+                                                                    <div class="d-flex mt-2">
+                                                                        <div class="">
+                                                                            <img class="rounded-circle img-thumbnail" src="<?php echo BASE_URL;?>images/placeholder.png" alt="" style="height: 50px; width: 50px;">
+                                                                        </div>
+                                                                        <div class="flex-grow-1 pl-2">
+                                                                            <div class="input-group">
+                                                                                <div class="custom-file">
+                                                                                    <input type="file" class="custom-file-input" name="user_image" id="user_image" onchange="changeTitleOfImageUploader(this)" accept="image/*">
+                                                                                    <label class="custom-file-label ellipsis" for="">Choose file</label>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <div class="row justify-content-center">
-                                                                <button type="submit" name="submit_profile" value="update_profile" class="btn btn-primary">Update profile</button>
-                                                            </div>
-                                                        </form>
+                                                                <!-- Basic personal Info -->
+                                                                <div class="form-group">
+                                                                    <div>
+                                                                        <label>First name</label>
+                                                                        <input type="text" name="fname" id="fname" value="" class="form-control">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Last name</label>
+                                                                        <input type="text" name="lname" id="lname" value="" class="form-control">
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Email Address -->
+                                                                <div class="form-group">
+                                                                    <label>Email (For Recovery):</label>
+                                                                    <input type="email" class="form-control" name="email_add" id="email_add" value="" >
+                                                                </div>
+
+                                                                <div class="row justify-content-center">
+                                                                    <button type="submit" name="submit_profile" value="update_profile" class="btn btn-primary">Update profile</button>
+                                                                </div>
+                                                            </form>
                                                                 
                                             </div> <!-- end card body-->
                                         </div> <!-- end card -->
@@ -322,52 +422,57 @@ if(isset($_POST['submit_password']) AND $_POST['submit_password'] =="update_pass
                                         <div class="col-xl-5">
                                             <div class="card">
                                                 <div class="card-body">
-                                                       <form action="manage_profile.php" name="update_password_form" id="update_password_form" class="form-horizontal form-groups-bordered validate" target="_top" method="POST" accept-charset="utf-8" onsubmit="return validator_password()">
+                                                   <form action="manage_profile.php" name="update_password_form" id="update_password_form" class="form-horizontal form-groups-bordered validate" target="_top" method="POST" accept-charset="utf-8" onsubmit="return validator_password()">
+                                                        
                                                         <div id="password_form_msg" class="alert <?php echo isset($message_password['errors']) ? 'alert-warning' : '';?> alert-dismissable" style="display: block;"> <?php //<!-- id='add_instructor_form_msg' - id ng msg div - change_this --> ?>
                                                             <?php echo isset($message_password['errors']) ? $message_password['errors']:''; //kung may error sa saving?>
                                                         </div>
+
                                                         <div class="form-group">
-															<label>Current password</label>
-														    <div class="input-group mb-3">
-																  <input type="password" class="form-control" name="current_password" id="current_password" value="" required="">
-																  <div class="input-group-append">
-																	<span class="input-group-text" onclick="password_show_hide('current_password');">
-																	  <i class="fas fa-eye" id="show_eye_current_password"></i>
-																	  <i class="fas fa-eye-slash d-none" id="hide_eye_current_password"></i>
-																	</span>
-																  </div>
-															</div>
+    														<label>Current password</label>
+    													    <div class="input-group mb-3">
+    															  <input type="password" class="form-control" name="current_password" id="current_password" value="" required="">
+    															  <div class="input-group-append">
+    																<span class="input-group-text" onclick="password_show_hide('current_password');">
+    																  <i class="fas fa-eye" id="show_eye_current_password"></i>
+    																  <i class="fas fa-eye-slash d-none" id="hide_eye_current_password"></i>
+    																</span>
+    															  </div>
+    														</div>
                                                         </div>
+
                                                         <div class="form-group">
                                                             <label>New password</label>
-																<div class="input-group mb-3">
-																 <input type="password" class="form-control" name="new_password" id="new_password" value="" required="">
-																  <div class="input-group-append">
-																	<span class="input-group-text" onclick="password_show_hide('new_password');">
-																	  <i class="fas fa-eye" id="show_eye_new_password"></i>
-																	  <i class="fas fa-eye-slash d-none" id="hide_eye_new_password"></i>
-																	</span>
-																  </div>
-															</div>
-                                                            
+    															<div class="input-group mb-3">
+    															 <input type="password" class="form-control" name="new_password" id="new_password" value="" required="">
+    															  <div class="input-group-append">
+    																<span class="input-group-text" onclick="password_show_hide('new_password');">
+    																  <i class="fas fa-eye" id="show_eye_new_password"></i>
+    																  <i class="fas fa-eye-slash d-none" id="hide_eye_new_password"></i>
+    																</span>
+    															  </div>
+    														</div>
                                                         </div>
+
                                                         <div class="form-group">
                                                             <label>Confirm new password</label>
                                                         	<div class="input-group mb-3">
-																 <input type="password" class="form-control" name="confirm_password" id="confirm_password" value="" required="">
-																  <div class="input-group-append">
-																	<span class="input-group-text" onclick="password_show_hide('confirm_password');">
-																	  <i class="fas fa-eye" id="show_eye_confirm_password"></i>
-																	  <i class="fas fa-eye-slash d-none" id="hide_eye_confirm_password"></i>
-																	</span>
-																  </div>
-															</div>
-														</div>
+    															 <input type="password" class="form-control" name="confirm_password" id="confirm_password" value="" required="">
+    															  <div class="input-group-append">
+    																<span class="input-group-text" onclick="password_show_hide('confirm_password');">
+    																  <i class="fas fa-eye" id="show_eye_confirm_password"></i>
+    																  <i class="fas fa-eye-slash d-none" id="hide_eye_confirm_password"></i>
+    																</span>
+    															  </div>
+    														</div>
+    													</div>
+
                                                         <div class="row justify-content-center">
                                                             <button type="submit" name="submit_password" value="update_password" class="btn btn-info">Update password</button>
                                                         </div>
+
                                                     </form>
-                                                    </div>
+                                                </div>
                                         </div>
                                         </div>
                                         </div>

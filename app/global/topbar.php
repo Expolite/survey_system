@@ -7,6 +7,9 @@ $badge_count = '';
     .option_topbar:hover {
         background: #007bff;
     }
+    .option_link:hover {
+        background: #0d6efd;
+    }
 </style>
 
 
@@ -28,7 +31,7 @@ $badge_count = '';
 
     <li class="dropdown notification-list" style="padding: 0; padding-top: 20px; padding-bottom: 10px;">
 
-        <a class="nav-link dropdown-toggle arrow-none m-1 text-center bg-primary" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="width: fit-content; padding: 0;">
+        <a class="nav-link dropdown-toggle arrow-none m-1 text-center bg-primary option_link" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="width: fit-content; padding: 0;">
             <!-- <span class="account-user-avatar">
                 <img src="<?php //echo $global_profile_pic;?>" alt="user-image" class="rounded-circle">
     			<?php //echo '<span class="badge badge-notify-name">'.$badge_count.'</span>'; ?>
@@ -56,7 +59,7 @@ $badge_count = '';
         <!-- Account -->
 
 		<a href="user_profile.php" class="dropdown-item notify-item">
-            <i class="fa-solid fa-circle-user"></i> <span>My account</span>
+            <i class="fa-solid fa-circle-user"></i> <span>My Profile</span>
         </a>
 
         <!-- Notification -->

@@ -250,6 +250,11 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
         <!-- CONTENTS PAGE -->
         <div id="survey_info_container">
 
+		    <!-- HEADER TITLE -->
+		    <div class="container bg-light pt-1 pb-1 mb-3 shadow rounded">
+		        <h3>User Management</h3>
+		    </div>
+
             <!-- ADD/EDIT USER SECTION -->
 			<div class="add_edit_section bg-light rounded shadow">
 				<h3 class="header-title">ADD USER</h3>

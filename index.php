@@ -99,7 +99,7 @@ if($browser_attempt >=30){
 										<form class="" name='login_form' id="login_form" action="<?php echo BASE_URL;?>login.php" method="POST">
 										<h3 id="log_title">LOGIN</h3>
 											<div class="row">
-												
+
 												<div class="form-group col-xs-12 col-sm-12 col-lg-12">
 													<input type="text" class="form-control" name="username" id="username" value="" placeholder="Username" required >
 												</div>
