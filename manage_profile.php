@@ -53,11 +53,6 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
         $sql_email_duplication = "SELECT email_address FROM users WHERE email_address = '$email'";
         $res_email_duplication = mysqli_query($db_connect, $sql_email_duplication);
 
-        // if($res_email_duplication) {
-        //     header("location: test.php");
-        //     exit();
-        // }
-
         if (mysqli_num_rows($res_email_duplication) > 0) {
             header("location: test.php");
             exit();
@@ -154,23 +149,27 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
             //   }
             // }
 
+            // if all fields are empty
+            if(empty($email_query) AND empty($fname_query) AND empty($lname_query) AND empty($upload_query)) {
+                $message['msg'] = '';
+                $message['errors'] = 'All fields are empty!';
+                $message['result']= 'error'; 
+
+                $session_class->setValue('error','All fields are empty!');
+                $session_class->setValue('photo',BASE_URL.$target_file);
+
+                header("Location: manage_profile.php");	
+                exit();
+            }
+
             // UPDATE data
             if($error_encounter ==  false){
 
+
                 // check if the value is empty or not
-
                 $email_query .= ($email_query!="" AND $fname_query!="") ? ",":'';
-
                 $fname_query .= ($fname_query!="" AND $lname_query!="") ? ",":'';
-
                 $lname_query .= ($lname_query!="" AND $upload_query!="") ? ",":'';
-
-
-                // $email_query .= ($email_query!="" AND $upload_query!="") ? ",":'';
-
-                // if(empty($upload_query)){
-                //     $upload_query = $get_location."";
-                // }
 
 
                 $update = "UPDATE users SET ".$email_query." ".$fname_query." ".$lname_query." ".$upload_query." WHERE user_id = '".$s_user_id."'";
@@ -188,11 +187,17 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
                     exit();
 
               
-                } else{
-                    $message['msg']="";
-                    $message['result'] ="error";
-                    $message['errors'] .="Unable to save!\n\r";
+                }else{
+                    // $message['msg']="";
+                    // $message['result'] ="error";
+                    // $message['errors'] .="Unable to save!\n\r";
                     //echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+
+                    // default error msg
+                    $error_encounter=true;
+                    $message['msg'] = '';
+                    $message['errors'] = 'Invalid po!';
+                    $message['result']= 'error'; 
                 }
 
 
