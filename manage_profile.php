@@ -47,32 +47,37 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
 		// 	$message['errors'] = 'Email Already Exist!';
 		// 	$message['result']= 'error';
 		// }
+
+        // Check if there's a duplication
+        // SELECT email_address FROM users WHERE email_address = 'kanna@yahoo.com';
+        $sql_email_duplication = "SELECT email_address FROM users WHERE email_address = '$email'";
+        $res_email_duplication = mysqli_query($db_connect, $sql_email_duplication);
+
+        // if($res_email_duplication) {
+        //     header("location: test.php");
+        //     exit();
+        // }
+
+        if (mysqli_num_rows($res_email_duplication) > 0) {
+            header("location: test.php");
+            exit();
+        }
 	}
 
     // First Name
     $fname = isset($_POST['fname']) ? $_POST['fname'] :'' ;
     $fname_query="";
-
     if ($fname !== ""){ 
-
         $fname_query = "firstname='".escape($db_connect,$fname)."'";
 
-        // if empty
-        // if ($fname == "") {
-        //     $error_encounter=true;
-        //     $message['msg'] = '';
-        //     $message['errors'] = 'Invalid First Name!';
-        //     $message['result']= 'error'; 
-        // }
-
-        // Looking for duplication
-        // $fname_where = "firstname = '".escape($db_connect,$fname)."' AND user_id != '".$s_user_id."'";
-        // if(isduplicate_where('users','firstname',$fname_where)){  
-        //     $error_encounter=true;
-        //     $message['msg'] = '';
-        //     $message['errors'] = 'First Name Already Exist!';
-        //     $message['result']= 'error';
-        // }
+    //     // Looking for duplication
+    //     // $fname_where = "firstname = '".escape($db_connect,$fname)."' AND user_id != '".$s_user_id."'";
+    //     // if(isduplicate_where('users','firstname',$fname_where)){  
+    //     //     $error_encounter=true;
+    //     //     $message['msg'] = '';
+    //     //     $message['errors'] = 'First Name Already Exist!';
+    //     //     $message['result']= 'error';
+    //     // }
     }
 
     // Last Name
@@ -80,21 +85,15 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
     $lname_query="";
     if ($lname !== ""){ 
         $lname_query = "lastname='".escape($db_connect,$lname)."'";
-        if ($lname = "") {
-            $error_encounter=true;
-            $message['msg'] = '';
-            $message['errors'] = 'Invalid Last Name!';
-            $message['result']= 'error'; 
-        }
 
-        // Looking for duplication
-        // $lname_where = "lastname = '".escape($db_connect,$lname)."' AND user_id != '".$s_user_id."'";
-        // if(isduplicate_where('users','lastname',$lname_where)){  
-        //     $error_encounter=true;
-        //     $message['msg'] = '';
-        //     $message['errors'] = 'Last Name Already Exist!';
-        //     $message['result']= 'error';
-        // }
+    //     // Looking for duplication
+    //     $lname_where = "lastname = '".escape($db_connect,$lname)."' AND user_id != '".$s_user_id."'";
+    //     if(isduplicate_where('users','lastname',$lname_where)){  
+    //         $error_encounter=true;
+    //         $message['msg'] = '';
+    //         $message['errors'] = 'Last Name Already Exist!';
+    //         $message['result']= 'error';
+    //     }
     }
 
     $target_file='';
@@ -105,7 +104,7 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
         'image/png'
     );
 
-    // if empty
+    // if not empty
     // if(empty($_FILES['user_image']))
 
     if(!empty($_FILES['user_image']['tmp_name'])){
@@ -143,38 +142,38 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
                 }
             }
 
-            // Select location
-            $sql_get_location = "SELECT location FROM users WHERE user_id = '".$s_user_id."'";
-            $result_get_location = mysqli_query($db_connect, $sql_get_location);
+            // // Select location
+            // $sql_get_location = "SELECT location FROM users WHERE user_id = '".$s_user_id."'";
+            // $result_get_location = mysqli_query($db_connect, $sql_get_location);
 
-            if (mysqli_num_rows($result_get_location) > 0) {
-              // output data of each row
-              while($row_get_location = mysqli_fetch_assoc($result_get_location)) {
+            // if (mysqli_num_rows($result_get_location) > 0) {
+            //   // output data of each row
+            //   while($row_get_location = mysqli_fetch_assoc($result_get_location)) {
 
-                $get_location = $row_get_location["location"];
-              }
-            }
+            //     $get_location = $row_get_location["location"];
+            //   }
+            // }
 
             // UPDATE data
             if($error_encounter ==  false){
 
                 // check if the value is empty or not
-				$email_query .= ($email_query!="" AND $upload_query!="" AND $fname_query!="" AND $lname_query!="") ? ",":'';
 
-                $fname_query .= ($fname_query!="" AND $email_query!="" AND $upload_query!="" AND $lname_query!="") ? ",":'';
+                $email_query .= ($email_query!="" AND $fname_query!="") ? ",":'';
 
-                $lname_query .= ($lname_query!="" AND $email_query!="" AND $upload_query!="" AND $fname_query!="") ? ",":'';
+                $fname_query .= ($fname_query!="" AND $lname_query!="") ? ",":'';
 
-                $email_query .= ($email_query!="" AND $lname_query!="" AND $upload_query!="" AND $fname_query!="") ? ",":'';
-
-                // $upload_query = $upload_query."";
-
-                if(empty($upload_query)){
-                    $upload_query = $upload_query."";
-                }
+                $lname_query .= ($lname_query!="" AND $upload_query!="") ? ",":'';
 
 
-                $update = "UPDATE users SET ".$fname_query." ".$lname_query." ".$email_query." ".$upload_query." WHERE user_id = '".$s_user_id."'";
+                // $email_query .= ($email_query!="" AND $upload_query!="") ? ",":'';
+
+                // if(empty($upload_query)){
+                //     $upload_query = $get_location."";
+                // }
+
+
+                $update = "UPDATE users SET ".$email_query." ".$fname_query." ".$lname_query." ".$upload_query." WHERE user_id = '".$s_user_id."'";
 				
                  if(mysqli_query($db_connect, $update)){
                         $message['msg']="";
@@ -408,7 +407,7 @@ if(isset($_POST['submit_password']) AND $_POST['submit_password'] =="update_pass
                                                                 <!-- Email Address -->
                                                                 <div class="form-group">
                                                                     <label>Email (For Recovery):</label>
-                                                                    <input type="email" class="form-control" name="email_add" id="email_add" value="" >
+                                                                    <input type="email" class="form-control" name="email_add" id="email_add" value="">
                                                                 </div>
 
                                                                 <div class="row justify-content-center">

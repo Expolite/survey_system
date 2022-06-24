@@ -31,10 +31,10 @@
   }
 
   .selection_sidebar {
-    border: 2px solid white; 
+    /* border: 2px solid white; 
     border-left-style: none; 
     border-right-style: none; 
-    border-bottom-style: none;
+    border-bottom-style: none; */
     padding: 10px; 
     color: white;
     cursor: pointer;
@@ -247,7 +247,7 @@
     
 
   <!-- image & name -->
-  <img src="<?php echo BASE_URL;?>images/placeholder.png" id="profile_img_sidebar" class="mx-auto d-block">
+  <img src="<?php echo BASE_URL;?>images/your_logo.jpg" id="profile_img_sidebar" class="mx-auto d-block">
   <div id="user_display_name" class="text-light text-center"><?php echo $g_first_name." ".$g_last_name; ?></div>
 
 <!-- SURVEY INFORMATION -->
