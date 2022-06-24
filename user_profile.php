@@ -42,7 +42,7 @@ if (mysqli_num_rows($res_user_info) > 0) {
     <!-- CONTENTS... -->
     <div class="container rounded bg-light mt-2 shadow border">
 
-        <img src="<?php echo $global_profile_pic;?>" class="rounded border m-2" alt="profile pic" width="150px" height="150px">
+        <img src="<?php echo $g_logo_sidebar;?>" class="rounded border m-2" alt="profile pic" width="150px" height="150px">
 
         <!-- Edit Profile Picture -->
         <h4 style="font-size: 15px">Edit Profile Picture &nbsp;&nbsp;<i class="fa-solid fa-pen-to-square text-secondary" onclick="window.location.href = 'manage_profile.php';" style="cursor: pointer; font-size: 20px;"></i></h4>

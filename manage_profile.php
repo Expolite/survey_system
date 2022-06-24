@@ -39,17 +39,7 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
 			$message['result']= 'error'; 
 		}
 
-        // looking for duplication
-		// $where = " email_address = '".escape($db_connect,$email)."' AND user_id != '".$s_user_id."'";
-		// if(isduplicate_where('users','email_address',$where)){  
-		// 	$error_encounter=true;
-		// 	$message['msg'] = '';
-		// 	$message['errors'] = 'Email Already Exist!';
-		// 	$message['result']= 'error';
-		// }
-
         // Check if there's a duplication
-        // SELECT email_address FROM users WHERE email_address = 'kanna@yahoo.com';
         $sql_email_duplication = "SELECT email_address FROM users WHERE email_address = '$email'";
         $res_email_duplication = mysqli_query($db_connect, $sql_email_duplication);
 
@@ -127,6 +117,7 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
                        unlink($old_file);
                 }
                 if (move_uploaded_file($_FILES["user_image"]["tmp_name"], $target_file)) {
+
                     $target_file = 'upload'.DIRECTORY_SEPARATOR.$target_name;
 					$upload_query = "location='".escape($db_connect,$target_file)."'";
                 } else {
@@ -137,17 +128,6 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
                 }
             }
 
-            // // Select location
-            // $sql_get_location = "SELECT location FROM users WHERE user_id = '".$s_user_id."'";
-            // $result_get_location = mysqli_query($db_connect, $sql_get_location);
-
-            // if (mysqli_num_rows($result_get_location) > 0) {
-            //   // output data of each row
-            //   while($row_get_location = mysqli_fetch_assoc($result_get_location)) {
-
-            //     $get_location = $row_get_location["location"];
-            //   }
-            // }
 
             // if all fields are empty
             if(empty($email_query) AND empty($fname_query) AND empty($lname_query) AND empty($upload_query)) {
@@ -171,8 +151,17 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
                 $fname_query .= ($fname_query!="" AND $lname_query!="") ? ",":'';
                 $lname_query .= ($lname_query!="" AND $upload_query!="") ? ",":'';
 
+                // if img file is empty, update without img
+                if($upload_query == "") {
 
-                $update = "UPDATE users SET ".$email_query." ".$fname_query." ".$lname_query." ".$upload_query." WHERE user_id = '".$s_user_id."'";
+                    // Update without img file
+                    $update = "UPDATE users SET ".$email_query." ".$fname_query." ".$lname_query." WHERE user_id = '".$s_user_id."'";
+                }else {
+
+                    // update with img file
+                    $update = "UPDATE users SET ".$email_query." ".$fname_query." ".$lname_query." ".$upload_query." WHERE user_id = '".$s_user_id."'";
+                }
+
 				
                  if(mysqli_query($db_connect, $update)){
                         $message['msg']="";

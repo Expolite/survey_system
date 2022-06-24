@@ -226,6 +226,8 @@
 
 
 
+
+
 <!-- SIDEBAR -->
 
 <div id="sidebar_container" class="border-0 bg-primary bg-gradient">
@@ -247,7 +249,7 @@
     
 
   <!-- image & name -->
-  <img src="<?php echo BASE_URL;?>images/your_logo.jpg" id="profile_img_sidebar" class="mx-auto d-block">
+  <img src="<?php echo $g_logo_sidebar; ?>" id="profile_img_sidebar" class="mx-auto d-block">
   <div id="user_display_name" class="text-light text-center"><?php echo $g_first_name." ".$g_last_name; ?></div>
 
 <!-- SURVEY INFORMATION -->

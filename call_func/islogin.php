@@ -46,6 +46,18 @@ if (!isset($global_profile_pic) OR empty($global_profile_pic)) { /* is the locat
     $global_profile_pic = $get_path;
 }
 
+// GET IMG LOCATION
+
+$sql_sidebar_profile_info = "SELECT location FROM users WHERE user_id = '$s_user_id'";
+$res_sidebar_profile_info = mysqli_query($db_connect, $sql_sidebar_profile_info);
+
+if (mysqli_num_rows($res_sidebar_profile_info) > 0) {
+while($row_sidebar_profile_info = mysqli_fetch_assoc($res_sidebar_profile_info)) {
+	$g_logo_sidebar = $row_sidebar_profile_info['location'];
+}
+}
+
+
 $global_fy = array();
 $global_my_class = array();
 $g_user_id = $session_class->getValue('user_id'); // user fullname
