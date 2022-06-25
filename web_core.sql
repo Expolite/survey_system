@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2022 at 02:33 PM
+-- Generation Time: Jun 25, 2022 at 05:17 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -928,7 +928,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `id_no`, `location`, `firstname`, `middlename`, `lastname`, `user_role`, `username`, `password`, `email_address`, `status`, `locked`, `last_signin`) VALUES
-(1, 'ituser', 'upload\\user_image_62b1ce34165461.tmp', 'Nel', '', 'ddd', 1, 'ituser', 'b994f9e88b5be30943d5a7c963cf58a7a19f3394', 'ronnel32@yahoo.com', 0, 0, NULL),
+(1, 'ituser', 'upload\\user_image_62b5dd1ccd7231.tmp', 'Ronnel', '', 'Macompas', 1, 'ituser', 'b994f9e88b5be30943d5a7c963cf58a7a19f3394', 'ronnel@yahoo.com', 0, 0, NULL),
 (2, '', '', 'SAMPLE_REGS', '', 'LAST', 2, '', 'a195c5c1019326441def43766894f74373e13003', '', 1, 0, NULL),
 (8, 'nel', '', 'neru', '', 'tokisaki', 2, 'nel', '5ecab09f348cc97279a616079664d6373c1b4ec6', 'neru@gmail.com', 0, 0, NULL);
 
@@ -1016,7 +1016,14 @@ INSERT INTO `user_log` (`user_log_id`, `login_date`, `logout_date`, `action`, `u
 (59, '2022-06-21 16:31:48', '0000-00-00 00:00:00', 'LOGIN', 1, 'c3068dd94ce6ec295120575321d22107feb60d6aa4094af0250c0781b08042b7', '::1', '{\"device\":\"Chrome\",\"version\":\"102.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 102.0.0.0 on Windows 10 64-bit\"}', 0),
 (60, '2022-06-21 18:49:01', '0000-00-00 00:00:00', 'LOGIN', 1, '20585e3b709663bd64ea45721113614d5812951cc03043afc1419cc418a86e4b', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"102.0.1245.44\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 102.0.1245.44 on Windows 10 64-bit\"}', 0),
 (61, '2022-06-22 09:40:51', '0000-00-00 00:00:00', 'LOGIN', 1, 'c7e96ef9c2dbc5538b459c1446cde0709d7b37d301d9a5ee332834f0a29179c7', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"102.0.1245.44\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 102.0.1245.44 on Windows 10 64-bit\"}', 0),
-(62, '2022-06-22 12:47:01', '0000-00-00 00:00:00', 'LOGIN', 1, 'e1720cb8e77530b5cbe1aff7a646bddf4b3467277ed3f57ccf4c288fe6cd39d4', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"102.0.1245.44\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 102.0.1245.44 on Windows 10 64-bit\"}', 0);
+(62, '2022-06-22 12:47:01', '0000-00-00 00:00:00', 'LOGIN', 1, 'e1720cb8e77530b5cbe1aff7a646bddf4b3467277ed3f57ccf4c288fe6cd39d4', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"102.0.1245.44\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 102.0.1245.44 on Windows 10 64-bit\"}', 0),
+(63, '2022-06-23 22:07:53', '0000-00-00 00:00:00', 'LOGIN', 1, '0ca7055d5dd66c30dd40e0e67dccadedc7d5125639bbe8e9093ef780ccf75e57', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"102.0.1245.44\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 102.0.1245.44 on Windows 10 64-bit\"}', 0),
+(64, '2022-06-24 08:47:14', '0000-00-00 00:00:00', 'LOGIN', 1, '7f4d9372ac1275317834bf302ffae12a499cf026886ca35fdd738cd024cf9e2f', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"102.0.1245.44\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 102.0.1245.44 on Windows 10 64-bit\"}', 0),
+(65, '2022-06-24 17:27:31', '0000-00-00 00:00:00', 'LOGIN', 1, '1061f86dba9853db02c0918835e0de0734edf813aa873f967980c46995f2ce33', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"102.0.1245.44\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 102.0.1245.44 on Windows 10 64-bit\"}', 0),
+(66, '2022-06-24 21:39:59', '2022-06-24 23:44:00', 'LOGIN', 1, 'db8dc5a4fcf380c80c943f6dac5102ab1d7ad2ab8a6861fc0e281d77a109b352', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"102.0.1245.44\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 102.0.1245.44 on Windows 10 64-bit\"}', 0),
+(67, '2022-06-24 23:44:04', '2022-06-24 23:44:42', 'LOGIN', 1, 'f864089ec9befd2decb87c3f026dc1684dcf9e2af29a97d480059492c9ee08ad', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"102.0.1245.44\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 102.0.1245.44 on Windows 10 64-bit\"}', 0),
+(68, '2022-06-24 23:44:46', '0000-00-00 00:00:00', 'LOGIN', 1, '307a2296737d52960c1366a00f89240e8349cf7ed9cdbfbcdd5cc5b080e2c151', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"102.0.1245.44\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 102.0.1245.44 on Windows 10 64-bit\"}', 0),
+(69, '2022-06-25 11:16:16', '0000-00-00 00:00:00', 'LOGIN', 1, '7899d4a2619468b0569246e4b87d5e835193f0db953e916089508db36222188e', '::1', '{\"device\":\"Microsoft Edge\",\"version\":\"103.0.1264.37\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Microsoft Edge 103.0.1264.37 on Windows 10 64-bit\"}', 0);
 
 --
 -- Indexes for dumped tables
@@ -1132,7 +1139,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_log`
 --
 ALTER TABLE `user_log`
-  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
