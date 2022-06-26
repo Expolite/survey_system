@@ -199,77 +199,107 @@ if(isset($_POST['submit_profile']) AND $_POST['submit_profile'] =="update_profil
 
 
 
+
+
+
+
+
+
+
+
+// Update Password
 if(isset($_POST['submit_password']) AND $_POST['submit_password'] =="update_password"  AND is_digit($s_user_id)){ // update 
+    
     $message_password=array();
+
     foreach ($_POST as $key => $value) {
         $_POST[$key] = trim($value);
     }
 	
-    $uform['cpass']= trim($_POST['current_password']);
-    $uform['npass']= trim($_POST['new_password']);
-    $uform['cmpass']= trim($_POST['confirm_password']);
+    $uform['cpass']= trim($_POST['current_password']); // Current Password
+    $uform['npass']= trim($_POST['new_password']); // New Passowrd
+    $uform['cmpass']= trim($_POST['confirm_password']); // Confirm Password
 
 
     $validator = new FormValidator(); 
     $validator->set_field_names($update_password_form_labels); 
     $validated = $validator->validate($_POST, $update_password_form_rules);
 
-    $password =  get_user_data($s_user_id,'users','password','user_id');
-    $input_password =  set_password($uform['cpass']);
-	$new_password =  set_password($uform['cmpass']);
-	/*
-	$collect_password = password_history($s_user_id,'ADMIN');
+    // $password =  get_user_data($s_user_id,'users','password','user_id');
+
+    $password =  set_password($uform['cpass']); // current password
+    $input_password =  set_password($uform['npass']); // current password
+	$new_password =  set_password($uform['cmpass']); // confirm password
+
+    // Uncomment
+	// $collect_password = password_history($s_user_id,'ADMIN');
 	
-	if(in_array($new_password,$collect_password)){
+	// if(in_array($new_password,$collect_password)){
+	// 	$error_encounter=true;
+	// 	$message_password['msg'] = '';
+	// 	$message_password['errors'] .= '**Please choose a password that you haven\'t used before<br>';
+	// 	$message_password['result'] = 'error';
+	// }
+    // END Uncomment
+
+    // Get the current password if already used before
+    $sql_get_current_pass = "SELECT password FROM users WHERE password = '$password'";
+    $res_get_current_pass = mysqli_query($db_connect, $sql_get_current_pass);
+
+    if (mysqli_num_rows($res_get_current_pass) > 0) {
 		$error_encounter=true;
 		$message_password['msg'] = '';
-		$message_password['errors'] .= '**Please choose a password that you haven\'t used before<br>';
+		$message_password['errors'] .= '**Please choose a password that you have not used before<br>';
 		$message_password['result'] = 'error';
-	}
-	*/
-	if(strlen($uform['npass']) < 8 ){
+    }
+
+
+    // Validation
+	if(strlen($uform['npass']) < 8 ){ // Less than 8 string/character
 		$error_encounter=true;
 		$message_password['msg'] = '';
 		$message_password['errors'] .= '**Your password at least 8 characters long <br>';
 		$message_password['result'] = 'error';
 	}
-    if($password != $input_password ){
-            $error_encounter=true;
-            $message_password['msg'] = '';
-            $message_password['errors'] .= '**Current password not match<br>';
-            $message_password['result'] = 'error';
+
+    // // check if the password is matches the current password
+    // if($password != $input_password ){0
+    //     $error_encounter=true;
+    //     $message_password['msg'] = '';
+    //     $message_password['errors'] .= '**Current password not match<br>';
+    //     $message_password['result'] = 'error';
+    // }
+
+    // Password do not match
+    if($uform['npass'] != $uform['cmpass'] ){ // 
+        $error_encounter=true;
+        $message_password['msg'] = '';
+        $message_password['errors'] .= "**New Password and Confirm Password not match<br>";
+        $message_password['result'] = 'error';
     }
 
-    if($uform['npass'] != $uform['cmpass'] ){
-            $error_encounter=true;
-            $message_password['msg'] = '';
-            $message_password['errors'] .= "**New Password and Confirm Password not match<br>";
-            $message_password['result'] = 'error';
-    }
 
+    if($error_encounter!=TRUE) { 
+        if($validated === TRUE) { // kung true validate 
 
-    if($error_encounter!=TRUE){
-        if($validated === TRUE){// kung true validate 
+            $update = "UPDATE users SET password = '".escape($db_connect,$new_password)."' WHERE user_id = '".$s_user_id."' ";
 
-                $update = "UPDATE users SET password = '".escape($db_connect,$new_password)."' WHERE user_id = '".$s_user_id."' ";
+            if(mysqli_query($db_connect, $update)){
+                //insert_password_history($new_password,$s_user_id,'ADMIN');
+                $message_password['msg']="";
+                $message_password['result'] ="success";
+                $message_password['errors'] ="";
 
-                 if(mysqli_query($db_connect, $update)){
-						//insert_password_history($new_password,$s_user_id,'ADMIN');
-                        $message_password['msg']="";
-                        $message_password['result'] ="success";
-                        $message_password['errors'] ="";
+                $session_class->setValue('success','Successfully Updated');
+                header("Location: manage_profile.php");
+                exit();
 
-                        $session_class->setValue('success','Successfully Updated');
-                        header("Location: manage_profile.php");
-                        exit();
-
-              
-                } else{
-                    $message_password['msg']="";
-                    $message_password['result'] ="error";
-                    $message_password['errors'] .="Unable to save!\n\r";
-                    //echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                }
+            }else{
+                $message_password['msg']="";
+                $message_password['result'] ="error";
+                $message_password['errors'] .="Unable to save!\n\r";
+                //echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+            }
 
         }
 
@@ -412,6 +442,8 @@ if(isset($_POST['submit_password']) AND $_POST['submit_password'] =="update_pass
                                             </div> <!-- end card body-->
                                         </div> <!-- end card -->
                                         </div>
+
+                                        <!-- UPDATE PASSWORD -->
                                         <div class="col-xl-5">
                                             <div class="card">
                                                 <div class="card-body">

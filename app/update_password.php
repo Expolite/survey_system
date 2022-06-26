@@ -9,6 +9,7 @@ $update_password_form = array(
 $update_password_form_rules=array();
 $update_password_form_labels=array();
 $f_name = "";
+
 foreach($update_password_form as $value){ 
 	$f_name = $value['name'];
 	$update_password_form_rules[$f_name] = $value['rules'];
