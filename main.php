@@ -60,6 +60,28 @@ if($result_survey_records_byMon) {
 <?php
     include DOMAIN_PATH."/app/global/meta_data.php";
     include DOMAIN_PATH."/app/global/include_top.php";
+
+    // BAR CHART
+    $dataPoints = array( 
+        array("y" => 3373.64, "label" => "Dept 1" ),
+        array("y" => 2435.94, "label" => "Dept 2" ),
+        array("y" => 1842.55, "label" => "Dept 3" ),
+        array("y" => 1828.55, "label" => "Dept 4" ),
+        array("y" => 1039.99, "label" => "Dept 5" ),
+        array("y" => 765.215, "label" => "Dept 6" ),
+        array("y" => 612.453, "label" => "Dept 7" )
+    );
+
+    // BAR CHART_2
+    $dataPoints_2 = array( 
+        array("y" => 3373.64, "label" => "Dept 1" ),
+        array("y" => 2435.94, "label" => "Dept 2" ),
+        array("y" => 1842.55, "label" => "Dept 3" ),
+        array("y" => 1828.55, "label" => "Dept 4" ),
+        array("y" => 1039.99, "label" => "Dept 5" ),
+        array("y" => 765.215, "label" => "Dept 6" ),
+        array("y" => 612.453, "label" => "Dept 7" )
+    );
 ?>
 
 <style type="text/css">
@@ -156,12 +178,14 @@ if($result_survey_records_byMon) {
 
                         </div>
 
+<!-- BAR CHART -->
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- GRAPH - START -->
                                 <div class="container bg-light d-flex justify-content-center" style="border: 1px solid black;">
 
-                                    <canvas id="myChart" style="width:100%; max-width: 80%; border: 1px solid red;"></canvas>
+                                    <!-- BAR CHART -->
+                                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
                                 </div>
                                 <!-- GRAPH - END -->
@@ -170,14 +194,14 @@ if($result_survey_records_byMon) {
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="container d-flex justify-content-center" style="border: 1px solid red;">
-                                    <div class="d-flex justify-content-between" style="border: 1px solid blue; width: 100%; max-width: 70%;">
-                                        <div>Very Satisfied</div>
-                                        <div>Satisfied</div>
-                                        <div>Disatisfied</div>
-                                        <div>Very Disatisfied</div>
-                                    </div>
+                                <!-- GRAPH - START -->
+                                <div class="container bg-light d-flex justify-content-center" style="border: 1px solid black;">
+
+                                    <!-- BAR CHART -->
+                                    <div id="chartContainer_2" style="height: 370px; width: 100%;"></div>
+
                                 </div>
+                                <!-- GRAPH - END -->
                             </div>
                         </div>
 
@@ -194,6 +218,19 @@ if($result_survey_records_byMon) {
 <?php  include FOOTER_PATH; ?>
 <!-- END FOOTER -->
 
+
+
+
+
+
+<!-- CANVAS OF BAR CHART JS -->
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+
+
+
+
 </body>
 
 <!-- all the js files -->
@@ -202,31 +239,7 @@ if($result_survey_records_byMon) {
 <!-- all linked js -->
 <?php include DOMAIN_PATH."/app/global/include_bottom.php"; ?>
 
-<!-- CHART JS - START -->
-<script>
-var xValues = ["Cashier", "Registrar", "MISD", "Guidance", "Health Office", " ", "Cashier", "Registrar", "MISD", "Guidance", "Health Office", " ", "Cashier", "Registrar", "MISD", "Guidance", "Health Office", " ", "Cashier", "Registrar", "MISD", "Guidance", "Health Office"];
-var yValues = [55, 49, 44, 30, 10, "", 55, 49, 44, 30, 10, "", 55, 49, 44, 30, 10, "", 55, 49, 44, 30, 10];
-var barColors = ["black", "red", "green","blue","orange", "none", "black", "red", "green","blue","orange", "none", "black", "red", "green","blue","orange", "none", "black", "red", "green","blue","orange"];
 
-new Chart("myChart", {
-  type: "bar",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    legend: {display: false},
-    title: {
-      display: true,
-      text: "Survey Chart"
-    }
-  }
-});
-</script>
-<!-- CHART JS - END -->
 
 <script>
 <?php
@@ -242,5 +255,54 @@ new Chart("myChart", {
 			$session_class->dropValue('error');
     	}
 ?>
+
+
+
+
+
+
+
+// BAR CHART
+window.onload = function() {
+ 
+ var chart = new CanvasJS.Chart("chartContainer", {
+     animationEnabled: true,
+     theme: "light2",
+     title:{
+         text: "Survey Chart"
+     },
+     axisY: {
+         title: "Number of Surveys"
+     },
+     data: [{
+         type: "column",
+         yValueFormatString: "#,##0.## tonnes",
+         dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+     }]
+ });
+ chart.render();
+
+
+
+
+ // BAR CHART 2
+ var chart = new CanvasJS.Chart("chartContainer_2", {
+     animationEnabled: true,
+     theme: "light2",
+     title:{
+         text: "Survey Chart_2"
+     },
+     axisY: {
+         title: "Number of Surveys_2"
+     },
+     data: [{
+         type: "column",
+         yValueFormatString: "#,##0.## tonnes",
+         dataPoints: <?php echo json_encode($dataPoints_2, JSON_NUMERIC_CHECK); ?>
+     }]
+ });
+ chart.render();
+  
+ }
 </script>
 </html>
