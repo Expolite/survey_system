@@ -231,68 +231,70 @@
 <!-- SIDEBAR -->
 
 <div id="sidebar_container" class="border-0 bg-primary bg-gradient">
+  <div class="sticky-top pt-2">
 
-  <!-- ARROW -->
-  <div style="position: relative;">
+    <!-- ARROW -->
+    <div style="position: relative;">
 
-    <!-- arrow-left-menu -->
-    <div id="arrow_left_sidebar" onclick="minimize_side_bar()" class="arrow_left_slidebar" style="color: white; padding: 8px; width: fit-content; position: absolute; top: 0; right: 0; font-size: 18px; cursor: pointer; text-shadow: 2px 2px 5px black;">
-      <i class="fa-solid fa-angles-left"></i> <!-- LEFT -->
-    </div>
-
-    <!-- arrow-right-menu -->
-    <div id="arrow_right_sidebar" onclick="maximize_side_bar()" class="arrow_left_slidebar">
-      <i class="fa-solid fa-angles-right"></i> <!-- RIGHT -->
-    </div>
-
-  </div>
-    
-
-  <!-- image & name -->
-  <img src="<?php echo $g_logo_sidebar; ?>" id="profile_img_sidebar" class="mx-auto d-block">
-  <div id="user_display_name" class="text-light text-center"><?php echo $g_first_name." ".$g_last_name; ?></div>
-
-<!-- SURVEY INFORMATION -->
-  <!-- SELECTION -->
-  <div class="selection_sidebar" onclick="window.location.href = 'main.php';">
-    <div id="titles_name_sidebar"><i class="fa-solid fa-square-poll-vertical"></i> Survey Information</div>
-    <!-- icon -->
-    <div><i class="fa-solid fa-square-poll-vertical" id="icon_sidebar"></i></div>
-  </div>
-
-<!-- USER MANAGEMENT -->
-  <div class="selection_sidebar" onclick="window.location.href = 'user_management.php';">
-    <div id="titles_name_sidebar_2"><i class="fa-solid fa-users-gear"></i> User Management</div>
-    <!-- icon -->
-    <div><i class="fa-solid fa-users-gear" id="icon_sidebar_2"></i></div>
-  </div>
-
-<!-- SURVEY TEMPLATE -->
-  <div class="selection_sidebar" onclick="window.location.href = 'eval_template.php';">
-    <div id="titles_name_sidebar_3"><i class="fa-solid fa-pen-ruler"></i> Survey Templates</div>
-    <!-- icon -->
-    <div><i class="fa-solid fa-pen-ruler" id="icon_sidebar_3"></i></div>
-  </div>
-
-<!-- ACTIVITY LOG -->
-  <!-- Div 1 -->
-  <div class="selection_sidebar" onclick="expand_act_log();">
-      <div id="titles_name_sidebar_4">
-        <i class="fa-solid fa-list"></i> Activity Log 
-        <span style="position: absolute; right: 10px;" id="activity_log_arrow"><i class="fa-solid fa-angle-right"></i></span>
+      <!-- arrow-left-menu -->
+      <div id="arrow_left_sidebar" onclick="minimize_side_bar()" class="arrow_left_slidebar" style="color: white; padding: 8px; width: fit-content; position: absolute; top: 0; right: 0; font-size: 18px; cursor: pointer; text-shadow: 2px 2px 5px black;">
+        <i class="fa-solid fa-angles-left"></i> <!-- LEFT -->
       </div>
-      <!-- icon -->
-      <div><i class="fa-solid fa-list" id="icon_sidebar_4"></i></div>
-  </div>
 
-  <!-- Acivity log - contents -->
-  <div class="selection_sidebar_content" id="selection_sidebar_4_1" onclick="window.location.href = 'admin_activity_log.php';">
-    <div id="titles_name_sidebar_4_1"><i class="fa-solid fa-arrow-right-long"></i> Admin-log</div>
-    <!-- icon -->
-    <div id="icon_sidebar_4_1"><i class="fa-solid fa-list"></i> <i class="fa-solid fa-1"></i></div>
-  </div>
-  <!-- END SELECTION -->
+      <!-- arrow-right-menu -->
+      <div id="arrow_right_sidebar" onclick="maximize_side_bar()" class="arrow_left_slidebar">
+        <i class="fa-solid fa-angles-right"></i> <!-- RIGHT -->
+      </div>
+
+    </div>
+      
+
+    <!-- image & name -->
+    <img src="<?php echo $g_logo_sidebar; ?>" id="profile_img_sidebar" class="mx-auto d-block">
+    <div id="user_display_name" class="text-light text-center"><?php echo $g_first_name." ".$g_last_name; ?></div>
+
+  <!-- SURVEY INFORMATION -->
+    <!-- SELECTION -->
+    <div class="selection_sidebar" onclick="window.location.href = 'main.php';">
+      <div id="titles_name_sidebar"><i class="fa-solid fa-square-poll-vertical"></i> Survey Information</div>
+      <!-- icon -->
+      <div><i class="fa-solid fa-square-poll-vertical" id="icon_sidebar"></i></div>
+    </div>
+
+  <!-- USER MANAGEMENT -->
+    <div class="selection_sidebar" onclick="window.location.href = 'user_management.php';">
+      <div id="titles_name_sidebar_2"><i class="fa-solid fa-users-gear"></i> User Management</div>
+      <!-- icon -->
+      <div><i class="fa-solid fa-users-gear" id="icon_sidebar_2"></i></div>
+    </div>
+
+  <!-- SURVEY TEMPLATE -->
+    <div class="selection_sidebar" onclick="window.location.href = 'eval_template.php';">
+      <div id="titles_name_sidebar_3"><i class="fa-solid fa-pen-ruler"></i> Survey Templates</div>
+      <!-- icon -->
+      <div><i class="fa-solid fa-pen-ruler" id="icon_sidebar_3"></i></div>
+    </div>
+
+  <!-- ACTIVITY LOG -->
+    <!-- Div 1 -->
+    <div class="selection_sidebar" onclick="expand_act_log();">
+        <div id="titles_name_sidebar_4">
+          <i class="fa-solid fa-list"></i> Activity Log 
+          <span style="position: absolute; right: 10px;" id="activity_log_arrow"><i class="fa-solid fa-angle-right"></i></span>
+        </div>
+        <!-- icon -->
+        <div><i class="fa-solid fa-list" id="icon_sidebar_4"></i></div>
+    </div>
+
+    <!-- Acivity log - contents -->
+    <div class="selection_sidebar_content" id="selection_sidebar_4_1" onclick="window.location.href = 'admin_activity_log.php';">
+      <div id="titles_name_sidebar_4_1"><i class="fa-solid fa-arrow-right-long"></i> Admin-log</div>
+      <!-- icon -->
+      <div id="icon_sidebar_4_1"><i class="fa-solid fa-list"></i> <i class="fa-solid fa-1"></i></div>
+    </div>
+    <!-- END SELECTION -->
   
+  </div>
 </div>
 
 

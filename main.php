@@ -90,6 +90,56 @@ if($result_survey_records_byMon) {
         padding: 10px;
         transition: all .3s ease;
     }
+
+    /* BarChart - 1 */
+    .barChart_1 {
+        border: 1px solid black; 
+        padding-left: 40px; 
+        padding-right: 40px;
+        padding-top: 10px;
+    }
+
+    /* Bar Chart Arrows */
+    #barChart_arrow_right {
+        border: 1px solid black; 
+        opacity: .4; 
+        background: black; 
+        color: white; 
+        font-size: 30px; 
+        height: fit-content; 
+        cursor: pointer; 
+        padding-top: 5px;
+        padding-left: 10px; 
+        padding-right: 10px; 
+        position: absolute; 
+        right: 0; 
+        top: 150px;
+        transition: all .3s ease;
+    }
+    #barChart_arrow_right:hover {
+        opacity: .8;
+    }
+
+    #barChart_arrow_left {
+        border: 1px solid black; 
+        opacity: .4; 
+        background: black; 
+        color: white; 
+        font-size: 30px; 
+        height: fit-content; 
+        cursor: pointer; 
+        padding-top: 5px;
+        padding-left: 10px; 
+        padding-right: 10px; 
+        position: absolute; 
+        left: 0; 
+        top: 150px;
+        transition: all .3s ease;
+    }
+    #barChart_arrow_left:hover {
+        opacity: .8;
+    }
+    /* END Bar Chart Arrows */
 </style>
 
 <!-- CHART -->
@@ -179,26 +229,54 @@ if($result_survey_records_byMon) {
                         </div>
 
 <!-- BAR CHART -->
+                        <!-- SIDEBAR - 1 -->
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- GRAPH - START -->
-                                <div class="container bg-light d-flex justify-content-center" style="border: 1px solid black;">
+                                <div class="container bg-light d-flex justify-content-center position-relative barChart_1">
 
                                     <!-- BAR CHART -->
                                     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+                                    <!-- Arrow -->
+
+                                    <!-- RIGHT -->
+                                    <div id="barChart_arrow_right">
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </div>
+
+                                    <!-- LEFT -->
+                                    <div id="barChart_arrow_left">
+                                        <i class="fa-solid fa-angle-left"></i>
+                                    </div>
+                                    <!-- END Arrow -->
 
                                 </div>
                                 <!-- GRAPH - END -->
                             </div>
                         </div>
 
+                        <!-- SIDEBAR - 2 -->
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- GRAPH - START -->
-                                <div class="container bg-light d-flex justify-content-center" style="border: 1px solid black;">
+                                <div class="container bg-light d-flex justify-content-center position-relative barChart_1">
 
                                     <!-- BAR CHART -->
                                     <div id="chartContainer_2" style="height: 370px; width: 100%;"></div>
+
+                                    <!-- Arrow -->
+
+                                    <!-- RIGHT -->
+                                    <div id="barChart_arrow_right">
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </div>
+
+                                    <!-- LEFT -->
+                                    <div id="barChart_arrow_left">
+                                        <i class="fa-solid fa-angle-left"></i>
+                                    </div>
+                                    <!-- END Arrow -->
 
                                 </div>
                                 <!-- GRAPH - END -->
