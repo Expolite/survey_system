@@ -46,7 +46,7 @@ Import the database (optional)
 
 ### Login
 - Username: ituser
-- Password: admin
+- Password: Admin@1234
 
 ## For Design and JS > but yu can use your own design (CSS Template)
 - Use bootstrap 4+
