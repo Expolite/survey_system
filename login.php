@@ -147,7 +147,7 @@ if(isset($_POST['username']) AND isset($_POST['password']) AND isset($_POST['sub
 					header('Location:'.BASE_URL.'main.php');
 					exit();
 
-				}else if($row['user_role'] == 3 AND !$error_login){ // Manager
+				}else if($row['user_role'] == 3 AND !$error_login){ // DEPARTMENT
 					$session_class->setValue('user_id',$row['user_id']);
 					$session_class->setValue('role_id',array('DEPARTMENT')); // Department
 					$session_class->setValue('photo',$row['location']);
@@ -159,7 +159,7 @@ if(isset($_POST['username']) AND isset($_POST['password']) AND isset($_POST['sub
 					$session_class->setValue('success',"DEPARTMENT");
 					$session_class->dropValue('browser_attempt_login');
 					user_log("LOGIN",$agent);
-					header('Location: '.BASE_URL.'test.php');
+					header('Location: '.BASE_URL.'department_main.php');
 					exit();
 				}	
 			}

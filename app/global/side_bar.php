@@ -250,7 +250,7 @@
       
 
     <!-- image & name -->
-    <img src="<?php echo $g_logo_sidebar; ?>" id="profile_img_sidebar" class="mx-auto d-block">
+    <img src="<?php if(!empty($g_logo_sidebar)){echo $g_logo_sidebar;}else{echo BASE_URL."/images/placeholder.png";} ?>" id="profile_img_sidebar" class="mx-auto d-block">
     <div id="user_display_name" class="text-light text-center"><?php echo $g_first_name." ".$g_last_name; ?></div>
 
   <!-- SURVEY INFORMATION -->

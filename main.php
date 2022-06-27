@@ -142,9 +142,6 @@ if($result_survey_records_byMon) {
     /* END Bar Chart Arrows */
 </style>
 
-<!-- CHART -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-
 </head>
 
 <body>
@@ -176,7 +173,7 @@ if($result_survey_records_byMon) {
                     <div class="container">
                         <div class="row">
 
-                            <!-- BOX START -->
+                            <!-- BOX START 1 -->
                             <div class="col-md-6">
                                 <div class="card mb-4 shadow border">
 
@@ -201,7 +198,7 @@ if($result_survey_records_byMon) {
                             </div>
                             <!-- END BOX -->
 
-                            <!-- BOX START -->
+                            <!-- BOX START 2 -->
                             <div class="col-md-6">
                                 <div class="card mb-4 shadow border">
 
@@ -229,7 +226,7 @@ if($result_survey_records_byMon) {
                         </div>
 
 <!-- BAR CHART -->
-                        <!-- SIDEBAR - 1 -->
+                        <!-- BARCHART - 1 -->
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- GRAPH - START -->
@@ -256,7 +253,7 @@ if($result_survey_records_byMon) {
                             </div>
                         </div>
 
-                        <!-- SIDEBAR - 2 -->
+                        <!-- BARCHART - 2 -->
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- GRAPH - START -->
