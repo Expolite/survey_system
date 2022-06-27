@@ -318,17 +318,17 @@ if($result_survey_records_byMon) {
 
 <script>
 <?php
-		$msg_success =$session_class->getValue('success');
-    	if(isset($msg_success) AND $msg_success !=""){
-			echo "success_notif('".$msg_success."');";
-			$session_class->dropValue('success');
-    	}
+	$msg_success =$session_class->getValue('success');
+	if(isset($msg_success) AND $msg_success !=""){
+		echo "success_notif('".$msg_success."');";
+		$session_class->dropValue('success');
+	}
 
-    	$msg_error =$session_class->getValue('error');
-    	if(isset($msg_error) AND $msg_error !=""){
-			echo "error_notif('".$msg_error."');";
-			$session_class->dropValue('error');
-    	}
+	$msg_error =$session_class->getValue('error');
+	if(isset($msg_error) AND $msg_error !=""){
+		echo "error_notif('".$msg_error."');";
+		$session_class->dropValue('error');
+	}
 ?>
 
 

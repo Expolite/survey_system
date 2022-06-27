@@ -63,6 +63,7 @@ define('GRADE_MODULE' , DOMAIN_PATH.'/call_func/compute_grade.php');
 define('ISLOGIN' , DOMAIN_PATH.'/call_func/islogin.php');
 define('PASSWORD_HELPER' , DOMAIN_PATH.'/call_func/password_helper.php');
 
+
 //global var
 define('DEFAULT_SESSION', 'web_session');
 define('SALT', '1234TREWPOIUYT_'); //change me

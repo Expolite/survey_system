@@ -111,6 +111,20 @@
     display: block;
   }
 
+/* TEMPLATES LIST */
+  /* icons */
+  #icon_sidebar_3_1 {
+    font-size: 30px;
+    display: none;
+    text-align: center;
+  }
+
+  /* title names */
+  #titles_name_sidebar_3_1 {
+    position: relative;
+    display: block;
+  }
+
 /* ACTIVITY LOG */
   /* icons */
   #icon_sidebar_4 {
@@ -198,12 +212,21 @@
     #icon_sidebar_2 {
       display: block;
     }
+    /* CREATE TEMPLATES */
     #titles_name_sidebar_3 {
       display: none;
     }
     #icon_sidebar_3 {
       display: block;
     }
+    /* TEMPLATES lIST */
+    #titles_name_sidebar_3_1 {
+      display: none;
+    }
+    #icon_sidebar_3_1 {
+      display: block;
+    }
+
     #titles_name_sidebar_4 {
       display: none;
     }
@@ -269,10 +292,17 @@
     </div>
 
   <!-- SURVEY TEMPLATE -->
-    <div class="selection_sidebar" onclick="window.location.href = 'eval_template.php';">
-      <div id="titles_name_sidebar_3"><i class="fa-solid fa-pen-ruler"></i> Survey Templates</div>
+    <div class="selection_sidebar" onclick="window.location.href = 'create_template.php';">
+      <div id="titles_name_sidebar_3"><i class="fa-solid fa-pen-ruler"></i> Create Templates</div>
       <!-- icon -->
       <div><i class="fa-solid fa-pen-ruler" id="icon_sidebar_3"></i></div>
+    </div>
+
+  <!-- TEMPLATE LIST -->
+    <div class="selection_sidebar" onclick="window.location.href = 'test.php';">
+      <div id="titles_name_sidebar_3_1"><i class="fa-solid fa-clipboard-check"></i> Template List</div>
+      <!-- icon -->
+      <div><i class="fa-solid fa-clipboard-check" id="icon_sidebar_3_1"></i></div>
     </div>
 
   <!-- ACTIVITY LOG -->
@@ -328,6 +358,7 @@
     icon_sidebar.style.display = "block"; // display icons
     icon_sidebar_2.style.display = "block"; // display icons
     icon_sidebar_3.style.display = "block"; // display icons
+    icon_sidebar_3_1.style.display = "block"; // display icons
     icon_sidebar_4.style.display = "block"; // display icons
     icon_sidebar_4_1.style.display = "block"; // display icons
     icon_sidebar_4_1.style.fontSize = "20px"; // resize icons
@@ -335,6 +366,7 @@
     titles_name_sidebar.style.display = "none"; // hide title names
     titles_name_sidebar_2.style.display = "none"; // hide title names
     titles_name_sidebar_3.style.display = "none"; // hide title names
+    titles_name_sidebar_3_1.style.display = "none"; // hide title names
     titles_name_sidebar_4.style.display = "none"; // hide title names
     titles_name_sidebar_4_1.style.display = "none"; // hide title names
   }
@@ -358,12 +390,14 @@
     icon_sidebar.style.display = "none"; // hide icons
     icon_sidebar_2.style.display = "none"; // hide icons
     icon_sidebar_3.style.display = "none"; // hide icons
+    icon_sidebar_3_1.style.display = "none"; // hide icons
     icon_sidebar_4.style.display = "none"; // hide icons
     icon_sidebar_4_1.style.display = "none"; // hide icons
 
     titles_name_sidebar.style.display = "block"; // display title names
     titles_name_sidebar_2.style.display = "block"; // display title names
     titles_name_sidebar_3.style.display = "block"; // display title names
+    titles_name_sidebar_3_1.style.display = "block"; // display title names
     titles_name_sidebar_4.style.display = "block"; // display title names
     titles_name_sidebar_4_1.style.display = "block"; // display title names
   }
