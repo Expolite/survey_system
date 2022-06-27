@@ -392,13 +392,17 @@ $object_js =  output($list_data);
                             <div class="col-12">
                                 <div class="card py-4 bg-light">
                                     <div class="card-body bg-white col-sm-12 col-lg-9 mx-lg-auto  mx-sm-0  border">
+
+
 									<form id="eval_form" name="eval_form" action="eval_template.php<?php echo $update;?>" method="POST">
+
 										<div class="row p-2 pl-4">
 											<div  class="form-group  col-sm-12 col-lg-12 font-weight-bold">
 												<label for="content_time">Title of Page:</label><br>
 												<input type="text" class="form-control" name="page_title" id="page_title" value="<?php echo $uform['page_title'];?>"  required>
 											</div>
-										</div>                                       
+										</div>  
+
 									   <div class="row text-center p-1 pl-4 pr-4"> 
 											<div class="col-sm-12 col-xl-12">
 												<label class="font-weight-bold" for="">Header :</label>
@@ -450,13 +454,16 @@ $object_js =  output($list_data);
 													<div class="row pl-4 pr-4">
 														<div class="col-sm-12 col-xl-6">
 															<div class="input-group mb-3">
+
 															  <div class="input-group-prepend">
 																<a href="download.php?attach=EVAL_CRITERIA" class="" ><span class="input-group-text">Download Template</span></a>
 															  </div>
+
 															  <div class="custom-file">
 																<input type="file" class="custom-file-input" id="input_csv">
 																<label class="custom-file-label" for="input_csv">Choose file CSV</label>
 															  </div>
+															  
 															</div>
 														</div>
 													</div>

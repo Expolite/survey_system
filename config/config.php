@@ -12,7 +12,7 @@
 
 // my default: PROG
 // for debugging: DEV
-$envi = 'DEV';
+$envi = 'PROG';
 $before_memory = 0;
 //default settings values
 $config['filesize_limit'] = 20971520;//50000000;//20MB FILE UPLOAD LIMIT

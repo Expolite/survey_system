@@ -243,7 +243,7 @@ if(isset($_POST['submit_password']) AND $_POST['submit_password'] =="update_pass
     // END Uncomment
 
     // Get the current password if already used before
-    $sql_get_current_pass = "SELECT password FROM users WHERE password = '$password'";
+    $sql_get_current_pass = "SELECT password FROM users WHERE password = '$input_password'";
     $res_get_current_pass = mysqli_query($db_connect, $sql_get_current_pass);
 
     if (mysqli_num_rows($res_get_current_pass) > 0) {
