@@ -144,7 +144,7 @@ if($result_survey_records_byMon) {
 
 </head>
 
-<body>
+<body style="padding: 0;">
     <!-- HEADER -->
     <!-- NAVBAR -->
     <?php include DOMAIN_PATH."/app/global/topbar.php"; ?>   <!--topbar -->

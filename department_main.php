@@ -52,7 +52,7 @@ if(!($g_user_role[0] == "DEPARTMENT")){
         padding-right: 40px;
         padding-top: 10px;
     }
-    
+
     /* Bar Chart Arrows */
     #barChart_arrow_right {
         border: 1px solid black; 
@@ -97,7 +97,7 @@ if(!($g_user_role[0] == "DEPARTMENT")){
 
 
 </head>
-<body>
+<body style="padding: 0;">
 
     <!-- NAVBAR -->
     <?php include DOMAIN_PATH."/app/global/topbar.php"; ?>   <!--topbar -->
