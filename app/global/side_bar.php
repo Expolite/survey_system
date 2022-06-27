@@ -299,7 +299,7 @@
     </div>
 
   <!-- TEMPLATE LIST -->
-    <div class="selection_sidebar" onclick="window.location.href = 'test.php';">
+    <div class="selection_sidebar" onclick="window.location.href = 'template_list.php';">
       <div id="titles_name_sidebar_3_1"><i class="fa-solid fa-clipboard-check"></i> Template List</div>
       <!-- icon -->
       <div><i class="fa-solid fa-clipboard-check" id="icon_sidebar_3_1"></i></div>
