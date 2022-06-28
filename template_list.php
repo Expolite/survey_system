@@ -87,6 +87,13 @@ if(!($g_user_role[0] == "ADMIN")){
 
                 		<div class="row">
                 			<div class="col-md-12">
+
+                				<!-- Actions -->
+                				<div class="mb-3" align="right">
+                					<form action="template_list.php" action="POST">
+                						<button type="button" name="delete_btn" class="btn btn-danger">Delete</button>
+                					</form>
+                				</div>
                 				
                 				<!-- Table -->
                 				<div class="table-responsive">
@@ -97,19 +104,20 @@ if(!($g_user_role[0] == "ADMIN")){
                 								<!-- main checkbox 1 -->
                 								<div class="form-check form-check-inline" onclick="selects()" id="all_checkboxs_1">
 													<label class="form-check-label" for="inlineCheckbox1" style="cursor: pointer;"> 
-													<i class="fa-regular fa-square-full" id="inlineCheckbox1"></i> Select all
+													<i class="fa-regular fa-square-full"></i> Select all
 													</label>
 												</div>
 												<!-- main checkbox 2 -->
                 								<div class="form-check form-check-inline" onclick="deSelect()" id="all_checkboxs_2">
 													<label class="form-check-label" for="inlineCheckbox2" style="cursor: pointer;">
-													<i class="fa-regular fa-square-check" id="inlineCheckbox2"></i> Select all
+													<i class="fa-regular fa-square-check" style="font-size: 20px;"></i> Deselect all
 													</label>
 												</div>
                 							</th>
                 							<th>#</th>
                 							<th>Title</th>
                 							<th>Published</th>
+                							<th>Actions</th>
                 						</tr>
                 					</thead>
                 					<tbody>
@@ -128,10 +136,11 @@ if(!($g_user_role[0] == "ADMIN")){
                 						?>
 
                 						<tr id="tr_hover" onclick="toggle_<?php echo $s_template_id;?>()">
-                							<td><input type="checkbox" name="chk" id="<?php echo $s_template_id;?>"></td>
+                							<td><input type="checkbox" name="chk" class="m-1" id="<?php echo $s_template_id;?>"></td>
                 							<td><?php echo $s_template_id;?></td>
                 							<td><?php echo $s_template_title; ?></td>
                 							<td><?php echo $s_publish_date; ?></td>
+                							<td><a href="create_template.php?template_id_tl=<?php echo $s_template_id; ?>" class="m-0 text-dark"><i class="fa-solid fa-pen-to-square"></i> Edit</a></td>
                 						</tr>
 
                 						<!-- checkbox to list -->

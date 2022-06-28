@@ -28,11 +28,39 @@ if(!($g_user_role[0] == "ADMIN")){
 
 
 
+// VIEW TEMPLATE / EDIT
+if(isset($_GET['template_id_tl'])) {
+
+	// get data
+	$template_id_tl = $_GET['template_id_tl'];
+
+	$sql_view_edit_tmpl = "SELECT * FROM survey_template WHERE s_template_id = '$template_id_tl'";
+	$res_view_edit_tmpl = mysqli_query($db_connect, $sql_view_edit_tmpl);
+
+	if (mysqli_num_rows($res_view_edit_tmpl) > 0) {
+
+		while($row_view_edit_tmpl = mysqli_fetch_assoc($res_view_edit_tmpl)) {
+
+			$edit_title = $row_view_edit_tmpl['template_title'];
+			$edit_body = $row_view_edit_tmpl['template_body'];
+		}
+	}
+}
+
+
+
+
+
+
+
 
 // Publish Template data
 if(isset($_POST['publish_data'])) {
 
+
+
 	// get data
+	$get_templ_id = mysqli_real_escape_string($db_connect, $_POST['get_templ_id']);
 	$s_title = mysqli_real_escape_string($db_connect, $_POST['template_title']);
 	$s_header = mysqli_real_escape_string($db_connect, $_POST['template_header']);
 
@@ -41,47 +69,110 @@ if(isset($_POST['publish_data'])) {
 	// $date_now = date('Y-m-d');
 
 
-	// if data is empty
-	if(empty($s_title)) {
-
-		$msg_response['status']="error";
-		$msg_response['msg']="Title cannot be empty";
-		$session_class->setValue('error',$msg_response['msg']);
-		header("location: create_template.php");
-		exit();
-
-	}elseif(empty($s_header)){
-
-		$msg_response['status']="error";
-		$msg_response['msg']="Header cannot be empty";
-		$session_class->setValue('error',$msg_response['msg']);
-		header("location: create_template.php");
-		exit();
-
-	}
+	// if id is not empty -> INSERT
+	// else -> UPDATE
 
 
-	// Insert data
-	$sql_template_insert = "INSERT INTO survey_template (template_title, template_body) VALUES ('$s_title', '$s_header')";
-	$res_template_insert = mysqli_query($db_connect, $sql_template_insert);
+	// INSERT
+	if($get_templ_id == ""){
+		
 
-	if(!$res_template_insert) {
+		// if data is empty
+		if(empty($s_title)) {
 
-		$msg_response['status']="error";
-		$msg_response['msg']="Fail to publish";
-		$session_class->setValue('error',$msg_response['msg']);
-		header("location: create_template.php");
-		exit();
+			$msg_response['status']="error";
+			$msg_response['msg']="Title cannot be empty";
+			$session_class->setValue('error',$msg_response['msg']);
+			header("location: create_template.php");
+			exit();
 
+		}elseif(empty($s_header)){
+
+			$msg_response['status']="error";
+			$msg_response['msg']="Header cannot be empty";
+			$session_class->setValue('error',$msg_response['msg']);
+			header("location: create_template.php");
+			exit();
+
+		}
+
+
+		// Insert data
+		$sql_template_insert = "INSERT INTO survey_template (template_title, template_body) VALUES ('$s_title', '$s_header')";
+		$res_template_insert = mysqli_query($db_connect, $sql_template_insert);
+
+		if(!$res_template_insert) {
+
+			$msg_response['status']="error";
+			$msg_response['msg']="Fail to publish";
+			$session_class->setValue('error',$msg_response['msg']);
+			header("location: create_template.php");
+			exit();
+
+		}else{
+
+			$msg_response['status']="success";
+			$msg_response['msg']="Published!";
+			$session_class->setValue('success',$msg_response['msg']);
+			header("location: create_template.php");
+			exit();
+		}
+
+
+
+
+
+	// UPDATE
 	}else{
 
-		$msg_response['status']="success";
-		$msg_response['msg']="Published!";
-		$session_class->setValue('success',$msg_response['msg']);
-		header("location: create_template.php");
-		exit();
+
+		// if data is empty
+		if(empty($s_title)) {
+
+			$msg_response['status']="error";
+			$msg_response['msg']="Title cannot be empty";
+			$session_class->setValue('error',$msg_response['msg']);
+			header("location: create_template.php");
+			exit();
+
+		}elseif(empty($s_header)){
+
+			$msg_response['status']="error";
+			$msg_response['msg']="Header cannot be empty";
+			$session_class->setValue('error',$msg_response['msg']);
+			header("location: create_template.php");
+			exit();
+
+		}
+
+
+		// Update data
+		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_body = '$s_header' WHERE s_template_id = '$get_templ_id'";
+		$res_template_update = mysqli_query($db_connect, $sql_template_update);
+
+		if(!$res_template_update) {
+
+			$msg_response['status']="error";
+			$msg_response['msg']="Fail to update";
+			$session_class->setValue('error',$msg_response['msg']);
+			header("location: create_template.php");
+			exit();
+
+		}else{
+
+			$msg_response['status']="success";
+			$msg_response['msg']="UPDATED!";
+			$session_class->setValue('success',$msg_response['msg']);
+			header("location: create_template.php");
+			exit();
+		}
 	}
+
+
+
 }
+
+
 
 ?>
 
@@ -154,7 +245,7 @@ if(isset($_POST['publish_data'])) {
 
 				<!-- HEADER TITLE -->
                 <div class="container bg-light pt-1 pb-1 mb-3 shadow border rounded">
-                    <h3>Create Template</h3>
+                    <h3><?php if(empty($template_id_tl)){echo "Create";}else{echo "Update";} ?> Template</h3>
                 </div>
 
 
@@ -170,17 +261,21 @@ if(isset($_POST['publish_data'])) {
 	                				<!-- Title -->
 	                				<div class="mb-3">
 	                					<label style="font-size: 20px; font-weight: bold;">Title</label>
-			            				<input name="template_title" type="text" class="form-control">
+			            				<input name="template_title" type="text" value="<?php if(!empty($edit_title)){echo $edit_title;}else{echo "";} ?>" class="form-control">
 	                				</div>
 	                				
 	                				<!-- Form Editor / Builder -->
 									<div>
 										<label style="font-size: 20px; font-weight: bold;">Header</label>
-										<textarea name="template_header" id="survey_data"></textarea>
+										<textarea name="template_header" id="survey_data"><?php if(!empty($edit_body)){echo $edit_body;}else{echo "";} ?></textarea>
 									</div>
 
+
+									<!-- get ID -->
+									<input type="text" name="get_templ_id" value="<?php if(!empty($template_id_tl)){echo $template_id_tl;}else{echo "";} ?>">
+
 									<!-- SUBMIT -->
-									<button type="submit" name="publish_data" class="btn btn-success mt-4" style="width: 100%;">PUBLISH</button>
+									<button type="submit" name="publish_data" class="btn btn-success mt-4" style="width: 100%;"><?php if(empty($template_id_tl)){echo "PUBLISH";}else{echo "UPDATE";} ?></button>
                 				</div>
                 				</form>
 
