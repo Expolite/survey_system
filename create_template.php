@@ -245,7 +245,7 @@ if(isset($_POST['publish_data'])) {
 
 				<!-- HEADER TITLE -->
                 <div class="container bg-light pt-1 pb-1 mb-3 shadow border rounded">
-                    <h3><?php if(empty($template_id_tl)){echo "Create";}else{echo "Update";} ?> Template</h3>
+                    <h3><?php if(empty($template_id_tl)){echo "Create";}else{echo "Edit";} ?> Template</h3>
                 </div>
 
 
@@ -272,7 +272,7 @@ if(isset($_POST['publish_data'])) {
 
 
 									<!-- get ID -->
-									<input type="text" name="get_templ_id" value="<?php if(!empty($template_id_tl)){echo $template_id_tl;}else{echo "";} ?>">
+									<input type="text" name="get_templ_id" value="<?php if(!empty($template_id_tl)){echo $template_id_tl;}else{echo "";} ?>" style="display: none;">
 
 									<!-- SUBMIT -->
 									<button type="submit" name="publish_data" class="btn btn-success mt-4" style="width: 100%;"><?php if(empty($template_id_tl)){echo "PUBLISH";}else{echo "UPDATE";} ?></button>

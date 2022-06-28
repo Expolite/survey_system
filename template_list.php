@@ -13,6 +13,61 @@ if(!($g_user_role[0] == "ADMIN")){
 	exit();
 }
 
+
+
+
+// $msg_response['status']="error";
+// $msg_response['msg']="Unable to delete";
+// $session_class->setValue('error',$msg_response['msg']);
+// header("location: template_list.php");
+// exit();
+
+
+
+
+// DELETE select item
+if(isset($_POST['delete_btn'])) {
+	
+	// get data
+	$s_template_item = $_POST['chk'];
+
+	if(!empty($s_template_item)) {
+
+		$extract_id = implode(',',$s_template_item); // array
+
+		$sql_delete_template = "DELETE FROM survey_template WHERE s_template_id IN($extract_id)";
+
+		if (mysqli_query($db_connect, $sql_delete_template)) {
+
+			$msg_response['status']="success";
+			$msg_response['msg']="Deleted!";
+			$session_class->setValue('success',$msg_response['msg']);
+			header("location: template_list.php");
+			exit();
+
+		}else {
+
+			$msg_response['status']="error";
+			$msg_response['msg']="Unable to delete!";
+			$session_class->setValue('error',$msg_response['msg']);
+			header("location: template_list.php");
+			exit();
+		}
+
+	}else {
+		// select atleast one
+		$msg_response['status']="error";
+		$msg_response['msg']="Select atleast one";
+		$session_class->setValue('error',$msg_response['msg']);
+		header("location: template_list.php");
+		exit();
+	}
+
+}
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -87,88 +142,81 @@ if(!($g_user_role[0] == "ADMIN")){
 
                 		<div class="row">
                 			<div class="col-md-12">
-
-                				<!-- Actions -->
-                				<div class="mb-3" align="right">
-                					<form action="template_list.php" action="POST">
-                						<button type="button" name="delete_btn" class="btn btn-danger">Delete</button>
-                					</form>
-                				</div>
                 				
-                				<!-- Table -->
-                				<div class="table-responsive">
-                				<table class="table table-striped border shadow">
-                					<thead class="bg-primary text-light" style="font-weight: bold; font-size: 17px;">
-                						<tr>
-                							<th>
-                								<!-- main checkbox 1 -->
-                								<div class="form-check form-check-inline" onclick="selects()" id="all_checkboxs_1">
-													<label class="form-check-label" for="inlineCheckbox1" style="cursor: pointer;"> 
-													<i class="fa-regular fa-square-full"></i> Select all
-													</label>
-												</div>
-												<!-- main checkbox 2 -->
-                								<div class="form-check form-check-inline" onclick="deSelect()" id="all_checkboxs_2">
-													<label class="form-check-label" for="inlineCheckbox2" style="cursor: pointer;">
-													<i class="fa-regular fa-square-check" style="font-size: 20px;"></i> Deselect all
-													</label>
-												</div>
-                							</th>
-                							<th>#</th>
-                							<th>Title</th>
-                							<th>Published</th>
-                							<th>Actions</th>
-                						</tr>
-                					</thead>
-                					<tbody>
-                						<?php 
-                						// DISPLAY SURVEY TEMPLATES
-										$sql_d_templates = "SELECT * FROM survey_template";
-										$res_d_templates = mysqli_query($db_connect, $sql_d_templates);
+                				<form action="template_list.php" method="POST">
 
-										if (mysqli_num_rows($res_d_templates) > 0) {
+	                				<!-- Actions -->
+	                				<div class="mb-3" align="right">
+	            						<button type="submit" name="delete_btn" class="btn btn-danger">Delete</button>
+	                				</div>
 
-											while($row_d_templates = mysqli_fetch_assoc($res_d_templates)) {
-												$s_template_id = $row_d_templates['s_template_id'];
-												$s_template_title = $row_d_templates['template_title'];
-												$s_publish_date = $row_d_templates['date_publish'];
+	                				<!-- Table -->
+	                				<div class="table-responsive">
+	                				<table class="table table-striped border shadow">
+	                					<thead class="bg-primary text-light" style="font-weight: bold; font-size: 17px;">
+	                						<tr>
+	                							<th>
+	                								<!-- main checkbox 1 -->
+	                								<div class="form-check form-check-inline" onclick="selects()" id="all_checkboxs_1">
+														<label class="form-check-label" for="inlineCheckbox1" style="cursor: pointer;"> 
+														<i class="fa-regular fa-square-full"></i> Select all
+														</label>
+													</div>
+													<!-- main checkbox 2 -->
+	                								<div class="form-check form-check-inline" onclick="deSelect()" id="all_checkboxs_2">
+														<label class="form-check-label" for="inlineCheckbox2" style="cursor: pointer;">
+														<i class="fa-regular fa-square-check" style="font-size: 20px;"></i> Deselect all
+														</label>
+													</div>
+	                							</th>
+	                							<th>ID</th>
+	                							<th>Title</th>
+	                							<th>Published</th>
+	                							<th>Actions</th>
+	                						</tr>
+	                					</thead>
+	                					<tbody>
+	                						<?php 
+	                						// DISPLAY SURVEY TEMPLATES
+											$sql_d_templates = "SELECT * FROM survey_template";
+											$res_d_templates = mysqli_query($db_connect, $sql_d_templates);
 
-                						?>
+											if (mysqli_num_rows($res_d_templates) > 0) {
 
-                						<tr id="tr_hover" onclick="toggle_<?php echo $s_template_id;?>()">
-                							<td><input type="checkbox" name="chk" class="m-1" id="<?php echo $s_template_id;?>"></td>
-                							<td><?php echo $s_template_id;?></td>
-                							<td><?php echo $s_template_title; ?></td>
-                							<td><?php echo $s_publish_date; ?></td>
-                							<td><a href="create_template.php?template_id_tl=<?php echo $s_template_id; ?>" class="m-0 text-dark"><i class="fa-solid fa-pen-to-square"></i> Edit</a></td>
-                						</tr>
+												while($row_d_templates = mysqli_fetch_assoc($res_d_templates)) {
+													$s_template_id = $row_d_templates['s_template_id'];
+													$s_template_title = $row_d_templates['template_title'];
+													$s_publish_date = $row_d_templates['date_publish'];
 
-                						<!-- checkbox to list -->
-                						<script type="text/javascript">
-                							// Toggle checkbox
-											function toggle_<?php echo $s_template_id;?>() {
-												// Click
-												document.getElementById("<?php echo $s_template_id;?>").click();
+	                						?>
+
+	                						<tr id="tr_hover" onclick="toggle_<?php echo $s_template_id;?>()">
+	                							<td><input type="checkbox" name="chk[]" value="<?php echo $s_template_id; ?>" class="m-1" id="<?php echo $s_template_id;?>"></td>
+	                							<td><?php echo $s_template_id;?></td>
+	                							<td><?php echo $s_template_title; ?></td>
+	                							<td><?php echo $s_publish_date; ?></td>
+	                							<td><a href="create_template.php?template_id_tl=<?php echo $s_template_id; ?>" class="m-0 text-dark"><i class="fa-solid fa-pen-to-square"></i> Edit</a></td>
+	                						</tr>
+
+	                						<!-- checkbox to list -->
+	                						<script type="text/javascript">
+	                							// Toggle checkbox
+												function toggle_<?php echo $s_template_id;?>() {
+													// Click
+													document.getElementById("<?php echo $s_template_id;?>").click();
+												}
+	                						</script>
+
+	                						<?php  
+												}
 											}
-                						</script>
+	                						?>
 
-                						<?php  
-											}
-										}
-                						?>
-
-
-                						<!-- Select All Checkbox -->
-                						<script type="text/javascript">
-
-                							
-
-                						</script>
-
-                					</tbody>
-                				</table>
-                				</div>
-                				<!-- END Table -->
+	                					</tbody>
+	                				</table>
+	                				</div>
+	                				<!-- END Table -->
+	                			</form>
 
                 			</div>
                 		</div>
@@ -238,7 +286,7 @@ all_checkboxs_2.style.display = "none"; // default
 
 // SELECT
 function selects(){  
-    var ele=document.getElementsByName('chk');  
+    var ele=document.getElementsByName('chk[]');  
     for(var i=0; i<ele.length; i++){  
         if(ele[i].type=='checkbox')  
             ele[i].checked=true;  
@@ -250,7 +298,7 @@ function selects(){
 // DESELECT
 // (deselect all checkbox)
 function deSelect(){  
-    var ele=document.getElementsByName('chk');  
+    var ele=document.getElementsByName('chk[]');  
     for(var i=0; i<ele.length; i++){  
         if(ele[i].type=='checkbox')  
             ele[i].checked=false;  
