@@ -199,6 +199,15 @@ if(isset($_POST['publish_data'])) {
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
+<!-- Survey Template Func -->
+<!-- CKeditor -->
+<script type="text/javascript" src="create_template/ckeditor/ckeditor.js"></script>
+ 
+<!-- CKfinder -->
+<script type="text/javascript" src="create_template/ckfinder/ckfinder.js"></script>
+
+
+
 </head>
 <body style="padding: 0;">
 
@@ -267,7 +276,7 @@ if(isset($_POST['publish_data'])) {
 	                				<!-- Form Editor / Builder -->
 									<div>
 										<label style="font-size: 20px; font-weight: bold;">Header</label>
-										<textarea name="template_header" id="survey_data"><?php if(!empty($edit_body)){echo $edit_body;}else{echo "";} ?></textarea>
+										<textarea name="template_header" name="survey_data" id="survey_data"><?php if(!empty($edit_body)){echo $edit_body;}else{echo "";} ?></textarea>
 									</div>
 
 
@@ -305,12 +314,24 @@ if(isset($_POST['publish_data'])) {
 
 
 
-<!-- Survey Template Func -->
-<script type="text/javascript" src="create_template/ckeditor/ckeditor.js"></script>
 
-<script type="text/javascript">
+<!-- SURVEY TEMPLATE FUNC -->
+<!-- <script type="text/javascript">
 	CKEDITOR.replace('survey_data');
+</script> -->
+
+<script>
+	// CKEDITOR.replace('survey_data', {
+	// 	filebrowserUploadUrl:'upload.php', // img file upload
+	// 	filebrowserUploadMethod: 'form'
+	// })
+
+	var editor = CKEDITOR.replace('survey_data');
+
+	CKFinder.setupCKEditor( editor );
 </script>
+
+
 <!-- END Survey Template Func -->
 
 
