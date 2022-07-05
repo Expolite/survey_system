@@ -19,13 +19,9 @@ if(!($g_user_role[0] == "ADMIN")){
 
 
 // Get the data to print
-$title = $_SESSION["template_title"];
 $header = $_SESSION["template_header"];
 
 // check if the value is empty, then print 'empty'
-if(empty($title)){
-	$title = "Empty";
-}
 if(empty($header)){
 	$header = "Empty";
 }
@@ -42,15 +38,13 @@ if(empty($header)){
 	<?php include DOMAIN_PATH."/app/global/include_top.php"; ?>
 
 	<title>Print Template</title>
+
 </head>
 <body>
 
-	<h1>Title: <?php echo $title; ?></h1>
-
-	<br>
-	<br>
-	
-	<p>Body: <?php echo $header; ?></p>
+	<div>
+		<?php echo $header; ?>
+	</div>
 	
 </body>
 </html>

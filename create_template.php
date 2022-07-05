@@ -175,7 +175,6 @@ if(isset($_POST['publish_data'])) {
 // print template
 if(isset($_POST['print_data'])){
 
-	$_SESSION["template_title"] = $_POST['template_title'];
 	$_SESSION["template_header"] = $_POST['template_header'];
 
 	header("location: view_print_template.php");
@@ -208,7 +207,33 @@ if(isset($_POST['print_data'])){
 <!-- Sweet Alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<style type="text/css">
+	/* Fixed underline body 1 */
+	.hr_line {
+		border: 1px solid black; 
+		border-top-style: none; 
+		border-left-style: none; 
+		border-right-style: none; 
+		padding-left: 30%;
+	}
+	.tbl_td_fxd1 {
+		border: 1px solid black; 
+		border-top-style: none; 
+		border-left-style: none; 
+		border-right-style: none;
+		padding-left: 100px;
+	}
 
+	/* Body 2 table hover */
+	.custm_body2 tbody tr {
+		background-color: white;
+	}
+	.custm_body2 tbody tr:hover {
+		background-color: #3198FF;
+	}
+
+
+</style>
 
 
 </head>
@@ -289,15 +314,111 @@ if(isset($_POST['print_data'])){
 										</textarea>
 									</div>
 
+
 									<hr>
 
 
 									<!-- Fixed Body 1 -->
-									<label style="font-size: 20px; font-weight: bold;">Body 1</label>
-									<div class="border text-center" style="padding-top: 5px; padding-left: 5px; padding-right: 5px;">
+									<label style="font-size: 20px; font-weight: bold;">Fixed Body 1</label>
+									<div class="border" style="padding-top: 5px; padding-left: 5px; padding-right: 5px; background: #D0D3D4;">
 										
+										<!-- I -->
+										<b style="font-size: 17px;">I. Impormasyon ng kliyente / Client Information</b>
+										<p>
+											Pangalan (Kung nais lamang) / Name (Optional): <span class="hr_line"> </span><br>
+											Tanggapan binisita o Taong kinausap / Office or person visited: <span class="hr_line"> </span> <br>
+											Layunin ng pagbisita (Pakitukoy) / Purpose of Visit (Please specify): <span class="hr_line"> </span>
+
+											<table>
+												<tr>
+													<td>Petsa / Date: </td>
+													<td class="tbl_td_fxd1"></td>
+													<td>Oras dumating / Time started: </td>
+													<td class="tbl_td_fxd1"></td>
+													<td>Oras natapos / Time finished: </td>
+													<td class="tbl_td_fxd1"></td>
+												</tr>
+											</table>
+										</p>
+
+										<!-- II -->
+										<b style="font-size: 17px;">II. Pagsukat sa antas ng kasiyahan ng kliyente / Client Satisfaction Rating</b>
+										<p>Pinagpayuhan na sukatin ang kalidad ng serbisyo na ibinigay sa pamamagitan ng tsek (✓) ng naangkop na kahon. <br>
+											Kindly rate the quality service provided by checking (✓) the appropriate box.</p>
 									</div>
+
+									<!-- contents -->
+									<textarea style="display: none;">
+										<!-- I -->
+										<b style="font-size: 17px;">I. Impormasyon ng kliyente / Client Information</b>
+										<p>
+											Pangalan (Kung nais lamang) / Name (Optional): <span class="hr_line"> </span><br>
+											Tanggapan binisita o Taong kinausap / Office or person visited: <span class="hr_line"> </span> <br>
+											Layunin ng pagbisita (Pakitukoy) / Purpose of Visit (Please specify): <span class="hr_line"> </span>
+
+											<table>
+												<tr>
+													<td>Petsa / Date: </td>
+													<td class="tbl_td_fxd1"></td>
+													<td>Oras dumating / Time started: </td>
+													<td class="tbl_td_fxd1"></td>
+													<td>Oras natapos / Time finished: </td>
+													<td class="tbl_td_fxd1"></td>
+												</tr>
+											</table>
+										</p>
+
+										<!-- II -->
+										<b style="font-size: 17px;">II. Pagsukat sa antas ng kasiyahan ng kliyente / Client Satisfaction Rating</b>
+										<p>Pinagpayuhan na sukatin ang kalidad ng serbisyo na ibinigay sa pamamagitan ng tsek (✓) ng naangkop na kahon. <br>
+											Kindly rate the quality service provided by checking (✓) the appropriate box.</p>
+									</textarea>
+
 									<!-- END Fixed Body 1 -->
+
+
+									<hr>
+
+
+									<!-- Custom Body 2 -->
+									<label style="font-size: 20px; font-weight: bold;">Custom Body 2</label>
+									<div class="border">
+										<table class="custm_body2 table table-striped">
+											<thead style="background: #3198FF;">
+												<tr>
+													<th>Questions</th>
+													<th>Very Satisfied</th>
+													<th>Satisfied</th>
+													<th>Dissatisfied</th>
+													<th>Very Dissastisfied</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>What's your favorite color?</td>
+													<td>...</td>
+													<td>...</td>
+													<td>...</td>
+													<td>...</td>
+												</tr>
+												<tr>
+													<td>Performance of functionality?</td>
+													<td>...</td>
+													<td>...</td>
+													<td>...</td>
+													<td>...</td>
+												</tr>
+												<tr>
+													<td>Third question</td>
+													<td>...</td>
+													<td>...</td>
+													<td>...</td>
+													<td>...</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<!-- END Custom Body 2 -->
 
 
 
