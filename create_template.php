@@ -172,6 +172,16 @@ if(isset($_POST['publish_data'])) {
 
 }
 
+// print template
+if(isset($_POST['print_data'])){
+
+	$_SESSION["template_title"] = $_POST['template_title'];
+	$_SESSION["template_header"] = $_POST['template_header'];
+
+	header("location: view_print_template.php");
+	exit();
+}
+
 
 
 ?>
@@ -259,6 +269,11 @@ if(isset($_POST['publish_data'])) {
                 				<form action="create_template.php" method="POST">
                 				<div class="container">
 
+                					<!-- Print btn -->
+                					<div style="float: right;">
+                						<button class="btn btn-outline-secondary btn-sm" name="print_data" style="padding-left: 20px; padding-right: 20px;"><i class="fa-solid fa-print"></i> Print & View</button>
+                					</div>
+
 	                				<!-- Title -->
 	                				<div class="mb-3">
 	                					<label style="font-size: 20px; font-weight: bold;">Title</label>
@@ -268,7 +283,7 @@ if(isset($_POST['publish_data'])) {
 	                				<!-- Form Editor / Builder field -->
 									<div>
 										<label style="font-size: 20px; font-weight: bold;">Header</label>
-										<textarea name="template_header" name="survey_data" id="editor">
+										<textarea name="template_header" name="survey_data" id="template_editor">
 											<?php echo !empty($edit_body)?$edit_body:''; ?>	
 										</textarea>
 									</div>
@@ -313,7 +328,7 @@ if(isset($_POST['publish_data'])) {
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 
 <script>
-    CKEDITOR.replace('editor', {
+    CKEDITOR.replace('template_editor', {
         filebrowserUploadUrl: 'ckeditor/ck_upload.php',
         filebrowserUploadMethod: 'form'
     });
