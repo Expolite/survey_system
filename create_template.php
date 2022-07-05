@@ -42,7 +42,7 @@ if(isset($_GET['template_id_tl'])) {
 		while($row_view_edit_tmpl = mysqli_fetch_assoc($res_view_edit_tmpl)) {
 
 			$edit_title = $row_view_edit_tmpl['template_title'];
-			$edit_body = $row_view_edit_tmpl['template_body'];
+			$edit_header = $row_view_edit_tmpl['template_header'];
 		}
 	}
 }
@@ -98,7 +98,7 @@ if(isset($_POST['publish_data'])) {
 
 
 		// Insert data
-		$sql_template_insert = "INSERT INTO survey_template (template_title, template_body) VALUES ('$s_title', '$s_header')";
+		$sql_template_insert = "INSERT INTO survey_template (template_title, template_header) VALUES ('$s_title', '$s_header')";
 		$res_template_insert = mysqli_query($db_connect, $sql_template_insert);
 
 		if(!$res_template_insert) {
@@ -147,7 +147,7 @@ if(isset($_POST['publish_data'])) {
 
 
 		// Update data
-		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_body = '$s_header' WHERE s_template_id = '$get_templ_id'";
+		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_header = '$s_header' WHERE s_template_id = '$get_templ_id'";
 		$res_template_update = mysqli_query($db_connect, $sql_template_update);
 
 		if(!$res_template_update) {
@@ -207,6 +207,7 @@ if(isset($_POST['print_data'])){
 
 <!-- Sweet Alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 
 
@@ -284,9 +285,19 @@ if(isset($_POST['print_data'])){
 									<div>
 										<label style="font-size: 20px; font-weight: bold;">Header</label>
 										<textarea name="template_header" name="survey_data" id="template_editor">
-											<?php echo !empty($edit_body)?$edit_body:''; ?>	
+											<?php echo !empty($edit_header)?$edit_header:''; ?>	
 										</textarea>
 									</div>
+
+									<hr>
+
+
+									<!-- Fixed Body 1 -->
+									<label style="font-size: 20px; font-weight: bold;">Body 1</label>
+									<div class="border text-center" style="padding-top: 5px; padding-left: 5px; padding-right: 5px;">
+										
+									</div>
+									<!-- END Fixed Body 1 -->
 
 
 
@@ -334,8 +345,6 @@ if(isset($_POST['print_data'])){
     });
 </script>
 <!-- END - Form builder field (CKEditor) -->
-
-
 
 
 
