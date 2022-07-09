@@ -493,7 +493,7 @@ if(isset($_POST['submit_password']) AND $_POST['submit_password'] =="update_pass
     													</div>
 
                                                         <div class="row justify-content-center">
-                                                            <button type="submit" name="submit_password" value="update_password" class="btn btn-info">Update password</button>
+                                                            <button type="submit" name="submit_password" value="update_password" class="btn btn-primary">Update password</button>
                                                         </div>
 
                                                     </form>

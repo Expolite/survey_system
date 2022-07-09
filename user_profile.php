@@ -44,17 +44,17 @@ if (mysqli_num_rows($res_user_info) > 0) {
 
         <img src="<?php echo $g_logo_sidebar;?>" class="rounded border m-2" alt="profile pic" width="150px" height="150px">
 
-        <!-- Edit Profile Picture -->
-        <h4 style="font-size: 15px">Edit Profile Picture &nbsp;&nbsp;<i class="fa-solid fa-pen-to-square text-secondary" onclick="window.location.href = 'manage_profile.php';" style="cursor: pointer; font-size: 20px;"></i></h4>
-
         <!-- User Name -->
-        <h4>Name: <span style="font-size: 18px; font-weight: normal;"><?php echo $fname." ".$lname; ?></span> &nbsp;&nbsp;<i class="fa-solid fa-pen-to-square text-secondary" onclick="window.location.href = 'manage_profile.php';" style="cursor: pointer;"></i></h4>
+        <h4>Name: <span style="font-size: 18px; font-weight: normal;"><?php echo $fname." ".$lname; ?></span></h4>
 
         <!-- Email -->
-        <h4>Email: <span style="font-size: 18px; font-weight: normal;"><?php echo $email_address; ?></span> &nbsp;&nbsp;<i class="fa-solid fa-pen-to-square text-secondary" onclick="window.location.href = 'manage_profile.php';" style="cursor: pointer;"></i></h4>
+        <h4>Email: <span style="font-size: 18px; font-weight: normal;"><?php echo $email_address; ?></span></h4>
+
+        <!-- Department -->
+        <h4>Department: <span style="font-size: 18px; font-weight: normal;"><?php echo "Dept Sample"; ?></span></h4>
 
         <!-- Settings btn -->
-        <button type="button" onclick="window.location.href = 'manage_profile.php';" class="btn btn-primary mb-3 mt-2"><i class="fa-solid fa-key"></i> Change Password</button>
+        <button type="button" onclick="window.location.href = 'manage_profile.php';" class="btn btn-primary mb-3 mt-2"><i class="fa-solid fa-gear"></i> Profile Settings</button>
 
     </div>
     <!-- END CONTENTS -->

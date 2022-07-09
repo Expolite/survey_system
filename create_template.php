@@ -126,7 +126,7 @@ if(isset($_POST['publish_data'])) {
 	}else{
 
 
-		// if data is empty
+		// check if data is empty
 		if(empty($s_title)) {
 
 			$msg_response['status']="error";
@@ -182,12 +182,12 @@ if(isset($_POST['print_data'])){
 }
 
 
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 
 <?php 
     include DOMAIN_PATH."/app/global/meta_data.php";
@@ -234,6 +234,9 @@ if(isset($_POST['print_data'])){
 
 
 </style>
+
+
+
 
 
 </head>
@@ -347,8 +350,8 @@ if(isset($_POST['print_data'])){
 											Kindly rate the quality service provided by checking (✓) the appropriate box.</p>
 									</div>
 
-									<!-- contents -->
-									<textarea style="display: none;">
+									<!-- contents of fixed body 1-->
+									<textarea name="fxd_body_1" style="display: none;">
 										<!-- I -->
 										<b style="font-size: 17px;">I. Impormasyon ng kliyente / Client Information</b>
 										<p>
@@ -380,51 +383,94 @@ if(isset($_POST['print_data'])){
 									<hr>
 
 
-									<!-- Custom Body 2 -->
-									<label style="font-size: 20px; font-weight: bold;">Custom Body 2</label>
-									<div class="border">
-										<table class="custm_body2 table table-striped">
-											<thead style="background: #3198FF;">
-												<tr>
-													<th>Questions</th>
-													<th>Very Satisfied</th>
-													<th>Satisfied</th>
-													<th>Dissatisfied</th>
-													<th>Very Dissastisfied</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>What's your favorite color?</td>
-													<td>...</td>
-													<td>...</td>
-													<td>...</td>
-													<td>...</td>
-												</tr>
-												<tr>
-													<td>Performance of functionality?</td>
-													<td>...</td>
-													<td>...</td>
-													<td>...</td>
-													<td>...</td>
-												</tr>
-												<tr>
-													<td>Third question</td>
-													<td>...</td>
-													<td>...</td>
-													<td>...</td>
-													<td>...</td>
-												</tr>
-											</tbody>
-										</table>
+									<!-- Enter Survey Type -->
+									<div style="width: 50%;">
+										<label style="font-size: 20px; font-weight: bold;"><span id="dept_lbl">Select</span> Department</label>
+										
+										<button type="button" class="btn btn-secondary btn-sm float-right" id="enter_dept_btn" onclick="enter_dept()" style="margin-left: 20px;">Enter New Department</button>
+										<button type="button" class="btn btn-secondary btn-sm float-right" id="select_dept_btn" onclick="select_dept()" style="margin-left: 20px;">Select Department</button>
+
+										<!-- Select -->
+										<select id="action_select_dept" class="form-control mb-2"> 
+											<option value="">Select Department</option>
+											<?php  
+												$sql_s_type = "SELECT survey_type FROM survey_template";
+												$res_s_type = mysqli_query($db_connect, $sql_s_type);
+
+												if (mysqli_num_rows($res_s_type) > 0){
+													while($row_s_type = mysqli_fetch_assoc($res_s_type)) {
+														$s_type = $row_s_type['survey_type'];
+											?>
+											<option value="<?php echo $s_type; ?>" style="display: <?php if(empty($s_type)){echo"none";}else{echo"block";} ?>;"><?php echo $s_type; ?></option>
+											<?php
+													}
+												}
+											?>
+										</select>
+
+										<input type="text" id="action_enter_dept" class="form-control mb-2" placeholder="Enter new department">
 									</div>
+									<!-- END Enter Survey Type -->
+
+
+									<!-- Custom Body 2 -->
+									<form onsubmit="return fetchcall()">
+									<div style="display: none;">
+										<label style="font-size: 20px; font-weight: bold;">Edit questions</label>
+
+										<!-- Questions field -->
+										<?php  
+
+										$sql_questions = "SELECT * FROM tbl_tmpl_body2";
+										$res_questions = mysqli_query($db_connect, $sql_questions);
+
+										if (mysqli_num_rows($res_questions) > 0) {
+											while($row_questions = mysqli_fetch_assoc($res_questions)) {
+												$question_id = $row_questions['id'];
+												$question = $row_questions['questions'];
+										?>
+
+										<!-- Question ID -->
+										<input type="text" id="q_id" value="<?php echo $question_id; ?>" style="display: none;">
+
+										<div class="input-group" style="width: 100%;">
+											<div style="width: 80%;">
+												<input type="text" class="form-control mb-2" name="questions[]" value="<?php echo $question; ?>" placeholder="Questions fields">
+											</div>
+											<!-- Remove button -->
+											<div style="width: 20%;">
+												<button type="submit" class="btn btn-danger" style="margin-left: 5px;">Remove</button>
+											</div>
+										</div>
+										
+										<?php 
+											}
+										}
+
+										?>
+										<!-- END Questions field -->
+										
+
+									</div>
+									</form>
 									<!-- END Custom Body 2 -->
 
+
+									
+
+
+									
 
 
 
 									<!-- get ID -->
 									<input type="text" name="get_templ_id" value="<?php if(!empty($template_id_tl)){echo $template_id_tl;}else{echo "";} ?>" style="display: none;">
+
+
+
+									<!-- NEXT button -->
+									<button type="button" class="btn btn-success" style="width: 100%;">NEXT</button>
+
 
 									<!-- SUBMIT -->
 									<button type="submit" name="publish_data" class="btn btn-success mt-4" style="width: 100%;"><?php if(empty($template_id_tl)){echo "PUBLISH";}else{echo "UPDATE";} ?></button>
@@ -485,8 +531,45 @@ if(isset($_POST['print_data'])){
 
 
 
+<!-- Survey Template Type Function -->
+<script type="text/javascript">
+	select_dept_btn.style.display = "none"; // hide select dept btn
+	action_enter_dept.style.display = "none"; // hide enter dept txtbox
+
+	<?php //if(empty($template_id_tl)){echo "PUBLISH";}else{echo "UPDATE";} ?>
+
+	// Enter dept button
+	function enter_dept() {
+		enter_dept_btn.style.display = "none";// hide own button
+		select_dept_btn.style.display = "block";// show select dept button
+
+		action_select_dept.style.display = "none"; // hide action selection
+		action_enter_dept.style.display = "block"; // show enter dept txtbox
+
+		document.getElementById("action_select_dept").selectedIndex = "0"; // select the first option in dropdow
+
+		document.getElementById("dept_lbl").innerHTML = "Enter New"; // change label
+	}
+	// select dept button
+	function select_dept() {
+		select_dept_btn.style.display = "none";// hide own button
+		enter_dept_btn.style.display = "block";// hide enter dept button
+
+		action_select_dept.style.display = "block"; // show action selection
+		action_enter_dept.style.display = "none"; // hide enter dept txtbox
+
+		document.getElementById("action_enter_dept").value = ""; // clear value of enter dept txtbox
+
+		document.getElementById("dept_lbl").innerHTML = "Select"; // change label
+	}
+</script>
+<!-- END Survey Template Type Function -->
 
 
+
+
+
+<!-- Notif -->
 <script type="text/javascript">
 <?php
 	$msg_success =$session_class->getValue('success');
@@ -501,6 +584,7 @@ if(isset($_POST['print_data'])){
 	}
 ?>
 </script>
+
 
 
 </html>

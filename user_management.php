@@ -209,133 +209,188 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 
 <style type="text/css">
     #survey_info_container {
-        width: 80%; 
+        /*width: 50%; */
         transition: all .3s ease;
-        background-color: #B3B6B7;
+        /*background-color: #B3B6B7;*/
         padding: 10px; /* temp */
+        width: 100%;
+        margin: 0;
     }
 
 	/* Add / Edit Section */
 	.add_edit_section {
-		padding: 10px; /* temp */
-		width: 50%;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
+		padding: 10px;
 	}
 	/* User List */
 	.user_list_container {
-		padding: 10px;
-		width: 90%;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		padding-left: 20px;
+		padding-right: 20px;
+		overflow-x:auto;
 	}
+
+	/* userl list table */
+	.userlist_tbl {
+		border: 1px solid black; 
+		min-width: unset; 
+		width: 100%;
+		
+	}
+
+
+	/* resize input tags */
+	.resize_input_tags {
+		width: 100%;
+		min-width: unset;
+	}
+
 </style>
 
 </head>
 
-<body style="padding-bottom: 0;">
-    <!-- HEADER -->
-  <?php include DOMAIN_PATH."/app/global/topbar.php"; ?>     <!--topbar -->
-  
-  	<!-- CONTAINER -->
+<body style="padding: 0;">
+
+
+
+    <!-- NAVBAR -->
+    	<?php include DOMAIN_PATH."/app/global/topbar.php"; ?>   <!--topbar -->
+    <!-- END NAVBAR -->
+
+
+
+
+
     <div style="padding: 0;">
-    	<div align="left" class="d-flex" style="margin-left: 0px; position: relative; left: 0px; width: 100%;">
+    	<div align="left" class="d-flex" style="margin-left: 0px; position: relative; left: 0px; width: 100%; padding: 0;">
     		
-    		<!-- SIDEBAR -->
-        	<?php include DOMAIN_PATH."/app/global/side_bar.php"; ?>
+    		<!-- BEGIN CONTENT -->
+            <!-- SIDEBAR -->
+            <?php include DOMAIN_PATH."/app/global/side_bar.php"; ?>
+            <!-- END SIDEBAR -->
 
 
-        <!-- CONTENTS PAGE -->
-        <div id="survey_info_container">
 
-		    <!-- HEADER TITLE -->
-		    <div class="container bg-light pt-1 pb-1 mb-3 shadow rounded">
-		        <h3>User Management</h3>
-		    </div>
+            <!-- PAGE CONTAINER -->
+            <div id="survey_info_container" class="border-0 shadow">
 
-            <!-- ADD/EDIT USER SECTION -->
-			<div class="add_edit_section bg-light rounded shadow">
-				<h3 class="header-title">ADD USER</h3>
-				<?php if($get_id > 0) { ?>
-				<a href="user_management.php"></a>
-				<?php } ?>
+	            <!-- CONTENTS -->
+	            <div class="py-3">
+	            	<div class="container">
+	            		<div class="row">
+	            			<div class="col-md-12">
 
-				<form id="form_submit" method="post">
 
-					<label>Select Role</label>
-					<select class="form-control" name ="user_role" placeholder="User Role" required>
-						<option></option>
-						<?php
-							$user_role =array(1=>"Admin",2=>"Manager",3=>"Department");
-							foreach($user_role as $id => $text) {
-								$selected ="";
-								if($id==$input['user_role']){
-									$selected ="selected";
-								}
-								echo "<option value='".$id."' ".$selected .">".$text."</option>";
-							}
-						?>
-					</select>
-					<!-- id number -->
-					<label for="">ID Number</label>
-					<input type="text" class="form-control" name="id_no" value="<?php echo $input['id_no'];?>" required>
-					<!-- first name -->
-					<label>First Name</label>
-					<input type="text" class="form-control" name="firstname" value="<?php echo $input['firstname'];?>" required>
-					<!-- last name -->
-					<label>Last Name</label>
-					<input type="text" class="form-control" name="lastname" value="<?php echo $input['lastname'];?>" required="">
-					<!-- email address -->
-					<label>Email Address</label>
-					<input type="email" class="form-control" name="email" value="<?php echo $input['email'];?>" required="">
-					
-					<!-- get id -->
-					<input type="hidden" value="" id="get_id" name="get_id">
+				            	<!-- HEADER TITLE -->
+					            <div class="container bg-light pt-1 pb-1 mb-3 shadow rounded">
+					                <h3>User Management</h3>
+					            </div>
 
-					<br>
-					<!-- button -->
-					<button name="save" value ="<?php echo $action_form;?>"  class="btn btn-outline-primary btn-rounded btn-sm ml-1">Add New User</button>
+		
+			            		<!-- Contents -->
+								<!-- ADD/EDIT USER SECTION -->
+								<!-- add_edit_section -->
+								<div class="add_edit_section bg-light rounded shadow" style="margin: 0;">
+									<!-- ADD USER -->
+									<h3 class="header-title">ADD USER</h3>
 
-				</form>
+									<?php if($get_id > 0) { ?>
+									<a href="user_management.php"></a>
+									<?php } ?>
 
-			</div>
-			<!-- END - ADD/EDIT USER SECTION -->
+									<form id="form_submit" method="post">
+										<!-- Select Role -->
+										<label>Select Role</label>
+										<select class="form-control resize_input_tags" name ="user_role" placeholder="User Role" required>
+											<option></option>
+											<?php
+												$user_role =array(1=>"Admin",2=>"Manager",3=>"Department");
+												foreach($user_role as $id => $text) {
+													$selected ="";
+													if($id==$input['user_role']){
+														$selected ="selected";
+													}
+													echo "<option value='".$id."' ".$selected .">".$text."</option>";
+												}
+											?>
+										</select>
+										<!-- id number -->
+										<label for="">ID Number</label>
+										<input type="text" class="form-control resize_input_tags" name="id_no" value="<?php echo $input['id_no'];?>" required>
+										<!-- first name -->
+										<label>First Name</label>
+										<input type="text" class="form-control resize_input_tags" name="firstname" value="<?php echo $input['firstname'];?>" required>
+										<!-- last name -->
+										<label>Last Name</label>
+										<input type="text" class="form-control resize_input_tags" name="lastname" value="<?php echo $input['lastname'];?>" required="">
+										<!-- email address -->
+										<label>Email Address</label>
+										<input type="email" class="form-control resize_input_tags" name="email" value="<?php echo $input['email'];?>" required="">
+										
+										<!-- get id -->
+										<input type="hidden" value="" id="get_id" name="get_id">
 
-			<br>
+										<br>
+										<!-- button -->
+										<button name="save" value ="<?php echo $action_form;?>"  class="btn btn-outline-primary btn-rounded btn-sm">Add New User</button>
 
-			<!-- USER LIST -->
-			<div class="user_list_container bg-light rounded shadow">
-				<h3 class="header-title">USER LIST</h3>
+									</form>
 
-				<div class="border-2">
-					<a href="#" id="add_new" class="btn btn-primary" style="margin-right: 10px;"><i class="fas fa-plus"></i> Add</a>
-					<a href="#" id="delete_sel_btn" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
-				</div>
-				<br>
+								</div>
+								<!-- END - ADD/EDIT USER SECTION -->
+			            		<!-- END Contents -->
 
-				<!-- TABLE DATABASE RECORDS -->
-                <div id="example-table"></div>
 
-                <br>
-                <!-- Save / Download Table -->
-                <div>
-                	<button id="download-csv" class="btn btn-outline-dark btn-sm">Download CSV</button>
-                    <button id="download-json" class="btn btn-outline-dark btn-sm">Download JSON</button>
-                    <button id="download-xlsx" class="btn btn-outline-dark btn-sm">Download XLSX</button>
-                    <button id="print-table" class="btn btn-outline-dark btn-sm">Print</button>
-                </div>
-			</div>
-			<!-- END USER LIST -->
 
-        </div>
-        <!-- END CONTENTS -->
+			            		<br>
+
+
+
+								<!-- USER LIST -->
+								<!-- user_list_container -->
+								<div class="user_list_container container bg-light rounded shadow">
+									
+									<h3 class="header-title">USER LIST</h3>
+
+									<div class="border-2">
+										<a href="#" id="add_new" class="btn btn-primary" style="margin-right: 10px;"><i class="fas fa-plus"></i> Add</a>
+										<a href="#" id="delete_sel_btn" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+									</div>
+									<br>
+
+									<!-- TABLE DATABASE RECORDS -->
+					                <div class="userlist_tbl" id="example-table"></div>
+
+					                <br>
+					                <!-- Save / Download Table -->
+					                <div>
+					                	<button id="download-csv" class="btn btn-outline-dark btn-sm">Download CSV</button>
+					                    <button id="download-json" class="btn btn-outline-dark btn-sm">Download JSON</button>
+					                    <button id="download-xlsx" class="btn btn-outline-dark btn-sm">Download XLSX</button>
+					                    <button id="print-table" class="btn btn-outline-dark btn-sm">Print</button>
+					                </div>
+								</div>
+								<!-- END USER LIST -->
+					            <!-- END Container -->
+
+
+
+	            				
+	            			</div>
+	            		</div>
+	            	</div>
+	            </div>
+
+	
+            </div> <!-- END PAGE CONTAINER -->
 
     	</div>
-    	<br>
     </div>
-    <!-- END - CONTAINER -->
+
+
+
+
+
 
 
 

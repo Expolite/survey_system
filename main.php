@@ -299,7 +299,8 @@ if($result_survey_records_byMon) {
 
 
 <!-- CANVAS OF BAR CHART JS -->
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<!-- <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
+<script src="js/canvasjs.min.js"></script>
 
 
 
