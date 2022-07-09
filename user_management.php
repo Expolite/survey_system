@@ -220,7 +220,19 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 	/* Add / Edit Section */
 	.add_edit_section {
 		padding: 10px;
+		padding-left: 20px;
+		padding-right: 20px;
 	}
+
+	/* Manage User Department */
+	.manage_user_dept {
+		padding-top: 10px;
+		padding-bottom: 15px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+
 	/* User List */
 	.user_list_container {
 		padding-top: 10px;
@@ -232,7 +244,6 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 
 	/* userl list table */
 	.userlist_tbl {
-		border: 1px solid black; 
 		min-width: unset; 
 		width: 100%;
 		
@@ -243,6 +254,30 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 	.resize_input_tags {
 		width: 100%;
 		min-width: unset;
+	}
+
+
+	/* Users Department Management */
+	#user_dept_actions_1 {
+		border: 1px solid #007bff;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 10px;
+		padding-right: 5px;
+		border-radius: 7px 0 0 7px;
+		color: #007bff;
+		cursor: pointer;
+	}
+
+	#user_dept_actions_2 {
+		border: 1px solid #007bff;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 5px;
+		padding-right: 10px;
+		border-radius: 0 7px 7px 0;
+		color: #007bff;
+		cursor: pointer;
 	}
 
 </style>
@@ -340,6 +375,59 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 								<!-- END - ADD/EDIT USER SECTION -->
 			            		<!-- END Contents -->
 
+
+
+			            		<br>
+
+
+			            		<!-- Manage User Department -->
+			            		<div class="bg-light rounded shadow">
+
+			            			<div class="manage_user_dept">
+				            			<h3 class="px-1">Manage User Department</h3>
+
+				            			<div class="input-group" style="width: 100%; border: 1px solid black; justify-content: space-between;">
+					            			<div style="width: 48%; margin-right: 10px;">
+
+						            			<!-- Select User -->
+						            			<div style="background: #007bff; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px; border-radius: 7px; color: white; width: fit-content;">Select User</div> 
+						            			<select class="form-control mt-2">
+						            				<option></option>
+						            				<?php 
+						            					$sql_mng_usr_dept = "SELECT user_id, user_role, status, locked, dept_assign, id_no FROM users WHERE status = '0' AND user_role = '3' AND locked = '0'";
+						            					$res_mng_usr_dept = mysqli_query($db_connect, $sql_mng_usr_dept);
+
+						            					if (mysqli_num_rows($res_mng_usr_dept) > 0) {
+						            						while($row_mng_usr_dept = mysqli_fetch_assoc($res_mng_usr_dept)) {
+						            							$user_id_no = $row_mng_usr_dept['id_no'];
+						            				?>
+						            				<option><?php echo $user_id_no; ?></option>
+						            				<?php
+						            						}
+						            					}
+						            				?>
+						            			</select>
+					            			</div>
+
+
+					            			<!-- Select Department for User -->
+					            			<div style="width: 48%;">
+					            				<div class="input-group">
+					            					<div id="user_dept_actions_1" onclick="new_dept_func()"><span>Add New Department</span></div>
+					            					<div id="user_dept_actions_2" onclick="select_dept_func()"><span>Select Department</span></div>
+					            				</div>
+					            				<!-- Enter New Department -->
+					            				<input type="text" id="new_dept_txtbox" class="form-control mt-2" placeholder="Enter New Department">
+					            				<!-- Select Department -->
+					            				<select class="form-control mt-2" id="sel_dept_selection">
+					            					<option></option>
+					            					<option>Dept 1</option>
+					            				</select>
+					            			</div>
+				            			</div>
+
+			            			</div>
+			            		</div>
 
 
 			            		<br>
@@ -786,6 +874,63 @@ $(document).on({
 });
 
 })();
+
+
+
+
+
+
+// User Department Management Function
+
+// default
+// active - Add New Dept
+user_dept_actions_1.style.background = "#007bff";
+user_dept_actions_1.style.color = "white";
+
+// hide Select input
+sel_dept_selection.style.display = "none";
+// END default
+
+// Add New Department Button
+function new_dept_func() {
+	// active this btn 1
+	user_dept_actions_1.style.background = "#007bff";
+	user_dept_actions_1.style.color = "white";
+
+	// inactive this btn 2
+	user_dept_actions_2.style.background = "white";
+	user_dept_actions_2.style.color = "#007bff";
+
+	// show txtbox -> add new department
+	new_dept_txtbox.style.display = "block";
+
+	// hide selection department
+	sel_dept_selection.style.display = "none";
+}
+
+// Select Department Button
+function select_dept_func() {
+	// active this btn 2
+	user_dept_actions_2.style.background = "#007bff";
+	user_dept_actions_2.style.color = "white";
+
+	// inactive this btn 1
+	user_dept_actions_1.style.background = "white";
+	user_dept_actions_1.style.color = "#007bff";
+
+	// show txtbox -> add new department
+	new_dept_txtbox.style.display = "none";
+
+	// show selection department
+	sel_dept_selection.style.display = "block";
+}
+
+
+
+
+
+
+// Notification msg
 <?php 
     $msg = $session_class->getValue('success');
     if(isset($msg) AND $msg !=""){
