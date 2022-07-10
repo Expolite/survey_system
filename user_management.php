@@ -198,6 +198,88 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 }
 
 
+
+
+
+
+
+// Manage User Department
+
+// Type submit: Added new dept
+if(isset($_POST['submit_add_user_manage_dept'])) {
+
+	// get data
+	$Selected_user = $_POST['sel_user_inDept']; // Select user
+	$added_new_dept = $_POST['added_new_dept']; // Add new dept
+
+	// check data if empty, then send error msg
+	if(empty($Selected_user)) {
+		$msg_response['status']="error";
+		$msg_response['msg']="Please Select User";
+		$session_class->setValue('error',$msg_response['msg']);
+		header("location: user_management.php?select_user_Alert=error");
+		exit();
+	}
+	// if data is not empty -> Insert
+	// else -> send error msg
+	if(!empty($added_new_dept)) { // added new dept field
+		// Insert data
+		echo "<script> alert('Added New'); </script>";
+	}else {
+		// Add new dept alert
+		$msg_response['status']="error";
+		$msg_response['msg']="Please Enter Department";
+		$session_class->setValue('error',$msg_response['msg']);
+
+		header("location: user_management.php?new_deptAlert=error");
+		exit(); 
+	}
+}
+
+// Type submit: Select dept
+if(isset($_POST['submit_select_user_manage_dept'])) {
+
+	// get data
+	$Selected_user = $_POST['sel_user_inDept']; // Select user
+	$selected_dept = $_POST['selected_dept']; // selected dept
+
+	// check data if empty, then send error msg
+	if(empty($Selected_user)) {
+		$msg_response['status']="error";
+		$msg_response['msg']="Please Select User";
+		$session_class->setValue('error',$msg_response['msg']);
+		header("location: user_management.php?select_user_Alert=error");
+		exit();
+	}
+
+	// if data is not empty -> Insert
+	// else -> send error msg
+	if(!empty($selected_dept)) { // added new dept field
+		// Insert data
+		echo "<script> alert('Select Dept'); </script>";
+	}else {
+		// Add new dept alert
+		$msg_response['status']="error";
+		$msg_response['msg']="Please Select Department";
+		$session_class->setValue('error',$msg_response['msg']);
+
+		header("location: user_management.php?select_deptAlert=error");
+		exit(); 
+	}
+
+
+}
+
+// END Manage User Department
+
+// $msg_response['status']="error";
+// $msg_response['msg']="You have not Enter Department";
+// $session_class->setValue('error',$msg_response['msg']);
+
+// header("location: user_management.php?new_deptAlert=error");
+// exit(); 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -258,6 +340,8 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 
 
 	/* Users Department Management */
+
+	/* Button - enter new dept */
 	#user_dept_actions_1 {
 		border: 1px solid #007bff;
 		padding-top: 5px;
@@ -269,6 +353,7 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 		cursor: pointer;
 	}
 
+	/* Button - select dept */
 	#user_dept_actions_2 {
 		border: 1px solid #007bff;
 		padding-top: 5px;
@@ -384,47 +469,92 @@ if (isset($_POST['save']) AND $_POST['save']=="save"){
 			            		<div class="bg-light rounded shadow">
 
 			            			<div class="manage_user_dept">
-				            			<h3 class="px-1">Manage User Department</h3>
+			            				<!-- Header -->
+				            			<h3 class="px-1">Manage/Set User Department</h3>
 
-				            			<div class="input-group" style="width: 100%; border: 1px solid black; justify-content: space-between;">
-					            			<div style="width: 48%; margin-right: 10px;">
+				            			<form action="user_management.php" method="POST">
+					            			<div class="input-group" style="width: 100%; justify-content: space-between;">
+						            			<div style="width: 48%; margin-right: 10px;">
 
-						            			<!-- Select User -->
-						            			<div style="background: #007bff; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px; border-radius: 7px; color: white; width: fit-content;">Select User</div> 
-						            			<select class="form-control mt-2">
-						            				<option></option>
-						            				<?php 
-						            					$sql_mng_usr_dept = "SELECT user_id, user_role, status, locked, dept_assign, id_no FROM users WHERE status = '0' AND user_role = '3' AND locked = '0'";
-						            					$res_mng_usr_dept = mysqli_query($db_connect, $sql_mng_usr_dept);
 
-						            					if (mysqli_num_rows($res_mng_usr_dept) > 0) {
-						            						while($row_mng_usr_dept = mysqli_fetch_assoc($res_mng_usr_dept)) {
-						            							$user_id_no = $row_mng_usr_dept['id_no'];
-						            				?>
-						            				<option><?php echo $user_id_no; ?></option>
-						            				<?php
-						            						}
-						            					}
-						            				?>
-						            			</select>
+							            			<!-- Select User -->
+							            			<div style="background: #007bff; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px; border-radius: 7px; color: white; width: fit-content;">
+							            				Select User
+							            			</div> 
+							            			<select name="sel_user_inDept" class="form-control mt-2 <?php if(isset($_GET['select_user_Alert'])){echo'border-danger';} ?>">
+							            				<option value="">-Select User-</option>
+							            				<?php 
+							            					$sql_mng_usr_dept = "SELECT user_id, user_role, status, locked, dept_assign, id_no FROM users WHERE status = '0' AND user_role = '3' AND locked = '0'";
+							            					$res_mng_usr_dept = mysqli_query($db_connect, $sql_mng_usr_dept);
+
+							            					if (mysqli_num_rows($res_mng_usr_dept) > 0) {
+							            						while($row_mng_usr_dept = mysqli_fetch_assoc($res_mng_usr_dept)) {
+							            							$user_id_no = $row_mng_usr_dept['id_no'];
+							            				?>
+							            				<option><?php echo $user_id_no; ?></option>
+							            				<?php
+							            						}
+							            					}
+							            				?>
+							            			</select>
+							            			<?php  
+							            				if(isset($_GET['select_user_Alert'])){
+							            			?>
+							            			<div class="text-danger">
+							            				<i class="fa-solid fa-circle-exclamation"></i>User is Required!
+							            			</div>
+							            			<?php
+							            				}
+							            			?>
+						            			</div>
+
+
+						            			<!-- Arrow right -->
+						            			<div style="position: relative;">
+						            				<div style="position: absolute; left: -5px; bottom: 8px; margin-left: -10px;">
+						            					<i class="fa-solid fa-right-long" style="font-size: 25px;"></i>
+						            				</div>
+						            			</div>
+
+
+						            			<!-- Select Department for User -->
+						            			<div style="width: 48%;">
+						            				<div class="input-group">
+						            					<div id="user_dept_actions_1" onclick="new_dept_func()"><span>Add New Department</span></div>
+						            					<div id="user_dept_actions_2" onclick="select_dept_func()"><span>Select Department</span></div>
+						            				</div>
+						            				<!-- Enter New Department -->
+						            				<input type="text" name="added_new_dept" id="new_dept_txtbox" value="" class="form-control mt-2 <?php if(isset($_GET['new_deptAlert'])){echo'border-danger';} ?>" placeholder="Enter New Department">
+						            				<!-- Select Department hide -->
+						            				<select name="selected_dept" class="form-control mt-2 <?php if(isset($_GET['new_deptAlert'])){echo'border-danger';} ?>" id="sel_dept_selection">
+						            					<option value="">-Select Department-</option>
+						            					<?php 
+						            						// select dept
+						            					?>
+						            					<option>Dept 1</option>
+						            				</select>
+
+													<!-- Error Msg -->
+													<?php 
+														if(isset($_GET['new_deptAlert'])) {
+													?>
+													<div class="text-danger">
+														<i class="fa-solid fa-circle-exclamation"></i>
+														This field is Required
+													</div>
+													<?php } ?>
+						            			</div>
+
+						            			<!-- Submit Button -->
+						            			<div class="mt-2" style="width: 100%;">
+						            				<div align="right">
+						            					<button type="submit" name="submit_add_user_manage_dept" id="submitBtn_addNewDept" class="btn btn-outline-success btn-sm" style="padding-left: 20px; padding-right: 20px;"><i class="fa-solid fa-floppy-disk"></i> Add & Save</button>
+														<button type="submit" name="submit_select_user_manage_dept" id="submitBtn_selectDept" class="btn btn-outline-primary btn-sm" style="padding-left: 20px; padding-right: 20px;"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+						            				</div>
+						            			</div>
+
 					            			</div>
-
-
-					            			<!-- Select Department for User -->
-					            			<div style="width: 48%;">
-					            				<div class="input-group">
-					            					<div id="user_dept_actions_1" onclick="new_dept_func()"><span>Add New Department</span></div>
-					            					<div id="user_dept_actions_2" onclick="select_dept_func()"><span>Select Department</span></div>
-					            				</div>
-					            				<!-- Enter New Department -->
-					            				<input type="text" id="new_dept_txtbox" class="form-control mt-2" placeholder="Enter New Department">
-					            				<!-- Select Department -->
-					            				<select class="form-control mt-2" id="sel_dept_selection">
-					            					<option></option>
-					            					<option>Dept 1</option>
-					            				</select>
-					            			</div>
-				            			</div>
+					            		</form>
 
 			            			</div>
 			            		</div>
@@ -882,14 +1012,45 @@ $(document).on({
 
 // User Department Management Function
 
-// default
-// active - Add New Dept
-user_dept_actions_1.style.background = "#007bff";
-user_dept_actions_1.style.color = "white";
+<?php 
+	if(isset($_GET['select_deptAlert'])) {
+		echo '
+			// active - Select Dept buttons
+			user_dept_actions_2.style.background = "#007bff";
+			user_dept_actions_2.style.color = "white";
 
-// hide Select input
-sel_dept_selection.style.display = "none";
-// END default
+			// disable - add new dept
+			user_dept_actions_1.style.background = "white";
+			user_dept_actions_1.style.color = "#007bff";
+
+			// hide add_new_dept txtbox
+			new_dept_txtbox.style.display = "none";
+
+			// hide submit add new button
+			submitBtn_addNewDept.style.display = "none";
+			// show submit select btn
+			submitBtn_selectDept.style.display = "block";
+		';
+	}else{
+
+		echo '
+			// default
+			// active - Add New Dept
+			user_dept_actions_1.style.background = "#007bff";
+			user_dept_actions_1.style.color = "white";
+
+			// hide Select input
+			sel_dept_selection.style.display = "none";
+
+			// hide submit select selectBtn
+			submitBtn_selectDept.style.display = "none";
+
+			// END default
+		';
+	}
+?>
+
+
 
 // Add New Department Button
 function new_dept_func() {
@@ -904,8 +1065,15 @@ function new_dept_func() {
 	// show txtbox -> add new department
 	new_dept_txtbox.style.display = "block";
 
+	// select the first option in dropdow
+	document.getElementById("sel_dept_selection").selectedIndex = "0"; 
+
 	// hide selection department
 	sel_dept_selection.style.display = "none";
+
+	// Submit btn's
+	submitBtn_selectDept.style.display = "none"; // hide selectBtn
+	submitBtn_addNewDept.style.display = "block"; // show addBtn
 }
 
 // Select Department Button
@@ -921,8 +1089,15 @@ function select_dept_func() {
 	// show txtbox -> add new department
 	new_dept_txtbox.style.display = "none";
 
+	// clear value of added new dept field
+	document.getElementById("new_dept_txtbox").value = ""; 
+
 	// show selection department
 	sel_dept_selection.style.display = "block";
+
+	// Submit btn's
+	submitBtn_selectDept.style.display = "block"; // show selectBtn
+	submitBtn_addNewDept.style.display = "none"; // hide addBtn
 }
 
 
