@@ -223,8 +223,23 @@ if(isset($_POST['submit_add_user_manage_dept'])) {
 	// if data is not empty -> Insert
 	// else -> send error msg
 	if(!empty($added_new_dept)) { // added new dept field
-		// Insert data
-		echo "<script> alert('Added New'); </script>";
+		// Insert data into 'tbl_survey_dept'
+		$sql_addNew_dept = "INSERT INTO tbl_survey_dept (dept_name, user_assigned_dept) VALUES ('$added_new_dept', '$Selected_user')";
+		if (mysqli_query($db_connect, $sql_addNew_dept)) {
+
+			// Update users data
+			$sql_update_usersDept = "UPDATE users SET dept_assign = '$added_new_dept' WHERE id_no = '$Selected_user'";
+			if (mysqli_query($db_connect, $sql_update_usersDept)) {
+
+				$msg_response['status']="success";
+				$msg_response['msg']="Successfully Saved!";
+				$session_class->setValue('success',$msg_response['msg']);
+				header("location: user_management.php");
+				exit();
+
+			}
+
+		}
 	}else {
 		// Add new dept alert
 		$msg_response['status']="error";
@@ -478,7 +493,7 @@ if(isset($_POST['submit_select_user_manage_dept'])) {
 
 
 							            			<!-- Select User -->
-							            			<div style="background: #007bff; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px; border-radius: 7px; color: white; width: fit-content;">
+							            			<div style="background: #007bff; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px; border-radius: 5px; color: white; width: fit-content;">
 							            				Select User
 							            			</div> 
 							            			<select name="sel_user_inDept" class="form-control mt-2 <?php if(isset($_GET['select_user_Alert'])){echo'border-danger';} ?>">
