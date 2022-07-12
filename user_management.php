@@ -212,7 +212,7 @@ if(isset($_POST['submit_add_user_manage_dept'])) {
 	$Selected_user = $_POST['sel_user_inDept']; // Select user
 	$added_new_dept = $_POST['added_new_dept']; // Add new dept
 
-	// check data if empty, then send error msg
+	// check selected_user if empty, then send error msg
 	if(empty($Selected_user)) {
 		$msg_response['status']="error";
 		$msg_response['msg']="Please Select User";
@@ -223,8 +223,21 @@ if(isset($_POST['submit_add_user_manage_dept'])) {
 	// if data is not empty -> Insert
 	// else -> send error msg
 	if(!empty($added_new_dept)) { // added new dept field
+
+		// check if the Department is already exist
+		$sql_ifAlreadyExist = "SELECT dept_name FROM tbl_survey_dept WHERE dept_name = '$added_new_dept'";
+		$res_ifAlreadyExist = mysqli_query($db_connect, $sql_ifAlreadyExist);
+
+		// Department Already Exist
+		if (mysqli_num_rows($res_ifAlreadyExist) > 0) {
+			$msg_response['status']="error";
+			$msg_response['msg']="Department Already Exist!";
+			$session_class->setValue('error',$msg_response['msg']);
+			header("location: user_management.php?deptAlreadyExist=error");
+			exit();
+		}
 		// Insert data into 'tbl_survey_dept'
-		$sql_addNew_dept = "INSERT INTO tbl_survey_dept (dept_name, user_assigned_dept) VALUES ('$added_new_dept', '$Selected_user')";
+		$sql_addNew_dept = "INSERT INTO tbl_survey_dept (dept_name) VALUES ('$added_new_dept')";
 		if (mysqli_query($db_connect, $sql_addNew_dept)) {
 
 			// Update users data
@@ -236,7 +249,6 @@ if(isset($_POST['submit_add_user_manage_dept'])) {
 				$session_class->setValue('success',$msg_response['msg']);
 				header("location: user_management.php");
 				exit();
-
 			}
 
 		}
@@ -270,8 +282,30 @@ if(isset($_POST['submit_select_user_manage_dept'])) {
 	// if data is not empty -> Insert
 	// else -> send error msg
 	if(!empty($selected_dept)) { // added new dept field
-		// Insert data
-		echo "<script> alert('Select Dept'); </script>";
+
+		// // check if the Department is already exist
+		// $sql_ifAlreadyExist = "SELECT dept_name FROM tbl_survey_dept WHERE dept_name = '$selected_dept'";
+		// $res_ifAlreadyExist = mysqli_query($db_connect, $sql_ifAlreadyExist);
+
+		// // Department Already Exist -> Update data
+		// if (mysqli_num_rows($res_ifAlreadyExist) > 0) {
+		// 	// Update data into 'tbl_survey_dept'
+		// 	$sql_update_selectDept = "UPDATE tbl_survey_dept SET dept_name = '$selected_dept' WHERE dept_name = '$selected_dept'";
+		// 	mysqli_query($db_connect, $sql_update_selectDept);
+		// }
+
+		// Update users data
+		$sql_update_usersDept = "UPDATE users SET dept_assign = '$selected_dept' WHERE id_no = '$Selected_user'";
+		if (mysqli_query($db_connect, $sql_update_usersDept)) {
+
+			$msg_response['status']="success";
+			$msg_response['msg']="Successfully Saved!";
+			$session_class->setValue('success',$msg_response['msg']);
+			header("location: user_management.php");
+			exit();
+
+		}
+		
 	}else {
 		// Add new dept alert
 		$msg_response['status']="error";
@@ -284,6 +318,53 @@ if(isset($_POST['submit_select_user_manage_dept'])) {
 
 
 }
+
+
+
+
+
+
+// Delete Department
+if(isset($_POST['del_dept_submit_confirm'])) {
+	// Get data
+	$user_idNum = $_POST['del_dept_userIdNum'];
+	$department_name = $_POST['del_department_name'];
+
+	// Update / Removing user department_assigned to
+	$sql_delDept = "UPDATE users SET dept_assign = '' WHERE dept_assign = '$department_name'";
+
+	// if Success, delete the same name on department list
+	if (mysqli_query($db_connect, $sql_delDept)) {
+		// Delete row
+		$sql_del_department_row = "DELETE FROM tbl_survey_dept WHERE dept_name = '$department_name'";
+		if (mysqli_query($db_connect, $sql_del_department_row)) {
+			$msg_response['status']="success";
+			$msg_response['msg']="Removed";
+			$session_class->setValue('success',$msg_response['msg']);
+			header("location: user_management.php");
+			exit();
+		}
+	}
+}
+
+
+
+
+
+
+// Edit User Department 
+if(isset($_POST['edit_dept_submit'])) {
+	// get data
+	$id_user = $_POST['user_id'];
+	$department_name = $_POST['del_dept_userIdNum'];
+
+
+}
+
+
+
+
+
 
 // END Manage User Department
 
@@ -356,35 +437,20 @@ if(isset($_POST['submit_select_user_manage_dept'])) {
 
 	/* Users Department Management */
 
-	/* Button - enter new dept */
-	#user_dept_actions_1 {
-		border: 1px solid #007bff;
-		padding-top: 5px;
-		padding-bottom: 5px;
-		padding-left: 10px;
-		padding-right: 5px;
-		border-radius: 7px 0 0 7px;
-		color: #007bff;
-		cursor: pointer;
+	/* User Department Table */
+	.user_dept_tbl tr th {
+		border-top: 1px solid black;
+		border-bottom: 2px solid black;
 	}
-
-	/* Button - select dept */
-	#user_dept_actions_2 {
-		border: 1px solid #007bff;
-		padding-top: 5px;
-		padding-bottom: 5px;
-		padding-left: 5px;
-		padding-right: 10px;
-		border-radius: 0 7px 7px 0;
-		color: #007bff;
-		cursor: pointer;
+	/* Border td top */
+	.tbl_border_td td {
+		border-top: 1px solid #ACACAC;
 	}
-
 </style>
 
 </head>
 
-<body style="padding: 0;">
+<body style="padding: 0; position: relative;">
 
 
 
@@ -484,92 +550,85 @@ if(isset($_POST['submit_select_user_manage_dept'])) {
 			            		<div class="bg-light rounded shadow">
 
 			            			<div class="manage_user_dept">
-			            				<!-- Header -->
-				            			<h3 class="px-1">Manage/Set User Department</h3>
 
-				            			<form action="user_management.php" method="POST">
-					            			<div class="input-group" style="width: 100%; justify-content: space-between;">
-						            			<div style="width: 48%; margin-right: 10px;">
+										<!-- User Department Table -->
+										<h3 class="px-1">Manage/Set User Department</h3>
+										<button type="button" class="btn btn-outline-primary btn-sm mb-2" id="toggle_hide_btn_userDeptTbl" onclick="toggleHide_userDept_tbl()"><i class="fa-solid fa-eye-slash"></i> Hide Table</button>
+										<button type="button" class="btn btn-outline-primary btn-sm mb-2" id="toggle_show_btn_userDeptTbl" onclick="toggleShow_userDept_tbl()"><i class="fa-solid fa-eye"></i> Show Table</button>
+										
+										<div id="user_dept_tbl">
+											<table class="table table-hover tbl_border_td">
+												<thead class="user_dept_tbl thead-dark">
+													<tr>
+														<th>Users</th>
+														<th>Department</th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php  
+														$sql_tbl_dept = "SELECT user_id, id_no, dept_assign, user_role, status, locked FROM users WHERE user_role = '3' AND status = '0' AND locked = '0' ORDER BY user_id DESC";
+														$res_tbl_dept = mysqli_query($db_connect, $sql_tbl_dept);
 
-
-							            			<!-- Select User -->
-							            			<div style="background: #007bff; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px; border-radius: 5px; color: white; width: fit-content;">
-							            				Select User
-							            			</div> 
-							            			<select name="sel_user_inDept" class="form-control mt-2 <?php if(isset($_GET['select_user_Alert'])){echo'border-danger';} ?>">
-							            				<option value="">-Select User-</option>
-							            				<?php 
-							            					$sql_mng_usr_dept = "SELECT user_id, user_role, status, locked, dept_assign, id_no FROM users WHERE status = '0' AND user_role = '3' AND locked = '0'";
-							            					$res_mng_usr_dept = mysqli_query($db_connect, $sql_mng_usr_dept);
-
-							            					if (mysqli_num_rows($res_mng_usr_dept) > 0) {
-							            						while($row_mng_usr_dept = mysqli_fetch_assoc($res_mng_usr_dept)) {
-							            							$user_id_no = $row_mng_usr_dept['id_no'];
-							            				?>
-							            				<option><?php echo $user_id_no; ?></option>
-							            				<?php
-							            						}
-							            					}
-							            				?>
-							            			</select>
-							            			<?php  
-							            				if(isset($_GET['select_user_Alert'])){
-							            			?>
-							            			<div class="text-danger">
-							            				<i class="fa-solid fa-circle-exclamation"></i>User is Required!
-							            			</div>
-							            			<?php
-							            				}
-							            			?>
-						            			</div>
-
-
-						            			<!-- Arrow right -->
-						            			<div style="position: relative;">
-						            				<div style="position: absolute; left: -5px; bottom: 8px; margin-left: -10px;">
-						            					<i class="fa-solid fa-right-long" style="font-size: 25px;"></i>
-						            				</div>
-						            			</div>
-
-
-						            			<!-- Select Department for User -->
-						            			<div style="width: 48%;">
-						            				<div class="input-group">
-						            					<div id="user_dept_actions_1" onclick="new_dept_func()"><span>Add New Department</span></div>
-						            					<div id="user_dept_actions_2" onclick="select_dept_func()"><span>Select Department</span></div>
-						            				</div>
-						            				<!-- Enter New Department -->
-						            				<input type="text" name="added_new_dept" id="new_dept_txtbox" value="" class="form-control mt-2 <?php if(isset($_GET['new_deptAlert'])){echo'border-danger';} ?>" placeholder="Enter New Department">
-						            				<!-- Select Department hide -->
-						            				<select name="selected_dept" class="form-control mt-2 <?php if(isset($_GET['new_deptAlert'])){echo'border-danger';} ?>" id="sel_dept_selection">
-						            					<option value="">-Select Department-</option>
-						            					<?php 
-						            						// select dept
-						            					?>
-						            					<option>Dept 1</option>
-						            				</select>
-
-													<!-- Error Msg -->
-													<?php 
-														if(isset($_GET['new_deptAlert'])) {
+														if (mysqli_num_rows($res_tbl_dept) > 0) {
+															while($row_tbl_dept = mysqli_fetch_assoc($res_tbl_dept)) {
+																$users_id_edit = $row_tbl_dept['user_id'];
+																$user_id_no = $row_tbl_dept['id_no'];
+																$user_department = $row_tbl_dept['dept_assign'];
 													?>
-													<div class="text-danger">
-														<i class="fa-solid fa-circle-exclamation"></i>
-														This field is Required
+													<tr>
+														<td><?php echo "$user_id_no"; ?></td>
+														<td>
+															<form action="user_management.php" method="POST">
+																<?php echo "$user_department"; ?>
+																<!-- Name of Department -->
+																<input type="text" name="del_dept_userIdNum" value="<?php echo $user_id_no; ?>" style="display: none;">
+																<input type="text" name="user_id" value="<?php echo $users_id_edit; ?>" style="display: none;">
+
+																<?php if(!empty($user_department)){ ?>
+																	<button type="button" name="del_dept_submit_confirm" class="text-danger" title="Remove Department to this User" style="background: transparent; border: none; cursor: pointer;" data-toggle="modal" data-target="#del_exampleModal_<?php echo $users_id_edit; ?>"><i class="fa-solid fa-trash"></i> Del</button>
+																<?php } ?>
+																<button type="button" id="toggle_edit_btn" name="edit_dept_submit" class="text-primary" title="Edit / Add Department to this User" style="background: transparent; border: none; cursor: pointer;" data-toggle="modal" data-target="#exampleModal_<?php echo $users_id_edit; ?>"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+															</form>
+														</td>
+													</tr>
+													<!-- MODAL Delete -->
+													<div class="modal fade" id="del_exampleModal_<?php echo $users_id_edit; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal-dialog" role="document">
+																<div class="modal-content">
+																	<div class="modal-header text-danger">
+																		<h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-circle-exclamation"></i> Delete</h5>
+																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
+																		</button>
+																	</div>
+																	<div class="modal-body" style="font-size: 17px;">
+																		Are you sure want to delete <b>'<?php echo $user_department; ?>'</b>?
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+																		<form action="user_management.php" method="POST">
+																			<input type="text" name="del_dept_userIdNum" value="<?php echo $user_id_no; ?>" style="display: none;">
+																			<input type="text" name="del_department_name" value="<?php echo $user_department; ?>" style="display: none;">
+
+																			<button type="submit" name="del_dept_submit_confirm" class="btn btn-danger">Delete</button>
+																		</form>
+																	</div>
+																</div>
+														</div>
 													</div>
-													<?php } ?>
-						            			</div>
+													<!-- END MODAL Delete -->
+													
 
-						            			<!-- Submit Button -->
-						            			<div class="mt-2" style="width: 100%;">
-						            				<div align="right">
-						            					<button type="submit" name="submit_add_user_manage_dept" id="submitBtn_addNewDept" class="btn btn-outline-success btn-sm" style="padding-left: 20px; padding-right: 20px;"><i class="fa-solid fa-floppy-disk"></i> Add & Save</button>
-														<button type="submit" name="submit_select_user_manage_dept" id="submitBtn_selectDept" class="btn btn-outline-primary btn-sm" style="padding-left: 20px; padding-right: 20px;"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-						            				</div>
-						            			</div>
-
-					            			</div>
-					            		</form>
+													<!-- MODAL Edit -->
+													<?php include "modal_user_management.php"; ?>
+													
+													<?php
+															}
+														}
+													?>
+												</tbody>
+											</table>
+										</div>
 
 			            			</div>
 			            		</div>
@@ -606,6 +665,7 @@ if(isset($_POST['submit_select_user_manage_dept'])) {
 								<!-- END USER LIST -->
 					            <!-- END Container -->
 
+								
 
 
 	            				
@@ -619,6 +679,18 @@ if(isset($_POST['submit_select_user_manage_dept'])) {
 
     	</div>
     </div>
+
+
+
+
+
+
+
+
+
+	<?php if(isset($_GET['confirm_del'])) { ?>
+
+	<?php } ?>
 
 
 
@@ -1025,95 +1097,27 @@ $(document).on({
 
 
 
-// User Department Management Function
+toggle_show_btn_userDeptTbl.style.display = "none"; // hide the show_btn
+// Toggle Hide User Department Table
+function toggleHide_userDept_tbl() {
+	
+	toggle_hide_btn_userDeptTbl.style.display = "none"; // hide own btn
+	toggle_show_btn_userDeptTbl.style.display = "block"; // show other btn
 
-<?php 
-	if(isset($_GET['select_deptAlert'])) {
-		echo '
-			// active - Select Dept buttons
-			user_dept_actions_2.style.background = "#007bff";
-			user_dept_actions_2.style.color = "white";
-
-			// disable - add new dept
-			user_dept_actions_1.style.background = "white";
-			user_dept_actions_1.style.color = "#007bff";
-
-			// hide add_new_dept txtbox
-			new_dept_txtbox.style.display = "none";
-
-			// hide submit add new button
-			submitBtn_addNewDept.style.display = "none";
-			// show submit select btn
-			submitBtn_selectDept.style.display = "block";
-		';
-	}else{
-
-		echo '
-			// default
-			// active - Add New Dept
-			user_dept_actions_1.style.background = "#007bff";
-			user_dept_actions_1.style.color = "white";
-
-			// hide Select input
-			sel_dept_selection.style.display = "none";
-
-			// hide submit select selectBtn
-			submitBtn_selectDept.style.display = "none";
-
-			// END default
-		';
-	}
-?>
-
-
-
-// Add New Department Button
-function new_dept_func() {
-	// active this btn 1
-	user_dept_actions_1.style.background = "#007bff";
-	user_dept_actions_1.style.color = "white";
-
-	// inactive this btn 2
-	user_dept_actions_2.style.background = "white";
-	user_dept_actions_2.style.color = "#007bff";
-
-	// show txtbox -> add new department
-	new_dept_txtbox.style.display = "block";
-
-	// select the first option in dropdow
-	document.getElementById("sel_dept_selection").selectedIndex = "0"; 
-
-	// hide selection department
-	sel_dept_selection.style.display = "none";
-
-	// Submit btn's
-	submitBtn_selectDept.style.display = "none"; // hide selectBtn
-	submitBtn_addNewDept.style.display = "block"; // show addBtn
+	// hide table
+	user_dept_tbl.style.display = "none";
 }
 
-// Select Department Button
-function select_dept_func() {
-	// active this btn 2
-	user_dept_actions_2.style.background = "#007bff";
-	user_dept_actions_2.style.color = "white";
+// Toggle Show User Department Table
+function toggleShow_userDept_tbl() {
 
-	// inactive this btn 1
-	user_dept_actions_1.style.background = "white";
-	user_dept_actions_1.style.color = "#007bff";
+	toggle_show_btn_userDeptTbl.style.display = "none"; // hide own btn
+	toggle_hide_btn_userDeptTbl.style.display = "block"; // show other btn
 
-	// show txtbox -> add new department
-	new_dept_txtbox.style.display = "none";
-
-	// clear value of added new dept field
-	document.getElementById("new_dept_txtbox").value = ""; 
-
-	// show selection department
-	sel_dept_selection.style.display = "block";
-
-	// Submit btn's
-	submitBtn_selectDept.style.display = "block"; // show selectBtn
-	submitBtn_addNewDept.style.display = "none"; // hide addBtn
+	// show table
+	user_dept_tbl.style.display = "block";
 }
+
 
 
 

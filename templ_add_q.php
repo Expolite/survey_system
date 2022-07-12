@@ -16,6 +16,19 @@ if(!($g_user_role[0] == "ADMIN")){
 }
 
 
+
+
+
+// stored data
+if(isset($_POST['next_btn_templ_1'])) {
+	// Get Data
+	$get_templ_id = mysqli_real_escape_string($db_connect, $_POST['get_templ_id']);
+	$s_title = mysqli_real_escape_string($db_connect, $_POST['template_title']); 
+	$s_header = mysqli_real_escape_string($db_connect, $_POST['template_header']);
+	$s_selected_dept = mysqli_real_escape_string($db_connect, $_POST['selected_department']);
+}
+
+
 ?>
 
 
@@ -72,14 +85,25 @@ if(!($g_user_role[0] == "ADMIN")){
 				
 				<!-- HEADER TITLE -->
                 <div class="container bg-light pt-1 pb-1 mb-3 shadow border rounded">
-                    <h3>Manage Survey Template Questions</h3>
+                    <h3>Manage Survey Template Questions [2-2]</h3>
                 </div>
+
+
 
                 <!-- CONTENTS -->
                 <div class="py-4 bg-light rounded border shadow mb-3">
                 	<div class="container">
                 		<div class="row">
                 			<div class="col-md-12">
+
+								<div style="border: 1px solid black;">
+									<?php  
+										echo $get_templ_id."<br>";
+										echo $s_title."<br>";
+										echo $s_header."<br>";
+										echo $s_selected_dept;
+									?>
+								</div>
                 				
                 				<!-- Add Questions -->
                 				<!-- Dynamic Fields -->

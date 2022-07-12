@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2022 at 06:44 PM
+-- Generation Time: Jul 12, 2022 at 05:46 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -66,7 +66,9 @@ INSERT INTO `activity_log` (`activity_log_id`, `user_id`, `date_log`, `action`, 
 (22, 1, '2022-06-26 22:06:41', 'Add User depart Details::{\"USER_ID\":9,\"USERNAME\":\"depart\",\"FIRST_NAME\":\"depter\",\"LAST_NAME\":\"partment\",\"USER_ROLE\":\"3\",\"EMAIL\":\"depter@gmail.com\"}', '812cb7465ec7816e194fe3963b2a234d4fb4dcbe079ae3ce0eb3cb83323d3f22', '1', 0),
 (23, 1, '2022-06-26 22:07:00', 'Reset Password Admin Account:depart - DETAILS : \r\n({\"ADMIN_ID\":\"9\",\"ADMIN_NO\":\"depart\",\"FIRSTNAME\":\"depter\",\"LASTNAME\":\"partment\",\"USERNAME\":\"depart\",\"USER_ROLE\":\"3\"})', '812cb7465ec7816e194fe3963b2a234d4fb4dcbe079ae3ce0eb3cb83323d3f22', '1', 0),
 (24, 1, '2022-06-27 01:49:08', 'Reset Password Admin Account:depart - DETAILS : \r\n({\"ADMIN_ID\":\"9\",\"ADMIN_NO\":\"depart\",\"FIRSTNAME\":\"depter\",\"LASTNAME\":\"partment\",\"USERNAME\":\"depart\",\"USER_ROLE\":\"3\"})', 'f765ac82b9a89b7f4d22cfee3582e2f3a448288c2c90eafbe9622b9fae98cbcb', '1', 0),
-(25, 1, '2022-07-09 15:44:04', 'Update User nel USER_ID:8 - FROM Details {\"USER_ROLE\":\"2\"} TO {\"USER_ROLE\":\"3\"}', '52f7aa16ff97cb1fa190bf6c963ce141444f8fb8af90ff8fd353ebb267aab168', '1', 0);
+(25, 1, '2022-07-09 15:44:04', 'Update User nel USER_ID:8 - FROM Details {\"USER_ROLE\":\"2\"} TO {\"USER_ROLE\":\"3\"}', '52f7aa16ff97cb1fa190bf6c963ce141444f8fb8af90ff8fd353ebb267aab168', '1', 0),
+(26, 1, '2022-07-11 22:18:23', 'Update User nel32 USER_ID:8 - FROM Details {\"USER_NO\":\"nel\"} TO {\"USER_NO\":\"nel32\"}', 'da696e1d9caead25ab728d6f028652ad56c64bb5650877ea342f2a76b909f6eb', '1', 0),
+(27, 1, '2022-07-11 22:18:38', 'Update User user_depart USER_ID:9 - FROM Details {\"USER_NO\":\"depart\"} TO {\"USER_NO\":\"user_depart\"}', 'da696e1d9caead25ab728d6f028652ad56c64bb5650877ea342f2a76b909f6eb', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -285,6 +287,26 @@ INSERT INTO `tbl_surveys_records` (`id`, `survey_name`, `date_log`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_survey_dept`
+--
+
+CREATE TABLE `tbl_survey_dept` (
+  `id` int(11) NOT NULL,
+  `dept_name` varchar(255) NOT NULL,
+  `date_log` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_survey_dept`
+--
+
+INSERT INTO `tbl_survey_dept` (`id`, `dept_name`, `date_log`) VALUES
+(7, 'Cashier', '2022-07-11 17:23:26'),
+(8, 'Clinic', '2022-07-12 00:42:03');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_tmpl_body2`
 --
 
@@ -333,8 +355,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `id_no`, `location`, `firstname`, `middlename`, `lastname`, `user_role`, `username`, `password`, `email_address`, `status`, `locked`, `last_signin`, `dept_assign`) VALUES
 (1, 'ituser', 'upload\\user_image_62b5dd1ccd7231.tmp', 'admin', '', 'asas', 1, 'ituser', '8bdcd09f5a8f9c55cb6702aed6728362db813e97', 'ronnel@yahoo.com', 0, 0, NULL, NULL),
 (2, '', '', 'SAMPLE_REGS', '', 'LAST', 2, '', 'a195c5c1019326441def43766894f74373e13003', '', 1, 0, NULL, NULL),
-(8, 'nel', '', 'neru', '', 'tokisaki', 3, 'nel', '5ecab09f348cc97279a616079664d6373c1b4ec6', 'neru@gmail.com', 0, 0, NULL, NULL),
-(9, 'depart', '', 'depter', '', 'partment', 3, 'depart', 'cc61cc7b75613e174384cc1005a752c7340a1c4b', 'depter@gmail.com', 0, 0, NULL, NULL);
+(8, 'nel32', '', 'neru', '', 'tokisaki', 3, 'nel32', '5ecab09f348cc97279a616079664d6373c1b4ec6', 'neru@gmail.com', 0, 0, NULL, 'Clinic'),
+(9, 'user_depart', '', 'depter', '', 'partment', 3, 'user_depart', 'cc61cc7b75613e174384cc1005a752c7340a1c4b', 'depter@gmail.com', 0, 0, NULL, 'Cashier');
 
 -- --------------------------------------------------------
 
@@ -487,7 +509,17 @@ INSERT INTO `user_log` (`user_log_id`, `login_date`, `logout_date`, `action`, `u
 (126, '2022-07-09 13:20:32', '0000-00-00 00:00:00', 'LOGIN', 1, '1ba0f95b9a5c9dc78f25c20a35c9e8e3575c463115f15cbc42b1405bd9eeb465', '::1', '{\"device\":\"Chrome Mobile\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":32,\"family\":\"Android\",\"version\":\"6.0\"},\"description\":\"Chrome Mobile 103.0.0.0 on Google Nexus 5 (Android 6.0)\"}', 0),
 (127, '2022-07-09 13:23:59', '0000-00-00 00:00:00', 'LOGIN', 1, 'c2dd7104c242434b31d3ff1c0ce34d1d26bbf43f31e824b59477d63e17be6bad', '::1', '{\"device\":\"Safari\",\"version\":\"13.0.3\",\"layout\":\"WebKit\",\"os\":{\"architecture\":32,\"family\":\"iOS\",\"version\":\"13.2.3\"},\"description\":\"Safari 13.0.3 on Apple iPhone (iOS 13.2.3)\"}', 0),
 (128, '2022-07-09 13:30:12', '0000-00-00 00:00:00', 'LOGIN', 1, '52f7aa16ff97cb1fa190bf6c963ce141444f8fb8af90ff8fd353ebb267aab168', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
-(129, '2022-07-09 21:41:07', '0000-00-00 00:00:00', 'LOGIN', 1, '1808e18b710461967a05c12d86cb375985432387199e28380ad9b6987d8556f0', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0);
+(129, '2022-07-09 21:41:07', '0000-00-00 00:00:00', 'LOGIN', 1, '1808e18b710461967a05c12d86cb375985432387199e28380ad9b6987d8556f0', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
+(130, '2022-07-10 09:39:17', '0000-00-00 00:00:00', 'LOGIN', 1, '870c744492f295b79950d912a3a224195ca5b4671bbb3a9c659afe287bb372a3', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
+(131, '2022-07-10 10:37:45', '0000-00-00 00:00:00', 'LOGIN', 1, '8d1bc861452e46f1f273f57637ade40d85038fb10aecf3fb90defa74dc0dd501', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
+(132, '2022-07-10 14:01:48', '0000-00-00 00:00:00', 'LOGIN', 1, '3c9cb78b0cdd833bf5e97cad007d0d46b1d4595dd9e80475c823fd3b4e27e95b', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
+(133, '2022-07-10 19:45:11', '2022-07-10 23:47:17', 'LOGIN', 1, 'fc17bd748591a15be7f8f86a5a2c8b80149287592031d6bbed6f47528acf2f7c', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
+(134, '2022-07-11 13:53:27', '0000-00-00 00:00:00', 'LOGIN', 1, '88610567535724213af49a72a0317c155ba0050ba8b1dc6021bb4a68f5df6d8c', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
+(135, '2022-07-11 19:50:32', '0000-00-00 00:00:00', 'LOGIN', 1, '05ae0484db7a30e7c1e7bb04a05ad1977f920a4ab973b3a336d3b940e289e529', '::1', '{\"device\":\"Chrome Mobile\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":32,\"family\":\"Android\",\"version\":\"6.0\"},\"description\":\"Chrome Mobile 103.0.0.0 on Google Nexus 5 (Android 6.0)\"}', 0),
+(136, '2022-07-11 19:52:38', '0000-00-00 00:00:00', 'LOGIN', 1, '821b729ea8e99880d56835ab7985d93f2afc42b1855c15cd8e20a47e42666264', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
+(137, '2022-07-11 19:56:02', '0000-00-00 00:00:00', 'LOGIN', 1, 'f50b8db50f645d99f3e2d6ce760b3fdbbb81eba465a680ae74d50d455c9234f7', '::1', '{\"device\":\"Chrome Mobile\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":32,\"family\":\"Android\",\"version\":\"6.0\"},\"description\":\"Chrome Mobile 103.0.0.0 on Google Nexus 5 (Android 6.0)\"}', 0),
+(138, '2022-07-11 19:58:43', '0000-00-00 00:00:00', 'LOGIN', 1, 'da696e1d9caead25ab728d6f028652ad56c64bb5650877ea342f2a76b909f6eb', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
+(139, '2022-07-12 07:33:44', '0000-00-00 00:00:00', 'LOGIN', 1, 'fc2cc5ce1e7659fa39f1be5729ad8c93f55d3b2722f5cfe0ba5c65e85d9107c7', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0);
 
 --
 -- Indexes for dumped tables
@@ -524,6 +556,12 @@ ALTER TABLE `tbl_surveys_records`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_survey_dept`
+--
+ALTER TABLE `tbl_survey_dept`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_tmpl_body2`
 --
 ALTER TABLE `tbl_tmpl_body2`
@@ -549,7 +587,7 @@ ALTER TABLE `user_log`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `activity_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `activity_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `reset_code`
@@ -576,6 +614,12 @@ ALTER TABLE `tbl_surveys_records`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `tbl_survey_dept`
+--
+ALTER TABLE `tbl_survey_dept`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `tbl_tmpl_body2`
 --
 ALTER TABLE `tbl_tmpl_body2`
@@ -591,7 +635,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_log`
 --
 ALTER TABLE `user_log`
-  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -182,7 +182,36 @@ if(isset($_POST['print_data'])){
 }
 
 
+
+
+
+
+
+
+// NEXT Submit Button
+// if(isset($_POST['next_btn_templ_1'])) {
+
+// 	// Get data and store
+// 	$get_templ_id = mysqli_real_escape_string($db_connect, $_POST['get_templ_id']);
+// 	$s_title = mysqli_real_escape_string($db_connect, $_POST['template_title']);
+// 	$s_header = mysqli_real_escape_string($db_connect, $_POST['template_header']);
+
+// 	// Store
+// 	$_SESSION["stored_templ_id"] = $get_templ_id;
+// 	$_SESSION["stored_templ_title"] = $s_title;
+// 	$_SESSION["stored_templ_header"] = $s_header;
+
+// }
+
+
+
+
+
+
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -285,7 +314,7 @@ if(isset($_POST['print_data'])){
 
 				<!-- HEADER TITLE -->
                 <div class="container bg-light pt-1 pb-1 mb-3 shadow border rounded">
-                    <h3><?php if(empty($template_id_tl)){echo "Create";}else{echo "Edit";} ?> Template</h3>
+                    <h3><?php if(empty($template_id_tl)){echo "Create Template [1-2]";}else{echo "Edit Template";} ?></h3>
                 </div>
 
 
@@ -295,7 +324,8 @@ if(isset($_POST['print_data'])){
                 		<div class="row">
                 			<div class="col-md-12">
 
-                				<form action="create_template.php" method="POST">
+                				<!-- <form action="create_template.php" method="POST"> -->
+            					<form action="templ_add_q.php" method="POST">
                 				<div class="container">
 
                 					<!-- Print btn -->
@@ -383,36 +413,45 @@ if(isset($_POST['print_data'])){
 									<hr>
 
 
+
+
+
+
+									<!-- SELECT DEPARTMENT -->
+
 									<!-- Enter Survey Type -->
 									<div style="width: 50%;">
-										<label style="font-size: 20px; font-weight: bold;"><span id="dept_lbl">Select</span> Department</label>
+										<label style="font-size: 20px; font-weight: bold;">Select Department</label>
 										
-										<button type="button" class="btn btn-secondary btn-sm float-right" id="enter_dept_btn" onclick="enter_dept()" style="margin-left: 20px;">Enter New Department</button>
-										<button type="button" class="btn btn-secondary btn-sm float-right" id="select_dept_btn" onclick="select_dept()" style="margin-left: 20px;">Select Department</button>
-
 										<!-- Select -->
-										<select id="action_select_dept" class="form-control mb-2"> 
+										<select name="selected_department" class="form-control mb-2"> 
 											<option value="">Select Department</option>
 											<?php  
-												$sql_s_type = "SELECT survey_type FROM survey_template";
-												$res_s_type = mysqli_query($db_connect, $sql_s_type);
+												$sql_department = "SELECT dept_name FROM tbl_survey_dept";
+												$res_department = mysqli_query($db_connect, $sql_department);
 
-												if (mysqli_num_rows($res_s_type) > 0){
-													while($row_s_type = mysqli_fetch_assoc($res_s_type)) {
-														$s_type = $row_s_type['survey_type'];
+												if (mysqli_num_rows($res_department) > 0){
+													while($row_department = mysqli_fetch_assoc($res_department)) {
+														$s_department = $row_department['dept_name'];
 											?>
-											<option value="<?php echo $s_type; ?>" style="display: <?php if(empty($s_type)){echo"none";}else{echo"block";} ?>;"><?php echo $s_type; ?></option>
+											<option value="<?php echo $s_department; ?>" style="display: <?php if(empty($s_department)){echo"none";}else{echo"block";} ?>;"><?php echo $s_department; ?></option>
 											<?php
 													}
 												}
 											?>
 										</select>
 
-										<input type="text" id="action_enter_dept" class="form-control mb-2" placeholder="Enter new department">
 									</div>
 									<!-- END Enter Survey Type -->
 
 
+
+
+
+
+
+
+									<!-- HIDDEN -->
 									<!-- Custom Body 2 -->
 									<form onsubmit="return fetchcall()">
 									<div style="display: none;">
@@ -454,6 +493,7 @@ if(isset($_POST['print_data'])){
 									</div>
 									</form>
 									<!-- END Custom Body 2 -->
+									<!-- END HIDDEN -->
 
 
 									
@@ -469,11 +509,11 @@ if(isset($_POST['print_data'])){
 
 
 									<!-- NEXT button -->
-									<button type="button" class="btn btn-success" style="width: 100%;">NEXT</button>
+									<button type="submit" name="next_btn_templ_1" class="btn btn-success mt-4" style="width: 100%;">NEXT</button>
 
 
 									<!-- SUBMIT -->
-									<button type="submit" name="publish_data" class="btn btn-success mt-4" style="width: 100%;"><?php if(empty($template_id_tl)){echo "PUBLISH";}else{echo "UPDATE";} ?></button>
+									<!-- <button type="submit" name="publish_data" class="btn btn-success mt-4" style="width: 100%;"><?php if(empty($template_id_tl)){echo "PUBLISH";}else{echo "UPDATE";} ?></button> -->
                 				</div>
                 				</form>
 
@@ -531,39 +571,7 @@ if(isset($_POST['print_data'])){
 
 
 
-<!-- Survey Template Type Function -->
-<script type="text/javascript">
-	select_dept_btn.style.display = "none"; // hide select dept btn
-	action_enter_dept.style.display = "none"; // hide enter dept txtbox
 
-	<?php //if(empty($template_id_tl)){echo "PUBLISH";}else{echo "UPDATE";} ?>
-
-	// Enter dept button
-	function enter_dept() {
-		enter_dept_btn.style.display = "none";// hide own button
-		select_dept_btn.style.display = "block";// show select dept button
-
-		action_select_dept.style.display = "none"; // hide action selection
-		action_enter_dept.style.display = "block"; // show enter dept txtbox
-
-		document.getElementById("action_select_dept").selectedIndex = "0"; // select the first option in dropdow
-
-		document.getElementById("dept_lbl").innerHTML = "Enter New"; // change label
-	}
-	// select dept button
-	function select_dept() {
-		select_dept_btn.style.display = "none";// hide own button
-		enter_dept_btn.style.display = "block";// hide enter dept button
-
-		action_select_dept.style.display = "block"; // show action selection
-		action_enter_dept.style.display = "none"; // hide enter dept txtbox
-
-		document.getElementById("action_enter_dept").value = ""; // clear value of enter dept txtbox
-
-		document.getElementById("dept_lbl").innerHTML = "Select"; // change label
-	}
-</script>
-<!-- END Survey Template Type Function -->
 
 
 
