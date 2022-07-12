@@ -2,8 +2,13 @@
 <style type="text/css">
   #sidebar_container {
     transition: all .3s ease;
-    width: 300px; 
-    margin: 0;
+    /*width: 300px; */
+    width: 20%;
+    margin-left: 10px;
+    margin-right: 0;
+    margin-top: 5px;
+    margin-bottom: 0;
+    border-radius: 7px 7px 0 0;
   }
   #arrow_right_sidebar {
     display: none; 
@@ -285,7 +290,7 @@
 
 <!-- SIDEBAR -->
 
-<div id="sidebar_container" class="border-0 bg-primary bg-gradient">
+<div id="sidebar_container" class="border-0 bg-primary bg-gradient shadow">
   <div class="sticky-top pt-2">
 
     <!-- ARROW -->
@@ -326,8 +331,8 @@
     <!-- SURVEY MANAGEMENT -->
     <div>
 
-      <div class="selection_sidebar" id="toggle_focus_s_mng" onclick="window.location.href = '#'; document.getElementById('checkbox_s_management').click(); click_s_management()">
-        <div id="titles_name_sidebar_2_1">Survey Management <div class="float-right" id="arr_right_sMng"><i class="fa-solid fa-chevron-right"></i></div></div>
+      <div class="selection_sidebar" id="toggle_focus_s_mng" onclick="document.getElementById('checkbox_s_management').click(); click_s_management()">
+        <div id="titles_name_sidebar_2_1"><i class="fa-solid fa-list-check"></i> Survey Management <div class="float-right" id="arr_right_sMng"><i class="fa-solid fa-chevron-right"></i></div></div>
         <!-- icon -->
         <div><i class="fa-solid fa-pen-ruler" id="icon_sidebar_2_1"></i></div>
 
@@ -336,17 +341,24 @@
 
     <!-- CREATE TEMPLATE -->
       <div class="selection_sidebar" id="sect_createTemplate" onclick="window.location.href = 'create_template.php';">
-        <div style="padding-left: 10px; background: white; z-index: 2; position: absolute; left: 0;"></div>
-        <div id="titles_name_sidebar_3"><i class="fa-solid fa-pen-ruler"></i> Create Templates</div>
+        <div id="titles_name_sidebar_3">
+          <!-- Vertical line -->
+          <div class="float-left bg-light" style="border: 1px solid white; width: 5px; height: 47px; margin-top: -10px; margin-left: -10px;"></div>
+          Create Templates
+        </div>
         <!-- icon -->
         <div><i class="fa-solid fa-pen-ruler" id="icon_sidebar_3"></i></div>
       </div>
 
     </div>
 
-  <!-- TEMPLATE LIST -->
+  <!-- LIST OF SURVEY -->
     <div class="selection_sidebar" onclick="window.location.href = 'template_list.php';">
-      <div id="titles_name_sidebar_3_1"><i class="fa-solid fa-clipboard-check"></i> Template List</div>
+      <div id="titles_name_sidebar_3_1">
+        <!-- Vertical line -->
+        <div class="float-left bg-light" style="border: 1px solid white; width: 5px; height: 47px; margin-top: -10px; margin-left: -10px;"></div>
+        List of Survey
+      </div>
       <!-- icon -->
       <div><i class="fa-solid fa-clipboard-check" id="icon_sidebar_3_1"></i></div>
     </div>
@@ -388,6 +400,7 @@
   // MINIMIZE SIDE BAR
   function minimize_side_bar() {
     sidebar_container.style.width = "100px"; // sidebar
+    // sidebar_container.style.width = "10%"; // sidebar
     survey_info_container.style.width = "100%"; // contents
 
     arrow_right_sidebar.style.display = "block"; // display arrow-right button

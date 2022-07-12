@@ -43,6 +43,7 @@ if(isset($_GET['template_id_tl'])) {
 
 			$edit_title = $row_view_edit_tmpl['template_title'];
 			$edit_header = $row_view_edit_tmpl['template_header'];
+			$edit_assign_survey = $row_view_edit_tmpl['assign_survey'];
 		}
 	}
 }
@@ -63,6 +64,7 @@ if(isset($_POST['publish_data'])) {
 	$get_templ_id = mysqli_real_escape_string($db_connect, $_POST['get_templ_id']);
 	$s_title = mysqli_real_escape_string($db_connect, $_POST['template_title']);
 	$s_header = mysqli_real_escape_string($db_connect, $_POST['template_header']);
+	$s_department_assign = mysqli_real_escape_string($db_connect, $_POST['selected_department']);
 
 
 	// date now
@@ -73,11 +75,12 @@ if(isset($_POST['publish_data'])) {
 	// else -> UPDATE
 
 
-	// INSERT
+	// if id is empty -> INSERT
 	if($get_templ_id == ""){
 		
+		// INSERT ->
 
-		// if data is empty
+		// check if data is empty
 		if(empty($s_title)) {
 
 			$msg_response['status']="error";
@@ -86,19 +89,29 @@ if(isset($_POST['publish_data'])) {
 			header("location: create_template.php");
 			exit();
 
-		}elseif(empty($s_header)){
+		}
+		// check if Header is empty
+		if(empty($s_header)){
 
 			$msg_response['status']="error";
 			$msg_response['msg']="Header cannot be empty";
 			$session_class->setValue('error',$msg_response['msg']);
 			header("location: create_template.php");
 			exit();
+		}
+		// check if user select any department for template
+		if(empty($s_department_assign)) {
 
+			$msg_response['status']="error";
+			$msg_response['msg']="Select any Department";
+			$session_class->setValue('error',$msg_response['msg']);
+			header("location: create_template.php?sel_dept_error=error");
+			exit();
 		}
 
 
 		// Insert data
-		$sql_template_insert = "INSERT INTO survey_template (template_title, template_header) VALUES ('$s_title', '$s_header')";
+		$sql_template_insert = "INSERT INTO survey_template (template_title, template_header, assign_survey) VALUES ('$s_title', '$s_header', '$s_department_assign')";
 		$res_template_insert = mysqli_query($db_connect, $sql_template_insert);
 
 		if(!$res_template_insert) {
@@ -110,11 +123,12 @@ if(isset($_POST['publish_data'])) {
 			exit();
 
 		}else{
-
+			// Successfully Publish
 			$msg_response['status']="success";
 			$msg_response['msg']="Published!";
 			$session_class->setValue('success',$msg_response['msg']);
-			header("location: create_template.php");
+			// header("location: create_template.php");
+			header("location: template_list.php");
 			exit();
 		}
 
@@ -126,7 +140,7 @@ if(isset($_POST['publish_data'])) {
 	}else{
 
 
-		// check if data is empty
+		// check if title is empty
 		if(empty($s_title)) {
 
 			$msg_response['status']="error";
@@ -135,7 +149,9 @@ if(isset($_POST['publish_data'])) {
 			header("location: create_template.php");
 			exit();
 
-		}elseif(empty($s_header)){
+		}
+		// check if Header is empty
+		if(empty($s_header)){
 
 			$msg_response['status']="error";
 			$msg_response['msg']="Header cannot be empty";
@@ -144,10 +160,19 @@ if(isset($_POST['publish_data'])) {
 			exit();
 
 		}
+		// check if user select any department for template
+		if(empty($s_department_assign)) {
+
+			$msg_response['status']="error";
+			$msg_response['msg']="Select any Department";
+			$session_class->setValue('error',$msg_response['msg']);
+			header("location: create_template.php?sel_dept_error=error");
+			exit();
+		}
 
 
 		// Update data
-		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_header = '$s_header' WHERE s_template_id = '$get_templ_id'";
+		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_header = '$s_header', assign_survey = '$s_department_assign' WHERE s_template_id = '$get_templ_id'";
 		$res_template_update = mysqli_query($db_connect, $sql_template_update);
 
 		if(!$res_template_update) {
@@ -314,7 +339,7 @@ if(isset($_POST['print_data'])){
 
 				<!-- HEADER TITLE -->
                 <div class="container bg-light pt-1 pb-1 mb-3 shadow border rounded">
-                    <h3><?php if(empty($template_id_tl)){echo "Create Template [1-2]";}else{echo "Edit Template";} ?></h3>
+                    <h3><?php if(empty($template_id_tl)){echo "Create Template";}else{echo "Edit Template";} ?></h3>
                 </div>
 
 
@@ -324,8 +349,8 @@ if(isset($_POST['print_data'])){
                 		<div class="row">
                 			<div class="col-md-12">
 
-                				<!-- <form action="create_template.php" method="POST"> -->
-            					<form action="templ_add_q.php" method="POST">
+                				<form action="create_template.php" method="POST">
+            					<!-- <form action="templ_add_q.php" method="POST"> -->
                 				<div class="container">
 
                 					<!-- Print btn -->
@@ -336,7 +361,7 @@ if(isset($_POST['print_data'])){
 	                				<!-- Title -->
 	                				<div class="mb-3">
 	                					<label style="font-size: 20px; font-weight: bold;">Title</label>
-			            				<input name="template_title" type="text" value="<?php if(!empty($edit_title)){echo $edit_title;}else{echo "";} ?>" class="form-control">
+			            				<input name="template_title" type="text" value="<?php if(!empty($edit_title)){echo $edit_title;}else{echo "";} ?>" class="form-control" required>
 	                				</div>
 	                				
 	                				<!-- Form Editor / Builder field -->
@@ -423,9 +448,9 @@ if(isset($_POST['print_data'])){
 									<div style="width: 50%;">
 										<label style="font-size: 20px; font-weight: bold;">Select Department</label>
 										
-										<!-- Select -->
+										<!-- Select --> 
 										<select name="selected_department" class="form-control mb-2"> 
-											<option value="">Select Department</option>
+											<option value="<?php if(!empty($edit_assign_survey)){echo $edit_assign_survey;}else{echo'';} ?>"><?php if(!empty($edit_assign_survey)){echo $edit_assign_survey;}else{echo"-Select Department-";} ?></option>
 											<?php  
 												$sql_department = "SELECT dept_name FROM tbl_survey_dept";
 												$res_department = mysqli_query($db_connect, $sql_department);
@@ -440,6 +465,15 @@ if(isset($_POST['print_data'])){
 												}
 											?>
 										</select>
+										<div>Select department for this template.</div>
+
+										<!-- Error msg -->
+										<?php if(isset($_GET['sel_dept_error'])){ ?>
+											<div class="text-danger">
+												<i class="fa-solid fa-circle-exclamation"></i> 
+												Please select any Department.
+											</div>
+										<?php } ?>	
 
 									</div>
 									<!-- END Enter Survey Type -->
@@ -449,71 +483,17 @@ if(isset($_POST['print_data'])){
 
 
 
-
-
-									<!-- HIDDEN -->
-									<!-- Custom Body 2 -->
-									<form onsubmit="return fetchcall()">
-									<div style="display: none;">
-										<label style="font-size: 20px; font-weight: bold;">Edit questions</label>
-
-										<!-- Questions field -->
-										<?php  
-
-										$sql_questions = "SELECT * FROM tbl_tmpl_body2";
-										$res_questions = mysqli_query($db_connect, $sql_questions);
-
-										if (mysqli_num_rows($res_questions) > 0) {
-											while($row_questions = mysqli_fetch_assoc($res_questions)) {
-												$question_id = $row_questions['id'];
-												$question = $row_questions['questions'];
-										?>
-
-										<!-- Question ID -->
-										<input type="text" id="q_id" value="<?php echo $question_id; ?>" style="display: none;">
-
-										<div class="input-group" style="width: 100%;">
-											<div style="width: 80%;">
-												<input type="text" class="form-control mb-2" name="questions[]" value="<?php echo $question; ?>" placeholder="Questions fields">
-											</div>
-											<!-- Remove button -->
-											<div style="width: 20%;">
-												<button type="submit" class="btn btn-danger" style="margin-left: 5px;">Remove</button>
-											</div>
-										</div>
-										
-										<?php 
-											}
-										}
-
-										?>
-										<!-- END Questions field -->
-										
-
-									</div>
-									</form>
-									<!-- END Custom Body 2 -->
-									<!-- END HIDDEN -->
-
-
-									
-
-
-									
-
-
-
 									<!-- get ID -->
 									<input type="text" name="get_templ_id" value="<?php if(!empty($template_id_tl)){echo $template_id_tl;}else{echo "";} ?>" style="display: none;">
 
 
 
 									<!-- NEXT button -->
-									<button type="submit" name="next_btn_templ_1" class="btn btn-success mt-4" style="width: 100%;">NEXT</button>
+									<!-- <button type="submit" name="next_btn_templ_1" class="btn btn-success mt-4" style="width: 100%;">NEXT</button> -->
 
 
 									<!-- SUBMIT -->
-									<!-- <button type="submit" name="publish_data" class="btn btn-success mt-4" style="width: 100%;"><?php if(empty($template_id_tl)){echo "PUBLISH";}else{echo "UPDATE";} ?></button> -->
+									<button type="submit" name="publish_data" class="btn btn-success mt-4" style="width: 100%;"><?php if(empty($template_id_tl)){echo "PUBLISH";}else{echo "UPDATE";} ?></button>
                 				</div>
                 				</form>
 

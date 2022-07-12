@@ -178,7 +178,7 @@ if(isset($_POST['delete_btn'])) {
 	                					<tbody>
 	                						<?php 
 	                						// DISPLAY SURVEY TEMPLATES
-											$sql_d_templates = "SELECT * FROM survey_template";
+											$sql_d_templates = "SELECT * FROM survey_template ORDER BY s_template_id DESC";
 											$res_d_templates = mysqli_query($db_connect, $sql_d_templates);
 
 											if (mysqli_num_rows($res_d_templates) > 0) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2022 at 05:46 AM
+-- Generation Time: Jul 12, 2022 at 05:14 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -250,16 +250,18 @@ CREATE TABLE `survey_template` (
   `template_title` varchar(255) NOT NULL,
   `template_header` text NOT NULL,
   `date_publish` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `survey_type` varchar(100) DEFAULT NULL
+  `assign_survey` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `survey_template`
 --
 
-INSERT INTO `survey_template` (`s_template_id`, `template_title`, `template_header`, `date_publish`, `survey_type`) VALUES
-(20, 'template 001', '<p><em><strong>dexcriptio</strong>n</em> here...<img alt=\"\" src=\"ckeditor/uploads/246-2467553_nuwave-design-ltd-your-logo-here-png-png.jpg\" style=\"height:150px; width:150px\" /></p>\r\n', '2022-07-07 12:25:35', 'type 1'),
-(22, 'Header 1', '<p style=\"text-align:center\"><img alt=\"\" src=\"ckeditor/uploads/thumb-350-296347.png\" style=\"height:100px; width:100px\" />&nbsp; &nbsp; &nbsp; &nbsp;Header Title Here&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img alt=\"\" src=\"ckeditor/uploads/tumblr_8af80293008a8375acc428825dcdb5dd_c3dc0212_540.jpg\" style=\"height:99px; width:100px\" /></p>\r\n\r\n<p style=\"text-align:justify\">&nbsp;</p>\r\n', '2022-07-05 11:33:05', NULL);
+INSERT INTO `survey_template` (`s_template_id`, `template_title`, `template_header`, `date_publish`, `assign_survey`) VALUES
+(20, 'template 001', '<p><em><strong>dexcriptio</strong>n</em> here...<img alt=\"\" src=\"ckeditor/uploads/246-2467553_nuwave-design-ltd-your-logo-here-png-png.jpg\" style=\"height:150px; width:150px\" /></p>\r\n', '2022-07-12 14:48:14', NULL),
+(22, 'Header 1', '<p style=\"text-align:center\"><img alt=\"\" src=\"ckeditor/uploads/thumb-350-296347.png\" style=\"height:100px; width:100px\" />&nbsp; &nbsp; &nbsp; &nbsp;Header Title Here&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img alt=\"\" src=\"ckeditor/uploads/tumblr_8af80293008a8375acc428825dcdb5dd_c3dc0212_540.jpg\" style=\"height:99px; width:100px\" /></p>\r\n\r\n<p style=\"text-align:justify\">&nbsp;</p>\r\n', '2022-07-05 11:33:05', NULL),
+(23, 'Template 3', '<p>oloolol<u><strong>ololololl</strong></u></p>\r\n', '2022-07-12 14:36:53', NULL),
+(24, 'Template 4', '<p>444444</p>\r\n', '2022-07-12 14:38:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -520,6 +522,8 @@ INSERT INTO `user_log` (`user_log_id`, `login_date`, `logout_date`, `action`, `u
 (137, '2022-07-11 19:56:02', '0000-00-00 00:00:00', 'LOGIN', 1, 'f50b8db50f645d99f3e2d6ce760b3fdbbb81eba465a680ae74d50d455c9234f7', '::1', '{\"device\":\"Chrome Mobile\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":32,\"family\":\"Android\",\"version\":\"6.0\"},\"description\":\"Chrome Mobile 103.0.0.0 on Google Nexus 5 (Android 6.0)\"}', 0),
 (138, '2022-07-11 19:58:43', '0000-00-00 00:00:00', 'LOGIN', 1, 'da696e1d9caead25ab728d6f028652ad56c64bb5650877ea342f2a76b909f6eb', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
 (139, '2022-07-12 07:33:44', '0000-00-00 00:00:00', 'LOGIN', 1, 'fc2cc5ce1e7659fa39f1be5729ad8c93f55d3b2722f5cfe0ba5c65e85d9107c7', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0);
+INSERT INTO `user_log` (`user_log_id`, `login_date`, `logout_date`, `action`, `user_id`, `session_id`, `ip_address`, `device`, `system_id`) VALUES
+(140, '2022-07-12 18:07:56', '0000-00-00 00:00:00', 'LOGIN', 1, '7e5b1cf252076fb00f96c7e45c0ff7fc79e378beb11bae5e687a23eb46d9fd84', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0);
 
 --
 -- Indexes for dumped tables
@@ -605,7 +609,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `survey_template`
 --
 ALTER TABLE `survey_template`
-  MODIFY `s_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `s_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `tbl_surveys_records`
@@ -635,7 +639,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_log`
 --
 ALTER TABLE `user_log`
-  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
