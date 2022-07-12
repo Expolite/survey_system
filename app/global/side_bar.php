@@ -97,6 +97,17 @@
     display: block;
   }
 
+  /* SURVEY MANAGEMENT */
+  #titles_name_sidebar_2_1 {
+    position: relative;
+    display: block;
+  }
+  #icon_sidebar_2_1 {
+    font-size: 30px;
+    display: none;
+    text-align: center;
+  }
+
 /* SURVEY TEMPLATES */
   /* icons */
   #icon_sidebar_3 {
@@ -167,6 +178,24 @@
   }
 
 
+  /* arrow rotation SURVEY MANAGEMENT*/
+  #arr_right_sMng {
+    transform: rotate(0deg);
+    transition: all .5s ease;
+  }
+
+  /* CREATE TEMPLATE - Survey Management */
+  #sect_createTemplate {
+    position: relative;
+    left: 0;
+    top: -45px;
+    display: none;
+    transition: all .3s ease;
+  }
+
+
+
+
 
   /* RESPONSIVE */
   @media screen and (max-width: 780px){
@@ -200,14 +229,17 @@
     #icon_sidebar {
       display: block;
     }
-    #icon_sidebar_2 {
-      display: block;
-    }
     #titles_name_sidebar {
       display: none;
     }
     #titles_name_sidebar_2 {
       display: none;
+    }
+    #titles_name_sidebar_2_1 {
+      display: none;
+    }
+    #icon_sidebar_2_1 {
+      display: block;
     }
     #icon_sidebar_2 {
       display: block;
@@ -279,7 +311,7 @@
   <!-- SURVEY INFORMATION -->
     <!-- SELECTION -->
     <div class="selection_sidebar" onclick="window.location.href = 'main.php';">
-      <div id="titles_name_sidebar"><i class="fa-solid fa-square-poll-vertical"></i> Survey Information</div>
+      <div id="titles_name_sidebar"><i class="fa-solid fa-square-poll-vertical"></i> Dashboard</div>
       <!-- icon -->
       <div><i class="fa-solid fa-square-poll-vertical" id="icon_sidebar"></i></div>
     </div>
@@ -291,11 +323,25 @@
       <div><i class="fa-solid fa-users-gear" id="icon_sidebar_2"></i></div>
     </div>
 
-  <!-- SURVEY TEMPLATE -->
-    <div class="selection_sidebar" onclick="window.location.href = 'create_template.php';">
-      <div id="titles_name_sidebar_3"><i class="fa-solid fa-pen-ruler"></i> Create Templates</div>
-      <!-- icon -->
-      <div><i class="fa-solid fa-pen-ruler" id="icon_sidebar_3"></i></div>
+    <!-- SURVEY MANAGEMENT -->
+    <div>
+
+      <div class="selection_sidebar" id="toggle_focus_s_mng" onclick="window.location.href = '#'; document.getElementById('checkbox_s_management').click(); click_s_management()">
+        <div id="titles_name_sidebar_2_1">Survey Management <div class="float-right" id="arr_right_sMng"><i class="fa-solid fa-chevron-right"></i></div></div>
+        <!-- icon -->
+        <div><i class="fa-solid fa-pen-ruler" id="icon_sidebar_2_1"></i></div>
+
+        <input type="checkbox" id="checkbox_s_management" style="display: none;">
+      </div>
+
+    <!-- CREATE TEMPLATE -->
+      <div class="selection_sidebar" id="sect_createTemplate" onclick="window.location.href = 'create_template.php';">
+        <div style="padding-left: 10px; background: white; z-index: 2; position: absolute; left: 0;"></div>
+        <div id="titles_name_sidebar_3"><i class="fa-solid fa-pen-ruler"></i> Create Templates</div>
+        <!-- icon -->
+        <div><i class="fa-solid fa-pen-ruler" id="icon_sidebar_3"></i></div>
+      </div>
+
     </div>
 
   <!-- TEMPLATE LIST -->
@@ -357,6 +403,7 @@
     // CHANGE ICON SIZE & DISPLAY - TEXT CENTER
     icon_sidebar.style.display = "block"; // display icons
     icon_sidebar_2.style.display = "block"; // display icons
+    icon_sidebar_2_1.style.display = "block"; // display icons
     icon_sidebar_3.style.display = "block"; // display icons
     icon_sidebar_3_1.style.display = "block"; // display icons
     icon_sidebar_4.style.display = "block"; // display icons
@@ -365,6 +412,7 @@
 
     titles_name_sidebar.style.display = "none"; // hide title names
     titles_name_sidebar_2.style.display = "none"; // hide title names
+    titles_name_sidebar_2_1.style.display = "none"; // hide title names
     titles_name_sidebar_3.style.display = "none"; // hide title names
     titles_name_sidebar_3_1.style.display = "none"; // hide title names
     titles_name_sidebar_4.style.display = "none"; // hide title names
@@ -389,6 +437,7 @@
     // CHANGE ICON SIZE & DISPLAY - TEXT CENTER
     icon_sidebar.style.display = "none"; // hide icons
     icon_sidebar_2.style.display = "none"; // hide icons
+    icon_sidebar_2_1.style.display = "none"; // hide icons
     icon_sidebar_3.style.display = "none"; // hide icons
     icon_sidebar_3_1.style.display = "none"; // hide icons
     icon_sidebar_4.style.display = "none"; // hide icons
@@ -396,6 +445,7 @@
 
     titles_name_sidebar.style.display = "block"; // display title names
     titles_name_sidebar_2.style.display = "block"; // display title names
+    titles_name_sidebar_2_1.style.display = "block"; // display title names
     titles_name_sidebar_3.style.display = "block"; // display title names
     titles_name_sidebar_3_1.style.display = "block"; // display title names
     titles_name_sidebar_4.style.display = "block"; // display title names
@@ -415,6 +465,60 @@
       activity_log_arrow.style.transform = "rotate(90deg)"; // rotate arrow from Activity log
     }
   }
+
+
+
+
+
+
+  // SURVEY MANAGEMENT
+
+  // if checkbox is clicked rotate the arrow,
+  // if clicked again, rotate arrow to original
+  function click_s_management(){
+    // checkbox id: checkbox_s_management
+    // arrow right id: arr_right_sMng
+    var checkBox_s_mngnt = document.getElementById("checkbox_s_management");
+    var txt_arrowRight = document.getElementById("arr_right_sMng"); // arrow right
+    if (checkBox_s_mngnt.checked == true) {
+      txt_arrowRight.style.transform = "rotate(90deg)"; // rotate txt
+      // focus selection
+      toggle_focus_s_mng.style.background = "white";
+      toggle_focus_s_mng.style.color = "#007bff";
+
+      // toggle down -> sect_createTemplate
+      // show
+      setTimeout(tggleShow_sectCreateTempl, 200); // .2 second
+      function tggleShow_sectCreateTempl() {
+        sect_createTemplate.style.display = "block";
+        // bring down
+        setTimeout(tggleDown_sectCreateTempl, 200); // .2 second
+        function tggleDown_sectCreateTempl() {
+          sect_createTemplate.style.top = "0px";
+        }
+      }
+
+      click();
+    }else{
+      txt_arrowRight.style.transform = "rotate(0deg)"; // rotate txt 0 degree
+      // unfocus selection
+      toggle_focus_s_mng.style.background = "#007bff";
+      toggle_focus_s_mng.style.color = "white";
+
+      // toggle down -> sect_createTemplate
+      // bring up
+      setTimeout(tggleUp_sectCreateTempl, 200); // .2 second
+      function tggleUp_sectCreateTempl() {
+        sect_createTemplate.style.top = "-45px";
+        // hide
+        setTimeout(tggleHide_sectCreateTempl, 300); // .3 second
+        function tggleHide_sectCreateTempl() {
+          sect_createTemplate.style.display = "none";
+        }
+      }
+    }
+  }
+
 
 
 </script>

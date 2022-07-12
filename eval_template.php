@@ -3,13 +3,13 @@ require 'config/config.php';
 require CONNECT_PATH;
 require CL_SESSION_PATH;
 require GLOBAL_FUNC;
-require ISLOGIN;
-define('PAGE_TITLE', 'EVALUATION');
+// require ISLOGIN;
+// define('PAGE_TITLE', 'EVALUATION');
 
-if(!($g_user_role[0] == "ADMIN")){  
-	include HTTP_404;
-	exit();
-}
+// if(!($g_user_role[0] == "ADMIN")){  
+// 	include HTTP_404;
+// 	exit();
+// }
 
 $csrf = new CSRF($session_class); // generate ng bagong csrf token
 $fingerprint = $session_class->getValue('browser_fingerprint');

@@ -39,6 +39,10 @@
                     
                     <form action="user_management.php" method="POST">
 
+                    	<!-- User -->
+                    	<label for=""><b>User</b></label>
+                    	<input type="text" name="sel_user" value="<?php echo $user_id_no; ?>" class="form-control mb-3" readonly>
+
 	                    <!-- Department Name -->
 	                    <label for=""><b>Department</b></label>
 	                    <input type="text" name="sel_user_inDept" value="<?php echo $user_department; ?>" class="form-control mb-3" readonly>
