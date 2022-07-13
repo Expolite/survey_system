@@ -171,7 +171,9 @@ if(isset($_POST['delete_btn'])) {
 	                							</th>
 	                							<th>ID</th>
 	                							<th>Title</th>
-	                							<th>Published</th>
+	                							<th>Department</th>
+	                							<th>Date_Start</th>
+	                							<th>Date_End</th>
 	                							<th>Actions</th>
 	                						</tr>
 	                					</thead>
@@ -186,15 +188,20 @@ if(isset($_POST['delete_btn'])) {
 												while($row_d_templates = mysqli_fetch_assoc($res_d_templates)) {
 													$s_template_id = $row_d_templates['s_template_id'];
 													$s_template_title = $row_d_templates['template_title'];
+													$s_template_department = $row_d_templates['assign_survey'];
 													$s_publish_date = $row_d_templates['date_publish'];
+													$s_date_start = $row_d_templates['start_date'];
+													$s_date_end = $row_d_templates['end_date'];
 
 	                						?>
 
-	                						<tr id="tr_hover" onclick="toggle_<?php echo $s_template_id;?>()">
+	                						<tr title="Published: <?php echo $s_publish_date; ?>" id="tr_hover" onclick="toggle_<?php echo $s_template_id;?>()">
 	                							<td><input type="checkbox" name="chk[]" value="<?php echo $s_template_id; ?>" class="m-1" id="<?php echo $s_template_id;?>"></td>
 	                							<td><?php echo $s_template_id;?></td>
 	                							<td><?php echo $s_template_title; ?></td>
-	                							<td><?php echo $s_publish_date; ?></td>
+	                							<td><?php echo $s_template_department; ?></td>
+	                							<td><?php echo $s_date_start; ?></td>
+	                							<td><?php echo $s_date_end; ?></td>
 	                							<td><a href="create_template.php?template_id_tl=<?php echo $s_template_id; ?>" class="m-0 text-dark"><i class="fa-solid fa-pen-to-square"></i> Edit</a></td>
 	                						</tr>
 

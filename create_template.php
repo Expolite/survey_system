@@ -41,9 +41,12 @@ if(isset($_GET['template_id_tl'])) {
 
 		while($row_view_edit_tmpl = mysqli_fetch_assoc($res_view_edit_tmpl)) {
 
+
+			// Get data to display to field
 			$edit_title = $row_view_edit_tmpl['template_title'];
 			$edit_header = $row_view_edit_tmpl['template_header'];
 			$edit_assign_survey = $row_view_edit_tmpl['assign_survey'];
+			$edit_template_status = $row_view_edit_tmpl['template_status'];
 		}
 	}
 }
@@ -65,8 +68,12 @@ if(isset($_POST['publish_data'])) {
 	$s_title = mysqli_real_escape_string($db_connect, $_POST['template_title']);
 	$s_header = mysqli_real_escape_string($db_connect, $_POST['template_header']);
 	$s_department_assign = mysqli_real_escape_string($db_connect, $_POST['selected_department']);
+	$s_template_status = mysqli_real_escape_string($db_connect, $_POST['tmpl_status']);
+	$s_templ_date_start = mysqli_real_escape_string($db_connect, $_POST['templ_start_date']);
+	$s_templ_date_end = mysqli_real_escape_string($db_connect, $_POST['templ_end_date']);
 
 
+	
 	// date now
 	// $date_now = date('Y-m-d');
 
@@ -99,19 +106,52 @@ if(isset($_POST['publish_data'])) {
 			header("location: create_template.php");
 			exit();
 		}
-		// check if user select any department for template
+		// check if admin_user select any department for template
 		if(empty($s_department_assign)) {
 
 			$msg_response['status']="error";
 			$msg_response['msg']="Select any Department";
 			$session_class->setValue('error',$msg_response['msg']);
-			header("location: create_template.php?sel_dept_error=error");
+			// header("location: create_template.php?sel_dept_error=error");
+			echo "echo <script> window.history.go(-1); </script>";
 			exit();
 		}
 
 
+
+
+		// You cannot enter current date
+		// END DATE
+		$ct_current_date = strtotime(date("d-m-yy"));
+		// $ct_current_date = date('d-m-yy');
+		// START DATE
+		if(strtotime($s_templ_date_start) < $ct_current_date) {
+
+			$msg_response['status']="error";
+			$msg_response['msg']="You cannot enter past date";
+			$session_class->setValue('error',$msg_response['msg']);
+			// header("location: create_template.php?sel_dept_error=error");
+			echo "echo <script> window.history.go(-1); </script>";
+			exit();
+		}
+
+		if(strtotime($s_templ_date_end) <= $ct_current_date) {
+
+			$msg_response['status']="error";
+			$msg_response['msg']="You cannot enter current & past date";
+			$session_class->setValue('error',$msg_response['msg']);
+			// header("location: create_template.php?sel_dept_error=error");
+			echo "echo <script> window.history.go(-1); </script>";
+			exit();
+		}
+		
+
+
+
+
+
 		// Insert data
-		$sql_template_insert = "INSERT INTO survey_template (template_title, template_header, assign_survey) VALUES ('$s_title', '$s_header', '$s_department_assign')";
+		$sql_template_insert = "INSERT INTO survey_template (template_title, template_header, assign_survey, template_status, start_date, end_date) VALUES ('$s_title', '$s_header', '$s_department_assign', '$s_template_status', '$s_templ_date_start', '$s_templ_date_end')";
 		$res_template_insert = mysqli_query($db_connect, $sql_template_insert);
 
 		if(!$res_template_insert) {
@@ -172,7 +212,7 @@ if(isset($_POST['publish_data'])) {
 
 
 		// Update data
-		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_header = '$s_header', assign_survey = '$s_department_assign' WHERE s_template_id = '$get_templ_id'";
+		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_header = '$s_header', assign_survey = '$s_department_assign', template_status = '$s_template_status', start_date = '$s_templ_date_start', end_date = '$s_templ_date_end' WHERE s_template_id = '$get_templ_id'";
 		$res_template_update = mysqli_query($db_connect, $sql_template_update);
 
 		if(!$res_template_update) {
@@ -188,7 +228,7 @@ if(isset($_POST['publish_data'])) {
 			$msg_response['status']="success";
 			$msg_response['msg']="UPDATED!";
 			$session_class->setValue('success',$msg_response['msg']);
-			header("location: create_template.php");
+			header("location: template_list.php");
 			exit();
 		}
 	}
@@ -363,6 +403,124 @@ if(isset($_POST['print_data'])){
 	                					<label style="font-size: 20px; font-weight: bold;">Title</label>
 			            				<input name="template_title" type="text" value="<?php if(!empty($edit_title)){echo $edit_title;}else{echo "";} ?>" class="form-control" required>
 	                				</div>
+
+
+
+
+	                				<hr>
+
+
+
+
+
+
+									<!-- SELECT DEPARTMENT -->
+
+									<!-- Enter Survey Type -->
+									<div style="width: 50%;">
+										<label style="font-size: 20px; font-weight: bold;">Select Department</label>
+										
+										<!-- Select --> 
+										<select name="selected_department" class="form-control mb-2"> 
+											<option value="<?php if(!empty($edit_assign_survey)){echo $edit_assign_survey;}else{echo'';} ?>"><?php if(!empty($edit_assign_survey)){echo $edit_assign_survey;}else{echo"-Select Department-";} ?></option>
+											<?php  
+												$sql_department = "SELECT dept_name FROM tbl_survey_dept";
+												$res_department = mysqli_query($db_connect, $sql_department);
+
+												if (mysqli_num_rows($res_department) > 0){
+													while($row_department = mysqli_fetch_assoc($res_department)) {
+														$s_department = $row_department['dept_name'];
+											?>
+											<option value="<?php echo $s_department; ?>" style="display: <?php if(empty($s_department)){echo"none";}else{echo"block";} ?>;"><?php echo $s_department; ?></option>
+											<?php
+													}
+												}
+											?>
+										</select>
+										<div>Select department for this template.</div>
+
+										<!-- Error msg -->
+										<?php if(isset($_GET['sel_dept_error'])){ ?>
+											<div class="text-danger">
+												<i class="fa-solid fa-circle-exclamation"></i> 
+												Please select any Department.
+											</div>
+										<?php } ?>	
+
+									</div>
+									<!-- END Enter Survey Type -->
+
+
+
+									<hr>
+
+
+
+
+									<!-- STATUS, DATE Start & End -->
+									<div class="container">
+										<div class="row">
+											<!-- COLUMN 1 -->
+											<div class="col-12 mb-3">
+
+												<div style="width: 15%;">
+													<!-- STATUS -->
+													<label style="font-weight: bold; font-size: 16px;">Status</label>
+													<select name="tmpl_status" class="form-control">
+														<?php if(!empty($edit_template_status)){ ?>
+														<option value="<?php echo $edit_template_status; ?>"><?php echo $edit_template_status; ?></option>
+														<?php } ?>
+
+														<?php if($edit_template_status == "Inactive"){ ?>
+														<option value="Active">Active</option>
+														<?php } ?>
+
+														<?php if($edit_template_status == "Active"){ ?>
+														<option value="Inactive">Inactive</option>
+														<?php } ?>
+
+														<?php if(empty($edit_template_status)){ ?>
+														<option value="Inactive">Inactive</option>
+														<option value="Active">Active</option>
+														<?php } ?>
+														
+													</select>
+												</div>
+
+												<!-- DATE FORMAT -->
+												<!-- <input type="text" value="<?php //echo date('d/m/yy'); ?>"> -->
+
+											</div>
+											<!-- COLUMN 2 -->
+											<div class="col-6">
+												
+												<!-- DATE START -->
+												<label style="font-weight: bold; font-size: 16px;">Date Start</label>
+												<input type="date" name="templ_start_date" class="form-control" required>
+
+											</div>
+											<!-- COLUMN 3 -->
+											<div class="col-6">
+												
+												<!-- DATE END -->
+												<label style="font-weight: bold; font-size: 16px;">Date End</label>
+												<input type="date" name="templ_end_date" class="form-control" min="<?php echo date('d/m/yy'); ?>" required>
+
+											</div>
+
+										</div>
+									</div>
+									<!-- END STATUS, DATE Start & End -->
+
+
+
+
+
+									<hr>
+
+
+
+
 	                				
 	                				<!-- Form Editor / Builder field -->
 									<div>
@@ -376,8 +534,8 @@ if(isset($_POST['print_data'])){
 									<hr>
 
 
-									<!-- Fixed Body 1 -->
-									<label style="font-size: 20px; font-weight: bold;">Fixed Body 1</label>
+									<!-- Fixed Body -->
+									<label style="font-size: 20px; font-weight: bold;">Fixed Body</label>
 									<div class="border" style="padding-top: 5px; padding-left: 5px; padding-right: 5px; background: #D0D3D4;">
 										
 										<!-- I -->
@@ -433,50 +591,6 @@ if(isset($_POST['print_data'])){
 									</textarea>
 
 									<!-- END Fixed Body 1 -->
-
-
-									<hr>
-
-
-
-
-
-
-									<!-- SELECT DEPARTMENT -->
-
-									<!-- Enter Survey Type -->
-									<div style="width: 50%;">
-										<label style="font-size: 20px; font-weight: bold;">Select Department</label>
-										
-										<!-- Select --> 
-										<select name="selected_department" class="form-control mb-2"> 
-											<option value="<?php if(!empty($edit_assign_survey)){echo $edit_assign_survey;}else{echo'';} ?>"><?php if(!empty($edit_assign_survey)){echo $edit_assign_survey;}else{echo"-Select Department-";} ?></option>
-											<?php  
-												$sql_department = "SELECT dept_name FROM tbl_survey_dept";
-												$res_department = mysqli_query($db_connect, $sql_department);
-
-												if (mysqli_num_rows($res_department) > 0){
-													while($row_department = mysqli_fetch_assoc($res_department)) {
-														$s_department = $row_department['dept_name'];
-											?>
-											<option value="<?php echo $s_department; ?>" style="display: <?php if(empty($s_department)){echo"none";}else{echo"block";} ?>;"><?php echo $s_department; ?></option>
-											<?php
-													}
-												}
-											?>
-										</select>
-										<div>Select department for this template.</div>
-
-										<!-- Error msg -->
-										<?php if(isset($_GET['sel_dept_error'])){ ?>
-											<div class="text-danger">
-												<i class="fa-solid fa-circle-exclamation"></i> 
-												Please select any Department.
-											</div>
-										<?php } ?>	
-
-									</div>
-									<!-- END Enter Survey Type -->
 
 
 
