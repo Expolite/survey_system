@@ -24,6 +24,10 @@
 <script type="text/javascript" src="<?php echo BASE_URL;?>js/selectize.js?v=<?php echo FILE_VERSION;?>"></script>
 <script type="text/javascript" src="<?php echo BASE_URL;?>js/validate_mod.js?v=<?php echo FILE_VERSION;?>"></script>
 <script type='text/javascript' src='<?php echo BASE_URL;?>js/main.js?v=<?php echo FILE_VERSION;?>'></script>
+
+<!-- My JQuery -->
+<script type="text/javascript" src="<?php echo BASE_URL;?>js/jquery-3.6.0.min.js?v=<?php echo FILE_VERSION;?>"></script>
+
 <script>
 function msg_modal(title,msg,type){
   Swal.fire(title,msg,type);

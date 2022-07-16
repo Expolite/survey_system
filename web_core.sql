@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2022 at 04:18 PM
+-- Generation Time: Jul 16, 2022 at 04:58 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -69,6 +69,20 @@ INSERT INTO `activity_log` (`activity_log_id`, `user_id`, `date_log`, `action`, 
 (25, 1, '2022-07-09 15:44:04', 'Update User nel USER_ID:8 - FROM Details {\"USER_ROLE\":\"2\"} TO {\"USER_ROLE\":\"3\"}', '52f7aa16ff97cb1fa190bf6c963ce141444f8fb8af90ff8fd353ebb267aab168', '1', 0),
 (26, 1, '2022-07-11 22:18:23', 'Update User nel32 USER_ID:8 - FROM Details {\"USER_NO\":\"nel\"} TO {\"USER_NO\":\"nel32\"}', 'da696e1d9caead25ab728d6f028652ad56c64bb5650877ea342f2a76b909f6eb', '1', 0),
 (27, 1, '2022-07-11 22:18:38', 'Update User user_depart USER_ID:9 - FROM Details {\"USER_NO\":\"depart\"} TO {\"USER_NO\":\"user_depart\"}', 'da696e1d9caead25ab728d6f028652ad56c64bb5650877ea342f2a76b909f6eb', '1', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quest_criteria`
+--
+
+CREATE TABLE `quest_criteria` (
+  `id` int(11) NOT NULL,
+  `questions` varchar(255) NOT NULL,
+  `input_type` varchar(50) NOT NULL,
+  `survey_dept_id` int(11) NOT NULL,
+  `date_log` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -535,7 +549,10 @@ INSERT INTO `user_log` (`user_log_id`, `login_date`, `logout_date`, `action`, `u
 (140, '2022-07-12 18:07:56', '0000-00-00 00:00:00', 'LOGIN', 1, '7e5b1cf252076fb00f96c7e45c0ff7fc79e378beb11bae5e687a23eb46d9fd84', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
 (141, '2022-07-13 08:52:12', '0000-00-00 00:00:00', 'LOGIN', 1, 'd148079b3bd2827df539fe4db94254b104e19f6b3fe283fa1bebe10bc4fe8cf0', '127.0.0.1', '{\"device\":\"Firefox\",\"version\":\"101.0\",\"layout\":\"Gecko\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Firefox 101.0 on Windows 10 64-bit\"}', 0),
 (142, '2022-07-13 10:24:10', '0000-00-00 00:00:00', 'LOGIN', 1, '74f857968073cc4672e8d4d2dd80d5ae3204921937709076b7c0b70adc2d205e', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
-(143, '2022-07-13 18:41:52', '0000-00-00 00:00:00', 'LOGIN', 1, 'd555da035930bc830421b82aedbc396d78ded15f7dcf61a7db4fd84de3266fc7', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0);
+(143, '2022-07-13 18:41:52', '0000-00-00 00:00:00', 'LOGIN', 1, 'd555da035930bc830421b82aedbc396d78ded15f7dcf61a7db4fd84de3266fc7', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
+(144, '2022-07-14 09:18:19', '0000-00-00 00:00:00', 'LOGIN', 1, '206047daaf96b2e20189325cb16bba49f481530fc9f9d1c008e48261bcc032f4', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
+(145, '2022-07-15 20:27:43', '0000-00-00 00:00:00', 'LOGIN', 1, '9fec4ad0a8ba1a21bc4a6f564d94cb2a3dd7cba91bb90919b7fc02ca9be302a3', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
+(146, '2022-07-16 10:19:44', '0000-00-00 00:00:00', 'LOGIN', 1, 'bcf539f3d2fd4bd557e0a65f70b4c9337c4eaef581ec56af3f1d13627339babc', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0);
 
 --
 -- Indexes for dumped tables
@@ -546,6 +563,12 @@ INSERT INTO `user_log` (`user_log_id`, `login_date`, `logout_date`, `action`, `u
 --
 ALTER TABLE `activity_log`
   ADD PRIMARY KEY (`activity_log_id`);
+
+--
+-- Indexes for table `quest_criteria`
+--
+ALTER TABLE `quest_criteria`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `reset_code`
@@ -606,6 +629,12 @@ ALTER TABLE `activity_log`
   MODIFY `activity_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
+-- AUTO_INCREMENT for table `quest_criteria`
+--
+ALTER TABLE `quest_criteria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `reset_code`
 --
 ALTER TABLE `reset_code`
@@ -651,7 +680,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_log`
 --
 ALTER TABLE `user_log`
-  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
+  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

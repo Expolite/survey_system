@@ -461,9 +461,9 @@ if(isset($_POST['print_data'])){
 									<div class="container">
 										<div class="row">
 											<!-- COLUMN 1 -->
-											<div class="col-12 mb-3">
+											<div class="col-4 mb-3">
 
-												<div style="width: 15%;">
+												<div>
 													<!-- STATUS -->
 													<label style="font-weight: bold; font-size: 16px;">Status</label>
 													<select name="tmpl_status" class="form-control">
@@ -492,7 +492,7 @@ if(isset($_POST['print_data'])){
 
 											</div>
 											<!-- COLUMN 2 -->
-											<div class="col-6">
+											<div class="col-4">
 												
 												<!-- DATE START -->
 												<label style="font-weight: bold; font-size: 16px;">Date Start</label>
@@ -500,7 +500,7 @@ if(isset($_POST['print_data'])){
 
 											</div>
 											<!-- COLUMN 3 -->
-											<div class="col-6">
+											<div class="col-4">
 												
 												<!-- DATE END -->
 												<label style="font-weight: bold; font-size: 16px;">Date End</label>
@@ -536,7 +536,8 @@ if(isset($_POST['print_data'])){
 
 									<!-- Fixed Body -->
 									<label style="font-size: 20px; font-weight: bold;">Fixed Body</label>
-									<div class="border" style="padding-top: 5px; padding-left: 5px; padding-right: 5px; background: #D0D3D4;">
+									<div style="overflow-x:auto;">
+									<div class="border" style="padding-top: 5px; padding-left: 5px; padding-right: 5px; background: #D0D3D4; min-width: 800px;">
 										
 										<!-- I -->
 										<b style="font-size: 17px;">I. Impormasyon ng kliyente / Client Information</b>
@@ -562,8 +563,9 @@ if(isset($_POST['print_data'])){
 										<p>Pinagpayuhan na sukatin ang kalidad ng serbisyo na ibinigay sa pamamagitan ng tsek (✓) ng naangkop na kahon. <br>
 											Kindly rate the quality service provided by checking (✓) the appropriate box.</p>
 									</div>
+									</div>
 
-									<!-- contents of fixed body 1-->
+									<!-- contents of fixed body -->
 									<textarea name="fxd_body_1" style="display: none;">
 										<!-- I -->
 										<b style="font-size: 17px;">I. Impormasyon ng kliyente / Client Information</b>

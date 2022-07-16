@@ -141,6 +141,17 @@
     display: block;
   }
 
+  /* QUESTIONS CRITEIA */
+  #titles_name_sidebar_3_2 {
+    position: relative;
+    display: block;
+  }
+  #icon_sidebar_3_2 {
+    font-size: 30px;
+    display: none;
+    text-align: center;
+  }
+
 /* ACTIVITY LOG */
   /* icons */
   #icon_sidebar_4 {
@@ -191,6 +202,15 @@
 
   /* CREATE TEMPLATE - Survey Management */
   #sect_createTemplate {
+    position: relative;
+    left: 0;
+    top: -45px;
+    display: none;
+    transition: all .3s ease;
+  }
+
+  /* LIST OF SURVEY */
+  #sect_list_survey {
     position: relative;
     left: 0;
     top: -45px;
@@ -264,6 +284,14 @@
       display: block;
     }
 
+    /* QUESTIONS CRITERIA */
+    #titles_name_sidebar_3_2 {
+      display: none;
+    }
+    #icon_sidebar_3_2 {
+      display: block;
+    }
+
     #titles_name_sidebar_4 {
       display: none;
     }
@@ -290,7 +318,7 @@
 
 <!-- SIDEBAR -->
 
-<div id="sidebar_container" class="border-0 bg-primary bg-gradient shadow">
+<div id="sidebar_container" class="border border-primary bg-primary bg-gradient shadow">
   <div class="sticky-top pt-2">
 
     <!-- ARROW -->
@@ -350,10 +378,8 @@
         <div><i class="fa-solid fa-pen-ruler" id="icon_sidebar_3"></i></div>
       </div>
 
-    </div>
-
-  <!-- LIST OF SURVEY -->
-    <div class="selection_sidebar" onclick="window.location.href = 'template_list.php';">
+    <!-- LIST OF SURVEY -->
+    <div class="selection_sidebar" id="sect_list_survey" onclick="window.location.href = 'template_list.php';">
       <div id="titles_name_sidebar_3_1">
         <!-- Vertical line -->
         <div class="float-left bg-light" style="border: 1px solid white; width: 5px; height: 47px; margin-top: -10px; margin-left: -10px;"></div>
@@ -362,6 +388,24 @@
       <!-- icon -->
       <div><i class="fa-solid fa-clipboard-check" id="icon_sidebar_3_1"></i></div>
     </div>
+
+    </div><!-- END SURVEY MANAGEMENT -->
+
+
+
+
+    <!-- QUESTIONS CRITERIA -->
+    <div class="selection_sidebar" onclick="window.location.href = 'questions_criteria.php';">
+        <div id="titles_name_sidebar_3_2">
+          <i class="fa-solid fa-file-lines"></i> Questions Criteria
+        </div>
+        <!-- icon -->
+        <div><i class="fa-solid fa-list" id="icon_sidebar_3_2"></i></div>
+    </div>
+
+
+
+
 
   <!-- ACTIVITY LOG -->
     <!-- Div 1 -->
@@ -503,11 +547,23 @@
       // show
       setTimeout(tggleShow_sectCreateTempl, 200); // .2 second
       function tggleShow_sectCreateTempl() {
-        sect_createTemplate.style.display = "block";
+        sect_createTemplate.style.display = "block"; // show CREATE TEMPLATE
+
+        setTimeout(toggleShow_sectListSurvey, 200); // .2 second
+        function toggleShow_sectListSurvey() {
+          sect_list_survey.style.display = "block"; // show LIST OF SURVEY
+        }
+
         // bring down
         setTimeout(tggleDown_sectCreateTempl, 200); // .2 second
         function tggleDown_sectCreateTempl() {
-          sect_createTemplate.style.top = "0px";
+          sect_createTemplate.style.top = "0px"; // bring down CREATE TEMPLATE
+
+          setTimeout(toggleDown_sectListSurvey, 200); // .2 second
+          function toggleDown_sectListSurvey() {
+            sect_list_survey.style.top = "0px"; // birng down LIST OF SURVEY
+          }
+
         }
       }
 
@@ -522,11 +578,22 @@
       // bring up
       setTimeout(tggleUp_sectCreateTempl, 200); // .2 second
       function tggleUp_sectCreateTempl() {
-        sect_createTemplate.style.top = "-45px";
+        sect_list_survey.style.top = "-45px"; // bring up LIST OF SURVEY
+        
+        setTimeout(toggleUp_sectListSurvey, 200); // .2 second
+        function toggleUp_sectListSurvey() {
+          sect_createTemplate.style.top = "-45px"; // bring up CREATE TEMPLATE
+        }
+
         // hide
         setTimeout(tggleHide_sectCreateTempl, 300); // .3 second
         function tggleHide_sectCreateTempl() {
-          sect_createTemplate.style.display = "none";
+          sect_list_survey.style.display = "none"; // hide LIST OF SURVEY
+          
+          setTimeout(toggleHide_sectListSurvey, 200); // .2 second
+          function toggleHide_sectListSurvey() {
+            sect_createTemplate.style.display = "none"; // hide CREATE TEMPLATE
+          }
         }
       }
     }
