@@ -200,7 +200,7 @@ if(isset($_POST['delete_btn'])) {
 	                							<td><input type="checkbox" name="chk[]" value="<?php echo $s_template_id; ?>" class="m-1" id="<?php echo $s_template_id;?>"></td>
 	                							<td><?php echo $s_template_id;?></td>
 	                							<td><?php echo $s_template_title; ?></td>
-	                							<td><?php echo $templ_description; ?></td>
+	                							<td><?php if(empty($templ_description)){echo"...";}else{echo $templ_description;}; ?></td>
 	                							<td><?php echo $s_date_start; ?></td>
 	                							<td><?php echo $s_date_end; ?></td>
 	                							<td>

@@ -71,6 +71,7 @@ if(isset($_POST['publish_data'])) {
 	$s_template_status = mysqli_real_escape_string($db_connect, $_POST['tmpl_status']);
 	$s_templ_date_start = mysqli_real_escape_string($db_connect, $_POST['templ_start_date']);
 	$s_templ_date_end = mysqli_real_escape_string($db_connect, $_POST['templ_end_date']);
+	$templ_description = mysqli_real_escape_string($db_connect, $_POST['templ_description']);
 
 
 	
@@ -151,7 +152,7 @@ if(isset($_POST['publish_data'])) {
 
 
 		// Insert data
-		$sql_template_insert = "INSERT INTO survey_template (template_title, template_header, assign_survey, template_status, start_date, end_date) VALUES ('$s_title', '$s_header', '$s_department_assign', '$s_template_status', '$s_templ_date_start', '$s_templ_date_end')";
+		$sql_template_insert = "INSERT INTO survey_template (template_title, template_header, assign_survey, template_status, start_date, end_date, survey_templ_desc) VALUES ('$s_title', '$s_header', '$s_department_assign', '$s_template_status', '$s_templ_date_start', '$s_templ_date_end', '$templ_description')";
 		$res_template_insert = mysqli_query($db_connect, $sql_template_insert);
 
 		if(!$res_template_insert) {

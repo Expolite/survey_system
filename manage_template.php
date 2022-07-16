@@ -20,7 +20,20 @@ if(!($g_user_role[0] == "ADMIN")){
 // from TEMPLATE LIST
 if (isset($_GET['template_id_tl'])) {
 	// get data(id) from Template_List
-	$templ_id_frmTempList = $_GET['template_id_tl'];
+	$templ_id_frmTempList = $_GET['template_id_tl']; // template id
+
+	$sql_select_template_manage_templ = "SELECT * FROM survey_template WHERE s_template_id = '$templ_id_frmTempList'";
+	$res_select_template_manage_templ = mysqli_query($db_connect, $sql_select_template_manage_templ);
+
+	if (mysqli_num_rows($res_select_template_manage_templ) > 0) {
+		while($row_select_template_manage_templ = mysqli_fetch_assoc($res_select_template_manage_templ)) {
+			$v_templ_title = $row_select_template_manage_templ['template_title'];
+			$v_templ_descption = $row_select_template_manage_templ['survey_templ_desc'];
+			$v_templ_start_date = $row_select_template_manage_templ['start_date'];
+			$v_templ_end_date = $row_select_template_manage_templ['end_date'];
+			$v_templ_taken = $row_select_template_manage_templ['taken'];
+		}
+	}
 }
 
 ?>
@@ -87,72 +100,23 @@ if (isset($_GET['template_id_tl'])) {
 							    <!-- CONTENTS HERE -->
 
 							    <!-- HEADER TITLE -->
-							    <h4><span style="font-weight: normal;">Title:</span> Suvery_Name</h4>
+							    <h4 class="mb-4"><span style="font-weight: normal;">Title:</span> <?php echo $v_templ_title; ?></h4>
+							    
+							    <h4 style="font-weight: normal;">Description:</h4>
+							    <p><?php echo $v_templ_descption; ?></p>
 
-							    <br><br><br><br>
-							    <hr style="border: 1px solid black;">
-							    <hr style="border: 1px solid black;">
+							    <hr>
 
-							    <div>
-								    <!-- My JQuery -->
-									<script type="text/javascript" src="<?php echo BASE_URL;?>js/jquery-3.6.0.min.js?v=<?php echo FILE_VERSION;?>"></script>
-									
-									<script type="text/javascript">
-										$(document).ready(function(){
-
-											var html = ' <tr><td><input class="form-control" type="text" name="txtFullname[]" required=""></td><td><input class="form-control" type="text" name="txtEmail[]" required=""></td><td><input class="form-control" type="text" name="txtPhone[]" required=""></td><td><input class="form-control" type="text" name="txtAddress[]" required=""></td><!-- Button --><td><input class="btn btn-danger" type="button" name="remove" id="remove" value="Remove"></td></tr>';
-
-											// max of field to add
-											var max = 3;
-											var x = 1;
-
-											// Add Button (Add row)
-											$("#add").click(function(){
-												if(x <= max) {
-													$("#table_field").append(html);
-													x++;
-												}
-											});
-											// Remove Button (Remove Row)
-											$("#table_field").on('click','#remove',function(){
-												$(this).closest('tr').remove();
-												x--;
-											});
-
-										});
-									</script>
-
-	                				<div>
-	                					<form id="insert_form">
-		                					<table class="table table-bordered" id="table_field">
-		                						<thead>
-													<tr>
-														<th>Question</th>
-														<th>Email Address</th>
-														<th>Phone No</th>
-														<th>Address</th>
-														<th>Add or Remove</th>
-													</tr>
-		                						</thead>
-		                						<tbody>
-													<tr>
-														<td><input class="form-control" type="text" name="txtFullname[]" required=""></td>
-														<td><input class="form-control" type="text" name="txtEmail[]" required=""></td>
-														<td><input class="form-control" type="text" name="txtPhone[]" required=""></td>
-														<td><input class="form-control" type="text" name="txtAddress[]" required=""></td>
-														<!-- Button -->
-														<td><input class="btn btn-warning" type="button" name="addd" id="add" value="Add"></td>
-													</tr>
-		                						</tbody>
-		                					</table>
-
-		                					<!-- SUBMIT Button -->
-		                					<center>
-												<input class="btn btn-success" type="submit" name="save" id="save" value="Save Data">
-											</center>
-
-		                				</form>
-	                				</div>
+							    <!-- Start and End Date -->
+							    <div style="font-size: 17px;" class="mb-2">
+							    	<span style="font-family: arial;">Start:</span> <span style="font-weight: bold;"><?php echo $v_templ_start_date; ?></span>
+							    </div>
+							    <div style="font-size: 17px;" class="mb-2">
+							    	<span style="font-family: arial;">End:</span> <span style="font-weight: bold;"><?php echo $v_templ_end_date; ?></span>
+							    </div>
+							    <!-- TAKEN -->
+							    <div style="font-size: 17px;">
+							    	<span style="font-family: arial;">Have taken:</span> <span style="font-weight: bold;"><?php if(empty($v_templ_taken)){echo"0";}else{echo $v_templ_taken;} ?></span>
 							    </div>
 
                 				<!-- END CONTENTS HERE -->
@@ -161,6 +125,32 @@ if (isset($_GET['template_id_tl'])) {
                 		</div>
                 	</div>
                 </div>
+
+
+                <!-- CONTAINER 2 -->
+                <div class="py-3 bg-light rounded shadow mt-3">
+                	<div class="container">
+                		<div class="row">
+                			<div class="col-md-12">
+                				<!-- CONTENTS -->
+
+                				<!-- HEADER TITLE -->
+							    <h4 class="float-left">Survey Questionaire</h4>
+
+							    <button type="button" class="btn btn-sm btn-outline-success float-right">&plus; Add New Quesion</button>
+
+							    <br>
+							    <hr class="mt-4">
+
+							    <div>
+							    	
+							    </div>
+							    <!-- END CONTAINER -->
+                			</div>
+                		</div>
+                	</div>
+                </div>
+                <!-- END CONTAINER 2 -->
 				
 			</div>
 
