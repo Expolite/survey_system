@@ -122,7 +122,7 @@ if(isset($_POST['publish_data'])) {
 
 		// You cannot enter current date
 		// END DATE
-		$ct_current_date = strtotime(date("d-m-yy"));
+		$ct_current_date = strtotime(date('d-m-Y'));
 		// $ct_current_date = date('d-m-yy');
 		// START DATE
 		if(strtotime($s_templ_date_start) < $ct_current_date) {
@@ -176,7 +176,7 @@ if(isset($_POST['publish_data'])) {
 
 
 
-	// UPDATE
+	// UPDATE Template
 	}else{
 
 
@@ -407,7 +407,7 @@ if(isset($_POST['print_data'])){
 
 
 
-	                				<hr>
+	                				<hr style="border: 1px solid #323232;">
 
 
 
@@ -452,7 +452,7 @@ if(isset($_POST['print_data'])){
 
 
 
-									<hr>
+									<hr style="border: 1px solid #323232;">
 
 
 
@@ -516,7 +516,18 @@ if(isset($_POST['print_data'])){
 
 
 
-									<hr>
+									<hr style="border: 1px solid #323232;">
+
+
+
+									<!-- DESCRIPTION -->
+									<label style="font-weight: bold; font-size: 16px;">Description</label>
+									<textarea name="templ_description" class="form-control"></textarea>
+
+
+
+
+									<hr style="border: 1px solid #323232;">
 
 
 
@@ -531,7 +542,7 @@ if(isset($_POST['print_data'])){
 									</div>
 
 
-									<hr>
+									<hr style="border: 1px solid #323232;">
 
 
 									<!-- Fixed Body -->

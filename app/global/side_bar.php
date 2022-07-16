@@ -371,7 +371,8 @@
       <div class="selection_sidebar" id="sect_createTemplate" onclick="window.location.href = 'create_template.php';">
         <div id="titles_name_sidebar_3">
           <!-- Vertical line -->
-          <div class="float-left bg-light" style="border: 1px solid white; width: 5px; height: 47px; margin-top: -10px; margin-left: -10px;"></div>
+          <!-- <div class="float-left bg-light" style="border: 1px solid white; width: 5px; height: 47px; margin-top: -10px; margin-left: -10px;"></div> -->
+          <i class="fa-solid fa-angle-right"></i>&nbsp;&nbsp;
           Create Templates
         </div>
         <!-- icon -->
@@ -382,7 +383,8 @@
     <div class="selection_sidebar" id="sect_list_survey" onclick="window.location.href = 'template_list.php';">
       <div id="titles_name_sidebar_3_1">
         <!-- Vertical line -->
-        <div class="float-left bg-light" style="border: 1px solid white; width: 5px; height: 47px; margin-top: -10px; margin-left: -10px;"></div>
+        <!-- <div class="float-left bg-light" style="border: 1px solid white; width: 5px; height: 47px; margin-top: -10px; margin-left: -10px;"></div> -->
+        <i class="fa-solid fa-angle-right"></i>&nbsp;&nbsp;
         List of Survey
       </div>
       <!-- icon -->
@@ -395,7 +397,7 @@
 
 
     <!-- QUESTIONS CRITERIA -->
-    <div class="selection_sidebar" onclick="window.location.href = 'questions_criteria.php';">
+    <div class="selection_sidebar" onclick="window.location.href = 'manage_template.php';">
         <div id="titles_name_sidebar_3_2">
           <i class="fa-solid fa-file-lines"></i> Questions Criteria
         </div>

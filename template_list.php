@@ -88,7 +88,8 @@ if(isset($_POST['delete_btn'])) {
     }
 
     #tr_hover:hover {
-    	background-color: #3198FF;
+    	/*background-color: #3198FF;*/
+    	background-color: #BDC3C7;
     }
 </style>
 	
@@ -136,7 +137,7 @@ if(isset($_POST['delete_btn'])) {
 
 
                 <!-- CONTENTS... -->
-                <div class="py-5 bg-light rounded shadow">
+                <div class="py-3 bg-light rounded shadow">
                 	
                 	<div class="container">
 
@@ -145,14 +146,14 @@ if(isset($_POST['delete_btn'])) {
                 				
                 				<form action="template_list.php" method="POST">
 
-	                				<!-- Actions -->
+	                				<!-- DELETE Button -->
 	                				<div class="mb-3" align="right">
 	            						<button type="submit" name="delete_btn" class="btn btn-danger">Delete</button>
 	                				</div>
 
 	                				<!-- Table -->
-	                				<div class="table-responsive">
-	                				<table class="table table-striped border shadow">
+	                				<div class="table-responsive" style="overflow-x:auto;">
+	                				<table class="table table-bordered border shadow">
 	                					<thead class="bg-primary text-light" style="font-weight: bold; font-size: 17px;">
 	                						<tr>
 	                							<th>
@@ -171,9 +172,9 @@ if(isset($_POST['delete_btn'])) {
 	                							</th>
 	                							<th>ID</th>
 	                							<th>Title</th>
-	                							<th>Department</th>
-	                							<th>Date_Start</th>
-	                							<th>Date_End</th>
+	                							<th>Description</th>
+	                							<th>Start</th>
+	                							<th>End</th>
 	                							<th>Actions</th>
 	                						</tr>
 	                					</thead>
@@ -188,7 +189,7 @@ if(isset($_POST['delete_btn'])) {
 												while($row_d_templates = mysqli_fetch_assoc($res_d_templates)) {
 													$s_template_id = $row_d_templates['s_template_id'];
 													$s_template_title = $row_d_templates['template_title'];
-													$s_template_department = $row_d_templates['assign_survey'];
+													$templ_description = $row_d_templates['survey_templ_desc'];
 													$s_publish_date = $row_d_templates['date_publish'];
 													$s_date_start = $row_d_templates['start_date'];
 													$s_date_end = $row_d_templates['end_date'];
@@ -199,10 +200,13 @@ if(isset($_POST['delete_btn'])) {
 	                							<td><input type="checkbox" name="chk[]" value="<?php echo $s_template_id; ?>" class="m-1" id="<?php echo $s_template_id;?>"></td>
 	                							<td><?php echo $s_template_id;?></td>
 	                							<td><?php echo $s_template_title; ?></td>
-	                							<td><?php echo $s_template_department; ?></td>
+	                							<td><?php echo $templ_description; ?></td>
 	                							<td><?php echo $s_date_start; ?></td>
 	                							<td><?php echo $s_date_end; ?></td>
-	                							<td><a href="create_template.php?template_id_tl=<?php echo $s_template_id; ?>" class="m-0 text-dark"><i class="fa-solid fa-pen-to-square"></i> Edit</a></td>
+	                							<td>
+	                								<a href="manage_template.php?template_id_tl=<?php echo $s_template_id; ?>" class="text-primary"><i class="fa-solid fa-eye"></i> View</a>
+	                								<a href="create_template.php?template_id_tl=<?php echo $s_template_id; ?>" class="m-0 text-secondary"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+	                							</td>
 	                						</tr>
 
 	                						<!-- checkbox to list -->
