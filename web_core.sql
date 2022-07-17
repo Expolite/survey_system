@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2022 at 06:34 PM
+-- Generation Time: Jul 17, 2022 at 05:54 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -79,10 +79,20 @@ INSERT INTO `activity_log` (`activity_log_id`, `user_id`, `date_log`, `action`, 
 CREATE TABLE `quest_criteria` (
   `id` int(11) NOT NULL,
   `questions` varchar(255) NOT NULL,
-  `input_type` varchar(50) NOT NULL,
-  `survey_dept_id` int(11) NOT NULL,
-  `date_log` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `answer_type` varchar(50) NOT NULL,
+  `survey_templ_id` int(11) NOT NULL,
+  `date_log` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `date_created` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `quest_criteria`
+--
+
+INSERT INTO `quest_criteria` (`id`, `questions`, `answer_type`, `survey_templ_id`, `date_log`, `date_created`) VALUES
+(4, 'sample again', 'text_field', 0, '2022-07-17 14:19:11', '2022-07-17 22:19:11'),
+(5, 'sample single radio', 'single_answer', 0, '2022-07-17 15:36:27', '2022-07-17 23:36:27'),
+(7, 'aaaa', 'text_field', 45, '2022-07-17 15:53:51', '2022-07-17 23:53:51');
 
 -- --------------------------------------------------------
 
@@ -549,7 +559,8 @@ INSERT INTO `user_log` (`user_log_id`, `login_date`, `logout_date`, `action`, `u
 (144, '2022-07-14 09:18:19', '0000-00-00 00:00:00', 'LOGIN', 1, '206047daaf96b2e20189325cb16bba49f481530fc9f9d1c008e48261bcc032f4', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.0.0\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.0.0 on Windows 10 64-bit\"}', 0),
 (145, '2022-07-15 20:27:43', '0000-00-00 00:00:00', 'LOGIN', 1, '9fec4ad0a8ba1a21bc4a6f564d94cb2a3dd7cba91bb90919b7fc02ca9be302a3', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
 (146, '2022-07-16 10:19:44', '0000-00-00 00:00:00', 'LOGIN', 1, 'bcf539f3d2fd4bd557e0a65f70b4c9337c4eaef581ec56af3f1d13627339babc', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
-(147, '2022-07-16 17:57:09', '0000-00-00 00:00:00', 'LOGIN', 1, '78d3546ac84b2b4e05c3179b463d319c703128f246301fb85214efceac17f571', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0);
+(147, '2022-07-16 17:57:09', '0000-00-00 00:00:00', 'LOGIN', 1, '78d3546ac84b2b4e05c3179b463d319c703128f246301fb85214efceac17f571', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
+(148, '2022-07-17 11:09:40', '0000-00-00 00:00:00', 'LOGIN', 1, 'e4e57ec2e35798a418e352f78e400e775461c5ed787feb7e5f9a20ecea8a876d', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0);
 
 --
 -- Indexes for dumped tables
@@ -629,7 +640,7 @@ ALTER TABLE `activity_log`
 -- AUTO_INCREMENT for table `quest_criteria`
 --
 ALTER TABLE `quest_criteria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `reset_code`
@@ -677,7 +688,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_log`
 --
 ALTER TABLE `user_log`
-  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

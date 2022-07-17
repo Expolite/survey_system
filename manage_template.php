@@ -36,6 +36,50 @@ if (isset($_GET['template_id_tl'])) {
 	}
 }
 
+
+
+
+// Save New Added Question
+if (isset($_POST['save_question'])) {
+	// Get data
+	$select_answer_type = $_POST['select_answer_type'];
+	$txt_question = $_POST['txt_question'];
+	$q_date_created = date('Y-m-d H:i:s');
+	$s_templ_id = $_POST['s_templ_id'];
+
+	// Insert
+	$insert_question = "INSERT INTO quest_criteria (questions, answer_type, survey_templ_id, date_created) VALUES('$txt_question','$select_answer_type','$s_templ_id','$q_date_created')";
+	if (mysqli_query($db_connect, $insert_question)) {
+
+		$msg_response['status']="success";
+		$msg_response['msg']="Data successfully saved!";
+		$session_class->setValue('success',$msg_response['msg']);
+		header("location: manage_template.php");
+		exit();
+	}
+}
+
+
+
+
+
+// DELETE QUESTION
+if(isset($_GET['quest_id'])) {
+
+	$q_criteria = $_GET['quest_id']; // question criteria id
+
+	$sql_delete_q = "DELETE FROM quest_criteria WHERE id = '$q_criteria'";
+
+	if (mysqli_query($db_connect, $sql_delete_q)) {
+
+		$msg_response['status']="success";
+		$msg_response['msg']="Deleted successfully!";
+		$session_class->setValue('success',$msg_response['msg']);
+		header("location: manage_template.php");
+		exit();
+	}
+}
+
 ?>
 
 
@@ -51,6 +95,7 @@ if (isset($_GET['template_id_tl'])) {
 
 
 <style type="text/css">
+	/* Container */
 	#survey_info_container {
         width: 80%; 
         padding: 10px;
@@ -137,14 +182,71 @@ if (isset($_GET['template_id_tl'])) {
                 				<!-- HEADER TITLE -->
 							    <h4 class="float-left">Survey Questionaire</h4>
 
-							    <button type="button" class="btn btn-sm btn-outline-success float-right">&plus; Add New Quesion</button>
+							    <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#exampleModal">&plus; Add New Quesion</button>
 
 							    <br>
 							    <hr class="mt-4">
 
-							    <div>
-							    	
-							    </div>
+							    <?php 
+							    	// SELECT DATA / DISPLAY DATA
+							    	$sql_select_questions = "SELECT * FROM quest_criteria ORDER BY id DESC";
+							    	$res_select_questions = mysqli_query($db_connect, $sql_select_questions);
+
+							    	if (mysqli_num_rows($res_select_questions) > 0) {
+							    		while($row_sel_quest = mysqli_fetch_assoc($res_select_questions)) {
+							    			$q_id = $row_sel_quest['id'];
+							    			$qc_question = $row_sel_quest['questions'];
+							    			$q_answer_type = $row_sel_quest['answer_type'];
+							    ?>
+							    <!-- Card -->
+								<div class="card shadow border">
+									<div class="card-body rounded" style="border-left: 3px solid #007bff; padding: 20px;">
+										<!-- Title -->
+										<h5 class="card-title float-left"><?php echo $qc_question; ?></h5>
+										<!-- Option -->
+										<div class="float-right px-2 text-dark" style="cursor: pointer; font-size: 18px;" data-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+										<!-- Dropdown list -->
+										<div class="dropdown-menu dropdown-menu-right shadow rounded" style="border-left: 3px solid #007bff; border-bottom: 3px solid #007bff;">
+											<a href="#" class="dropdown-item text-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+											<a href="manage_template.php?quest_id=<?php echo $q_id; ?>" class="dropdown-item text-danger" style="cursor: pointer;"><i class="fa-solid fa-trash"></i> Delete</a>
+										</div>
+										<br>
+										<hr>
+										<!-- Answer Type -->
+										<?php if($q_answer_type === "text_field") { ?>
+											<!-- Text Field -->
+								        	<input type="text" class="form-control" placeholder="Write something here..." readonly>
+										<?php } ?>
+
+										<?php if($q_answer_type === "single_answer") { ?>
+							        		<table class="table table-bordered rounded">
+							        			<tr>
+							        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
+							        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Very Satisfied" readonly></td>
+							        			</tr>
+							        			<tr>
+							        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
+							        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Satisfied" readonly></td>
+							        			</tr>
+							        			<tr>
+							        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
+							        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Dissatisfied" readonly></td>
+							        			</tr>
+							        			<tr>
+							        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
+							        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Very Dissatisfied" readonly></td>
+							        			</tr>
+							        		</table>
+										<?php } ?>
+									</div>
+								</div>
+								<!-- END Card -->
+							    <?php 
+							    		}
+							    	}
+							    ?>
+
+
 							    <!-- END CONTAINER -->
                 			</div>
                 		</div>
@@ -157,6 +259,100 @@ if (isset($_GET['template_id_tl'])) {
 
     	</div>
     </div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  	<form action="manage_template.php?template_id_tl=<?php echo $templ_id_frmTempList; ?>" method="POST">
+  		<!-- survey template id -->
+  		<input type="text" name="s_templ_id" value="<?php echo $templ_id_frmTempList; ?>" style="display: none;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      	<!-- Modal title -->
+	        <h5 class="modal-title" id="exampleModalLabel">New Question</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<!-- Questions -->
+	        <label style="font-weight: bold;">Question</label>
+	        <textarea name="txt_question" class="form-control mb-3" required></textarea>
+	        <!-- Answer Type -->
+	        <label style="font-weight: bold;">Answer Type</label>
+	        <select id="answer_type_selection" name="select_answer_type" class="form-control mb-3" onchange="check_answer_type()">
+	        	<option value="single_answer">Single Answer/Radio Button</option>
+	        	<option value="text_field">Text Field</option>
+	        </select>
+	        <hr>
+	        <!-- Preview Type of Answer -->
+	        <div>
+	        	<label style="font-weight: bold;">Preview</label>
+	        	<!-- Text Field -->
+	        	<input type="text" id="txt_field_input" class="form-control" placeholder="Write something here..." readonly>
+	        	<!-- Single Answer/Radio -->
+	        	<div id="sinlge_answer_input">
+	        		<table class="table table-bordered rounded">
+	        			<tr>
+	        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
+	        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Very Satisfied" readonly></td>
+	        			</tr>
+	        			<tr>
+	        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
+	        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Satisfied" readonly></td>
+	        			</tr>
+	        			<tr>
+	        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
+	        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Dissatisfied" readonly></td>
+	        			</tr>
+	        			<tr>
+	        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
+	        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Very Dissatisfied" readonly></td>
+	        			</tr>
+	        		</table>
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="submit" name="save_question" class="btn btn-sm btn-primary">Save</button>
+	      </div>
+	    </div>
+	</form>
+  </div>
+</div>
+<!-- END Modal -->
+
+
+
+
+
+<!-- Answer Type Function -->
+<script type="text/javascript">
+	// hide txt field input (Default)
+	txt_field_input.style.display = "none"; // hide txt field
+
+	function check_answer_type() {
+		// Get data
+		var answer_type = document.getElementById("answer_type_selection").value; // answer type selection
+
+		// if txt field are selected
+		if(answer_type == "text_field") {
+			txt_field_input.style.display = "block";
+			sinlge_answer_input.style.display = "none";
+		}
+
+		// if single answer are selected
+		if(answer_type == "single_answer") {
+			txt_field_input.style.display = "none";
+			sinlge_answer_input.style.display = "block";
+		}
+	}
+</script>
 
 
 
