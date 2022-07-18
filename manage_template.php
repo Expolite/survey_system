@@ -98,7 +98,7 @@ if(isset($_POST['update_question'])){
 		$msg_response['status']="success";
 		$msg_response['msg']="Update successfully!";
 		$session_class->setValue('success',$msg_response['msg']);
-		header("location: manage_template.php");
+		header("location: manage_template.php?template_id_tl=$s_templ_id");
 		exit();
 	}
 }
@@ -272,7 +272,7 @@ if(isset($_GET['edit_quest_id'])) {
 										<div class="float-right px-2 text-dark" style="cursor: pointer; font-size: 18px;" data-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></div>
 										<!-- Dropdown list -->
 										<div class="dropdown-menu dropdown-menu-right shadow rounded" style="border-left: 3px solid #007bff; border-bottom: 3px solid #007bff;">
-											<a href="manage_template.php?edit_quest_id=<?php echo $q_id; ?>" class="dropdown-item text-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+											<a href="manage_template.php?template_id_tl=<?php echo $templ_id_frmTempList; ?>&edit_quest_id=<?php echo $q_id; ?>" class="dropdown-item text-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
 											<a href="manage_template.php?quest_id=<?php echo $q_id; ?>" class="dropdown-item text-danger" style="cursor: pointer;"><i class="fa-solid fa-trash"></i> Delete</a>
 											<!-- <a href="#" onclick="confirmDel_Q()" class="dropdown-item text-danger" style="cursor: pointer;"><i class="fa-solid fa-trash"></i> Delete</a> -->
 										</div>
