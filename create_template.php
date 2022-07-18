@@ -67,7 +67,7 @@ if(isset($_POST['publish_data'])) {
 	$get_templ_id = mysqli_real_escape_string($db_connect, $_POST['get_templ_id']);
 	$s_title = mysqli_real_escape_string($db_connect, $_POST['template_title']);
 	$s_header = mysqli_real_escape_string($db_connect, $_POST['template_header']);
-	$s_department_assign = mysqli_real_escape_string($db_connect, $_POST['selected_department']);
+	// $s_department_assign = mysqli_real_escape_string($db_connect, $_POST['selected_department']);
 	$s_template_status = mysqli_real_escape_string($db_connect, $_POST['tmpl_status']);
 	$s_templ_date_start = mysqli_real_escape_string($db_connect, $_POST['templ_start_date']);
 	$s_templ_date_end = mysqli_real_escape_string($db_connect, $_POST['templ_end_date']);
@@ -108,15 +108,15 @@ if(isset($_POST['publish_data'])) {
 			exit();
 		}
 		// check if admin_user select any department for template
-		if(empty($s_department_assign)) {
+		// if(empty($s_department_assign)) {
 
-			$msg_response['status']="error";
-			$msg_response['msg']="Select any Department";
-			$session_class->setValue('error',$msg_response['msg']);
-			// header("location: create_template.php?sel_dept_error=error");
-			echo "echo <script> window.history.go(-1); </script>";
-			exit();
-		}
+		// 	$msg_response['status']="error";
+		// 	$msg_response['msg']="Select any Department";
+		// 	$session_class->setValue('error',$msg_response['msg']);
+		// 	// header("location: create_template.php?sel_dept_error=error");
+		// 	echo "echo <script> window.history.go(-1); </script>";
+		// 	exit();
+		// }
 
 
 
@@ -152,7 +152,7 @@ if(isset($_POST['publish_data'])) {
 
 
 		// Insert data
-		$sql_template_insert = "INSERT INTO survey_template (template_title, template_header, assign_survey, template_status, start_date, end_date, survey_templ_desc) VALUES ('$s_title', '$s_header', '$s_department_assign', '$s_template_status', '$s_templ_date_start', '$s_templ_date_end', '$templ_description')";
+		$sql_template_insert = "INSERT INTO survey_template (template_title, template_header, template_status, start_date, end_date, survey_templ_desc) VALUES ('$s_title', '$s_header', '$s_template_status', '$s_templ_date_start', '$s_templ_date_end', '$templ_description')";
 		$res_template_insert = mysqli_query($db_connect, $sql_template_insert);
 
 		if(!$res_template_insert) {
@@ -202,18 +202,18 @@ if(isset($_POST['publish_data'])) {
 
 		}
 		// check if user select any department for template
-		if(empty($s_department_assign)) {
+		// if(empty($s_department_assign)) {
 
-			$msg_response['status']="error";
-			$msg_response['msg']="Select any Department";
-			$session_class->setValue('error',$msg_response['msg']);
-			header("location: create_template.php?sel_dept_error=error");
-			exit();
-		}
+		// 	$msg_response['status']="error";
+		// 	$msg_response['msg']="Select any Department";
+		// 	$session_class->setValue('error',$msg_response['msg']);
+		// 	header("location: create_template.php?sel_dept_error=error");
+		// 	exit();
+		// }
 
 
 		// Update data
-		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_header = '$s_header', assign_survey = '$s_department_assign', template_status = '$s_template_status', start_date = '$s_templ_date_start', end_date = '$s_templ_date_end' WHERE s_template_id = '$get_templ_id'";
+		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_header = '$s_header', template_status = '$s_template_status', start_date = '$s_templ_date_start', end_date = '$s_templ_date_end' WHERE s_template_id = '$get_templ_id'";
 		$res_template_update = mysqli_query($db_connect, $sql_template_update);
 
 		if(!$res_template_update) {
@@ -408,7 +408,7 @@ if(isset($_POST['print_data'])){
 
 
 
-	                				<hr style="border: 1px solid #323232;">
+	                			<!-- 	<hr style="border: 1px solid #323232;"> -->
 
 
 
@@ -418,11 +418,11 @@ if(isset($_POST['print_data'])){
 									<!-- SELECT DEPARTMENT -->
 
 									<!-- Enter Survey Type -->
-									<div style="width: 50%;">
-										<label style="font-size: 20px; font-weight: bold;">Select Department</label>
+								<!-- 	<div style="width: 50%;">
+										<label style="font-size: 20px; font-weight: bold;">Select Department</label> -->
 										
 										<!-- Select --> 
-										<select name="selected_department" class="form-control mb-2"> 
+									<!-- 	<select name="selected_department" class="form-control mb-2"> 
 											<option value="<?php if(!empty($edit_assign_survey)){echo $edit_assign_survey;}else{echo'';} ?>"><?php if(!empty($edit_assign_survey)){echo $edit_assign_survey;}else{echo"-Select Department-";} ?></option>
 											<?php  
 												$sql_department = "SELECT dept_name FROM tbl_survey_dept";
@@ -437,18 +437,18 @@ if(isset($_POST['print_data'])){
 													}
 												}
 											?>
-										</select>
-										<div>Select department for this template.</div>
+										</select> -->
+										<!-- <div>Select department for this template.</div> -->
 
 										<!-- Error msg -->
-										<?php if(isset($_GET['sel_dept_error'])){ ?>
+										<!-- <?php if(isset($_GET['sel_dept_error'])){ ?>
 											<div class="text-danger">
 												<i class="fa-solid fa-circle-exclamation"></i> 
 												Please select any Department.
 											</div>
 										<?php } ?>	
 
-									</div>
+									</div> -->
 									<!-- END Enter Survey Type -->
 
 

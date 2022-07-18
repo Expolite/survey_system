@@ -148,6 +148,7 @@ if(isset($_POST['delete_btn'])) {
 
 	                				<!-- DELETE Button -->
 	                				<div class="mb-3" align="right">
+	                					<a href="create_template.php" class="btn btn-success">&plus; Create Template</a>
 	            						<button type="submit" name="delete_btn" class="btn btn-danger">Delete</button>
 	                				</div>
 

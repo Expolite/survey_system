@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2022 at 05:54 PM
+-- Generation Time: Jul 18, 2022 at 05:22 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -90,9 +90,8 @@ CREATE TABLE `quest_criteria` (
 --
 
 INSERT INTO `quest_criteria` (`id`, `questions`, `answer_type`, `survey_templ_id`, `date_log`, `date_created`) VALUES
-(4, 'sample again', 'text_field', 0, '2022-07-17 14:19:11', '2022-07-17 22:19:11'),
-(5, 'sample single radio', 'single_answer', 0, '2022-07-17 15:36:27', '2022-07-17 23:36:27'),
-(7, 'aaaa', 'text_field', 45, '2022-07-17 15:53:51', '2022-07-17 23:53:51');
+(14, 'logo quesiton 1', 'single_answer', 46, '2022-07-18 15:15:38', '2022-07-18 23:15:38'),
+(15, 'logo question 2', 'text_field', 46, '2022-07-18 15:18:20', '2022-07-18 23:18:20');
 
 -- --------------------------------------------------------
 
@@ -287,10 +286,7 @@ CREATE TABLE `survey_template` (
 --
 
 INSERT INTO `survey_template` (`s_template_id`, `template_title`, `template_header`, `date_publish`, `assign_survey`, `template_status`, `start_date`, `end_date`, `survey_templ_desc`, `taken`) VALUES
-(22, 'Clinic Template', '<p style=\"text-align:center\"><img alt=\"\" src=\"ckeditor/uploads/thumb-350-296347.png\" style=\"height:100px; width:100px\" />&nbsp; &nbsp; &nbsp; &nbsp;Header Title Here&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img alt=\"\" src=\"ckeditor/uploads/tumblr_8af80293008a8375acc428825dcdb5dd_c3dc0212_540.jpg\" style=\"height:99px; width:100px\" /></p>\r\n\r\n<p style=\"text-align:justify\">&nbsp;</p>\r\n', '2022-07-13 11:28:33', 'Clinic', 'Inactive', '2022-07-13', '2022-07-14', NULL, NULL),
-(25, 'Cashier Tamplate', '<p>cashier...</p>\r\n', '2022-07-13 03:44:15', 'Cashier', NULL, NULL, NULL, NULL, NULL),
-(31, 'past date try', '<p>ssssssssss</p>\r\n', '2022-07-13 12:45:38', 'Clinic', 'Inactive', '2022-07-13', '2022-07-13', NULL, NULL),
-(45, 'Template with Description', '<p>aaaa</p>\r\n', '2022-07-16 14:29:29', 'Clinic', 'Inactive', '2022-07-16', '2022-07-17', 'aaaaa', NULL);
+(46, 'Logo', '<p>sample picture&nbsp;<img alt=\"\" src=\"ckeditor/uploads/0dcfb548989afdf22afff75e2a46a508.jpg\" style=\"border-style:solid; border-width:1px; height:150px; width:150px\" /></p>\r\n', '2022-07-18 15:12:37', NULL, 'Inactive', '2022-07-18', '2022-07-29', 'sample', NULL);
 
 -- --------------------------------------------------------
 
@@ -560,7 +556,9 @@ INSERT INTO `user_log` (`user_log_id`, `login_date`, `logout_date`, `action`, `u
 (145, '2022-07-15 20:27:43', '0000-00-00 00:00:00', 'LOGIN', 1, '9fec4ad0a8ba1a21bc4a6f564d94cb2a3dd7cba91bb90919b7fc02ca9be302a3', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
 (146, '2022-07-16 10:19:44', '0000-00-00 00:00:00', 'LOGIN', 1, 'bcf539f3d2fd4bd557e0a65f70b4c9337c4eaef581ec56af3f1d13627339babc', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
 (147, '2022-07-16 17:57:09', '0000-00-00 00:00:00', 'LOGIN', 1, '78d3546ac84b2b4e05c3179b463d319c703128f246301fb85214efceac17f571', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
-(148, '2022-07-17 11:09:40', '0000-00-00 00:00:00', 'LOGIN', 1, 'e4e57ec2e35798a418e352f78e400e775461c5ed787feb7e5f9a20ecea8a876d', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0);
+(148, '2022-07-17 11:09:40', '0000-00-00 00:00:00', 'LOGIN', 1, 'e4e57ec2e35798a418e352f78e400e775461c5ed787feb7e5f9a20ecea8a876d', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
+(149, '2022-07-18 08:04:25', '0000-00-00 00:00:00', 'LOGIN', 1, 'b3c4e95360333a7dd737710608ce29b4414b6cfef8afa620db8bf9c1bef613d1', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
+(150, '2022-07-18 20:02:13', '0000-00-00 00:00:00', 'LOGIN', 1, '26fbcf2b51a84f893130476740d67bdcea11bcf5ee1478a0eea62102b6e92c48', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0);
 
 --
 -- Indexes for dumped tables
@@ -640,7 +638,7 @@ ALTER TABLE `activity_log`
 -- AUTO_INCREMENT for table `quest_criteria`
 --
 ALTER TABLE `quest_criteria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `reset_code`
@@ -658,7 +656,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `survey_template`
 --
 ALTER TABLE `survey_template`
-  MODIFY `s_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `s_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `tbl_surveys_records`
@@ -688,7 +686,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_log`
 --
 ALTER TABLE `user_log`
-  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

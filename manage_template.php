@@ -54,7 +54,7 @@ if (isset($_POST['save_question'])) {
 		$msg_response['status']="success";
 		$msg_response['msg']="Data successfully saved!";
 		$session_class->setValue('success',$msg_response['msg']);
-		header("location: manage_template.php");
+		header("location: manage_template.php?template_id_tl=$s_templ_id");
 		exit();
 	}
 }
@@ -80,6 +80,29 @@ if(isset($_GET['quest_id'])) {
 	}
 }
 
+
+
+
+
+//UPDATE Question
+if(isset($_POST['update_question'])){
+	// get data
+	$txt_question = $_POST['txt_question'];
+	$select_answer_type = $_POST['select_answer_type'];
+	$s_templ_id = $_POST['s_templ_id'];
+
+	// UPDATE
+	$sql_update_crit_q = "UPDATE quest_criteria SET questions = '$txt_question', answer_type = '$select_answer_type' WHERE survey_templ_id = '$s_templ_id'";
+	if (mysqli_query($db_connect, $sql_update_crit_q)) {
+
+		$msg_response['status']="success";
+		$msg_response['msg']="Update successfully!";
+		$session_class->setValue('success',$msg_response['msg']);
+		header("location: manage_template.php");
+		exit();
+	}
+}
+
 ?>
 
 
@@ -92,6 +115,10 @@ if(isset($_GET['quest_id'])) {
     include DOMAIN_PATH."/app/global/meta_data.php";
     include DOMAIN_PATH."/app/global/include_top.php";
 ?>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 
 <style type="text/css">
@@ -172,6 +199,36 @@ if(isset($_GET['quest_id'])) {
                 </div>
 
 
+
+<!-- EDIT Question Func -->
+<script type="text/javascript">
+<?php 
+if(isset($_GET['edit_quest_id'])) { 
+	//get data
+	$edit_quest_id = $_GET['edit_quest_id'];
+
+	// SELECT DATA
+	$sql_select_question = "SELECT * FROM quest_criteria WHERE id = '$edit_quest_id'"; 
+	$res_select_question = mysqli_query($db_connect, $sql_select_question);
+	if (mysqli_num_rows($res_select_question) > 0) {
+		while($row_edit_q = mysqli_fetch_assoc($res_select_question)) {
+			$edit_question = $row_edit_q['questions'];
+			$edit_ans_type = $row_edit_q['answer_type'];
+		}
+	}
+?>
+	// Toggle Modal -> to Edit Question
+	setTimeout(toggle_modal_edit, 500); // call function in .5 second.
+
+	function toggle_modal_edit() {
+		document.getElementById("toggle_me").click();
+	}
+<?php } ?>
+</script>
+
+
+
+
                 <!-- CONTAINER 2 -->
                 <div class="py-3 bg-light rounded shadow mt-3">
                 	<div class="container">
@@ -182,14 +239,22 @@ if(isset($_GET['quest_id'])) {
                 				<!-- HEADER TITLE -->
 							    <h4 class="float-left">Survey Questionaire</h4>
 
-							    <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#exampleModal">&plus; Add New Quesion</button>
+
+							    <!-- Add New Question Button -->
+							    <?php if(!empty($edit_ans_type)){ ?>
+							    	<a href="manage_template.php?add_new_q=add" class="btn btn-sm btn-success float-right">&plus; Add New Quesion</a>
+							    	<button type="button" id="toggle_me" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#exampleModal" style="display: none;">&plus; Add New Quesion</button>
+							    <?php } ?>
+							    <?php if(empty($edit_ans_type)){ ?>
+							    	<button type="button" id="toggle_me" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#exampleModal">&plus; Add New Quesion</button>
+							    <?php } ?>
 
 							    <br>
 							    <hr class="mt-4">
 
 							    <?php 
 							    	// SELECT DATA / DISPLAY DATA
-							    	$sql_select_questions = "SELECT * FROM quest_criteria ORDER BY id DESC";
+							    	$sql_select_questions = "SELECT * FROM quest_criteria WHERE survey_templ_id = '$templ_id_frmTempList' ORDER BY id DESC";
 							    	$res_select_questions = mysqli_query($db_connect, $sql_select_questions);
 
 							    	if (mysqli_num_rows($res_select_questions) > 0) {
@@ -207,8 +272,9 @@ if(isset($_GET['quest_id'])) {
 										<div class="float-right px-2 text-dark" style="cursor: pointer; font-size: 18px;" data-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></div>
 										<!-- Dropdown list -->
 										<div class="dropdown-menu dropdown-menu-right shadow rounded" style="border-left: 3px solid #007bff; border-bottom: 3px solid #007bff;">
-											<a href="#" class="dropdown-item text-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+											<a href="manage_template.php?edit_quest_id=<?php echo $q_id; ?>" class="dropdown-item text-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
 											<a href="manage_template.php?quest_id=<?php echo $q_id; ?>" class="dropdown-item text-danger" style="cursor: pointer;"><i class="fa-solid fa-trash"></i> Delete</a>
+											<!-- <a href="#" onclick="confirmDel_Q()" class="dropdown-item text-danger" style="cursor: pointer;"><i class="fa-solid fa-trash"></i> Delete</a> -->
 										</div>
 										<br>
 										<hr>
@@ -221,20 +287,20 @@ if(isset($_GET['quest_id'])) {
 										<?php if($q_answer_type === "single_answer") { ?>
 							        		<table class="table table-bordered rounded">
 							        			<tr>
-							        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
-							        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Very Satisfied" readonly></td>
+							        				<td style="padding: 4px;"><div style="height: 30px; position: relative;"><input type="radio" class="form-control form-control-sm" style="height: 20px; position: absolute; top: 50%; transform: translateY(-50%);" disabled></div></td>
+							        				<td style="padding: 4px;"><input type="text" class="form-control form-control-sm" placeholder="Very Satisfied" readonly></td>
 							        			</tr>
 							        			<tr>
-							        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
-							        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Satisfied" readonly></td>
+							        				<td style="padding: 4px;"><div style="height: 30px; position: relative;"><input type="radio" class="form-control form-control-sm" style="height: 20px; position: absolute; top: 50%; transform: translateY(-50%);" disabled></div></td>
+							        				<td style="padding: 4px;"><input type="text" class="form-control form-control-sm" placeholder="Satisfied" readonly></td>
 							        			</tr>
 							        			<tr>
-							        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
-							        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Dissatisfied" readonly></td>
+							        				<td style="padding: 4px;"><div style="height: 30px; position: relative;"><input type="radio" class="form-control form-control-sm" style="height: 20px; position: absolute; top: 50%; transform: translateY(-50%);" disabled></div></td>
+							        				<td style="padding: 4px;"><input type="text" class="form-control form-control-sm" placeholder="Dissatisfied" readonly></td>
 							        			</tr>
 							        			<tr>
-							        				<td style="padding: 4px;"><input type="radio" class="form-control" disabled></td>
-							        				<td style="padding: 4px;"><input type="text" class="form-control" placeholder="Very Dissatisfied" readonly></td>
+							        				<td style="padding: 4px;"><div style="height: 30px; position: relative;"><input type="radio" class="form-control form-control-sm" style="height: 20px; position: absolute; top: 50%; transform: translateY(-50%);" disabled></div></td>
+							        				<td style="padding: 4px;"><input type="text" class="form-control form-control-sm" placeholder="Very Dissatisfied" readonly></td>
 							        			</tr>
 							        		</table>
 										<?php } ?>
@@ -264,6 +330,9 @@ if(isset($_GET['quest_id'])) {
 
 
 
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -273,7 +342,7 @@ if(isset($_GET['quest_id'])) {
 	    <div class="modal-content">
 	      <div class="modal-header">
 	      	<!-- Modal title -->
-	        <h5 class="modal-title" id="exampleModalLabel">New Question</h5>
+	        <h5 class="modal-title" id="exampleModalLabel"><?php if(!empty($edit_quest_id)){echo'Edit Question';}else{echo'New Question';} ?></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -281,12 +350,20 @@ if(isset($_GET['quest_id'])) {
 	      <div class="modal-body">
 	      	<!-- Questions -->
 	        <label style="font-weight: bold;">Question</label>
-	        <textarea name="txt_question" class="form-control mb-3" required></textarea>
+	        <textarea name="txt_question" class="form-control mb-3" required><?php if(!empty($edit_question)){echo $edit_question;}else{echo'';} ?></textarea>
 	        <!-- Answer Type -->
 	        <label style="font-weight: bold;">Answer Type</label>
 	        <select id="answer_type_selection" name="select_answer_type" class="form-control mb-3" onchange="check_answer_type()">
-	        	<option value="single_answer">Single Answer/Radio Button</option>
-	        	<option value="text_field">Text Field</option>
+	        	<?php if($edit_ans_type === "single_answer"){ ?>
+	        		<option value="single_answer" selected>Single Answer/Radio Button</option>
+		        	<option value="text_field">Text Field</option>
+	        	<?php }elseif($edit_ans_type === "text_field"){ ?>
+	        		<option value="single_answer">Single Answer/Radio Button</option>
+		        	<option value="text_field" selected>Text Field</option>
+	        	<?php }else{ ?>
+	        		<option value="single_answer">Single Answer/Radio Button</option>
+		        	<option value="text_field">Text Field</option>
+	        	<?php } ?>
 	        </select>
 	        <hr>
 	        <!-- Preview Type of Answer -->
@@ -319,7 +396,14 @@ if(isset($_GET['quest_id'])) {
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="submit" name="save_question" class="btn btn-sm btn-primary">Save</button>
+	        <!-- Save Button -->
+	        <?php if(!isset($_GET['edit_quest_id'])) { ?>
+	        	<button type="submit" name="save_question" class="btn btn-sm btn-primary">Save</button>
+	        <?php } ?>
+	        <!-- Update Button -->
+	        <?php if(isset($_GET['edit_quest_id'])) { ?>
+	        	<button type="submit" name="update_question" class="btn btn-sm btn-info">Update</button>
+	        <?php } ?>
 	      </div>
 	    </div>
 	</form>
@@ -333,8 +417,23 @@ if(isset($_GET['quest_id'])) {
 
 <!-- Answer Type Function -->
 <script type="text/javascript">
+
+	// EDIT Question Func
+	// if question is 'single_answer' -> preview the radio single questions
+	<?php if($edit_ans_type === "single_answer"){ ?>
+		txt_field_input.style.display = "none";
+		sinlge_answer_input.style.display = "block";
+	<?php }elseif($edit_ans_type === "text_field"){ ?>
+		txt_field_input.style.display = "block";
+		sinlge_answer_input.style.display = "none";
+	<?php }elseif(empty($edit_ans_type)){ ?>
+		// hide txt field input (Default)
+		txt_field_input.style.display = "none"; // hide txt field
+	<?php } ?>
+
+
 	// hide txt field input (Default)
-	txt_field_input.style.display = "none"; // hide txt field
+	// txt_field_input.style.display = "none"; // hide txt field
 
 	function check_answer_type() {
 		// Get data
@@ -352,7 +451,23 @@ if(isset($_GET['quest_id'])) {
 			sinlge_answer_input.style.display = "block";
 		}
 	}
+
+
+
+
+	// Add new question
+	// refresh page and open modal
+	<?php if(isset($_GET['add_new_q'])){ ?>
+	setTimeout(open_modal_new_q, 1000);
+
+	function open_modal_new_q() {
+		document.getElementById("toggle_me").click();
+	}
+	<?php } ?>
+
 </script>
+
+
 
 
 

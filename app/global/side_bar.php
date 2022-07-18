@@ -395,20 +395,6 @@
 
 
 
-
-    <!-- QUESTIONS CRITERIA -->
-    <div class="selection_sidebar" onclick="window.location.href = 'manage_template.php';">
-        <div id="titles_name_sidebar_3_2">
-          <i class="fa-solid fa-file-lines"></i> Questions Criteria
-        </div>
-        <!-- icon -->
-        <div><i class="fa-solid fa-list" id="icon_sidebar_3_2"></i></div>
-    </div>
-
-
-
-
-
   <!-- ACTIVITY LOG -->
     <!-- Div 1 -->
     <div class="selection_sidebar" onclick="expand_act_log();">
