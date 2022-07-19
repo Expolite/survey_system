@@ -242,7 +242,7 @@ if(isset($_GET['edit_quest_id'])) {
 
 							    <!-- Add New Question Button -->
 							    <?php if(!empty($edit_ans_type)){ ?>
-							    	<a href="manage_template.php?add_new_q=add" class="btn btn-sm btn-success float-right">&plus; Add New Quesion</a>
+							    	<a href="manage_template.php?template_id_tl=<?php echo $templ_id_frmTempList; ?>&add_new_q=add" class="btn btn-sm btn-success float-right">&plus; Add New Quesion</a>
 							    	<button type="button" id="toggle_me" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#exampleModal" style="display: none;">&plus; Add New Quesion</button>
 							    <?php } ?>
 							    <?php if(empty($edit_ans_type)){ ?>
