@@ -34,6 +34,7 @@ if(isset($_GET['template_id_tl'])) {
 	// get data
 	$template_id_tl = $_GET['template_id_tl'];
 
+	// Select data
 	$sql_view_edit_tmpl = "SELECT * FROM survey_template WHERE s_template_id = '$template_id_tl'";
 	$res_view_edit_tmpl = mysqli_query($db_connect, $sql_view_edit_tmpl);
 
@@ -47,6 +48,9 @@ if(isset($_GET['template_id_tl'])) {
 			$edit_header = $row_view_edit_tmpl['template_header'];
 			$edit_assign_survey = $row_view_edit_tmpl['assign_survey'];
 			$edit_template_status = $row_view_edit_tmpl['template_status'];
+			$edit_template_descption = $row_view_edit_tmpl['survey_templ_desc'];
+			$edit_template_start_date = $row_view_edit_tmpl['start_date'];
+			$edit_template_end_date = $row_view_edit_tmpl['end_date'];
 		}
 	}
 }
@@ -213,7 +217,7 @@ if(isset($_POST['publish_data'])) {
 
 
 		// Update data
-		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_header = '$s_header', template_status = '$s_template_status', start_date = '$s_templ_date_start', end_date = '$s_templ_date_end' WHERE s_template_id = '$get_templ_id'";
+		$sql_template_update = "UPDATE survey_template SET template_title = '$s_title', template_header = '$s_header', template_status = '$s_template_status', start_date = '$s_templ_date_start', end_date = '$s_templ_date_end', suvery_templ_desc = '$templ_description' WHERE s_template_id = '$get_templ_id'";
 		$res_template_update = mysqli_query($db_connect, $sql_template_update);
 
 		if(!$res_template_update) {
@@ -497,7 +501,7 @@ if(isset($_POST['print_data'])){
 												
 												<!-- DATE START -->
 												<label style="font-weight: bold; font-size: 16px;">Date Start</label>
-												<input type="date" name="templ_start_date" class="form-control" required>
+												<input type="date" name="templ_start_date" class="form-control" value="<?php echo $edit_template_start_date; ?>" required>
 
 											</div>
 											<!-- COLUMN 3 -->
@@ -505,7 +509,7 @@ if(isset($_POST['print_data'])){
 												
 												<!-- DATE END -->
 												<label style="font-weight: bold; font-size: 16px;">Date End</label>
-												<input type="date" name="templ_end_date" class="form-control" min="<?php echo date('d/m/yy'); ?>" required>
+												<input type="date" name="templ_end_date" class="form-control" value="<?php echo $edit_template_end_date; ?>" min="<?php echo date('d/m/yy'); ?>" required>
 
 											</div>
 
@@ -523,7 +527,7 @@ if(isset($_POST['print_data'])){
 
 									<!-- DESCRIPTION -->
 									<label style="font-weight: bold; font-size: 16px;">Description</label>
-									<textarea name="templ_description" class="form-control"></textarea>
+									<textarea name="templ_description" class="form-control"><?php echo $edit_template_descption; ?></textarea>
 
 
 

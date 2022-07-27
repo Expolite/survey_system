@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2022 at 05:22 PM
+-- Generation Time: Jul 27, 2022 at 05:14 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -91,7 +91,10 @@ CREATE TABLE `quest_criteria` (
 
 INSERT INTO `quest_criteria` (`id`, `questions`, `answer_type`, `survey_templ_id`, `date_log`, `date_created`) VALUES
 (14, 'logo quesiton 1', 'single_answer', 46, '2022-07-18 15:15:38', '2022-07-18 23:15:38'),
-(15, 'logo question 2', 'text_field', 46, '2022-07-18 15:18:20', '2022-07-18 23:18:20');
+(15, 'logo question 2', 'text_field', 46, '2022-07-18 15:18:20', '2022-07-18 23:18:20'),
+(16, 'aaaaaaa', 'text_field', 46, '2022-07-18 15:36:51', '2022-07-18 23:36:51'),
+(17, 'Whats your nickname?', 'text_field', 47, '2022-07-26 14:22:41', '2022-07-26 22:22:41'),
+(18, 'Did our service satisfied you?', 'single_answer', 47, '2022-07-26 14:23:28', '2022-07-26 22:23:28');
 
 -- --------------------------------------------------------
 
@@ -286,7 +289,8 @@ CREATE TABLE `survey_template` (
 --
 
 INSERT INTO `survey_template` (`s_template_id`, `template_title`, `template_header`, `date_publish`, `assign_survey`, `template_status`, `start_date`, `end_date`, `survey_templ_desc`, `taken`) VALUES
-(46, 'Logo', '<p>sample picture&nbsp;<img alt=\"\" src=\"ckeditor/uploads/0dcfb548989afdf22afff75e2a46a508.jpg\" style=\"border-style:solid; border-width:1px; height:150px; width:150px\" /></p>\r\n', '2022-07-18 15:12:37', NULL, 'Inactive', '2022-07-18', '2022-07-29', 'sample', NULL);
+(46, 'Logo', '<p>sample picture&nbsp;<img alt=\"\" src=\"ckeditor/uploads/0dcfb548989afdf22afff75e2a46a508.jpg\" style=\"border-style:solid; border-width:1px; height:150px; width:150px\" /></p>\r\n', '2022-07-18 15:12:37', NULL, 'Inactive', '2022-07-18', '2022-07-29', 'sample', NULL),
+(47, 'Sample Template (sample)', '<p><img alt=\"\" src=\"ckeditor/uploads/LogoMaker.jpg\" style=\"height:150px; width:150px\" />Department Samlpe</p>\r\n', '2022-07-26 14:02:53', NULL, 'Active', '2022-07-26', '2022-07-28', 'this sample template created on July 16, 2022', NULL);
 
 -- --------------------------------------------------------
 
@@ -334,27 +338,6 @@ INSERT INTO `tbl_survey_dept` (`id`, `dept_name`, `date_log`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_tmpl_body2`
---
-
-CREATE TABLE `tbl_tmpl_body2` (
-  `id` int(11) NOT NULL,
-  `questions` varchar(255) NOT NULL,
-  `templ_id` int(11) DEFAULT NULL,
-  `date_log` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_tmpl_body2`
---
-
-INSERT INTO `tbl_tmpl_body2` (`id`, `questions`, `templ_id`, `date_log`) VALUES
-(1, 'What\'s your favorite color?', 1, '2022-07-06 08:13:50'),
-(2, 'What\'s your name?', NULL, '2022-07-06 09:28:44');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `users`
 --
 
@@ -380,7 +363,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `id_no`, `location`, `firstname`, `middlename`, `lastname`, `user_role`, `username`, `password`, `email_address`, `status`, `locked`, `last_signin`, `dept_assign`) VALUES
-(1, 'ituser', 'upload\\user_image_62b5dd1ccd7231.tmp', 'admin', '', 'asas', 1, 'ituser', '8bdcd09f5a8f9c55cb6702aed6728362db813e97', 'ronnel@yahoo.com', 0, 0, NULL, NULL),
+(1, 'ituser', 'upload\\user_image_62dfe92ac12d41.tmp', 'admin', '', 'asas', 1, 'ituser', '8bdcd09f5a8f9c55cb6702aed6728362db813e97', 'ronnel@yahoo.com', 0, 0, NULL, NULL),
 (2, '', '', 'SAMPLE_REGS', '', 'LAST', 2, '', 'a195c5c1019326441def43766894f74373e13003', '', 1, 0, NULL, NULL),
 (8, 'nel32', '', 'neru', '', 'tokisaki', 3, 'nel32', '5ecab09f348cc97279a616079664d6373c1b4ec6', 'neru@gmail.com', 0, 0, NULL, 'Clinic'),
 (9, 'user_depart', '', 'depter', '', 'partment', 3, 'user_depart', 'cc61cc7b75613e174384cc1005a752c7340a1c4b', 'depter@gmail.com', 0, 0, NULL, 'Cashier');
@@ -558,7 +541,17 @@ INSERT INTO `user_log` (`user_log_id`, `login_date`, `logout_date`, `action`, `u
 (147, '2022-07-16 17:57:09', '0000-00-00 00:00:00', 'LOGIN', 1, '78d3546ac84b2b4e05c3179b463d319c703128f246301fb85214efceac17f571', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
 (148, '2022-07-17 11:09:40', '0000-00-00 00:00:00', 'LOGIN', 1, 'e4e57ec2e35798a418e352f78e400e775461c5ed787feb7e5f9a20ecea8a876d', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
 (149, '2022-07-18 08:04:25', '0000-00-00 00:00:00', 'LOGIN', 1, 'b3c4e95360333a7dd737710608ce29b4414b6cfef8afa620db8bf9c1bef613d1', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
-(150, '2022-07-18 20:02:13', '0000-00-00 00:00:00', 'LOGIN', 1, '26fbcf2b51a84f893130476740d67bdcea11bcf5ee1478a0eea62102b6e92c48', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0);
+(150, '2022-07-18 20:02:13', '0000-00-00 00:00:00', 'LOGIN', 1, '26fbcf2b51a84f893130476740d67bdcea11bcf5ee1478a0eea62102b6e92c48', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
+(151, '2022-07-19 09:08:55', '0000-00-00 00:00:00', 'LOGIN', 1, '7ebfb4e80195bb81fb705957e0baa0923080e9f3273558619c375b3ba87dae99', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
+(152, '2022-07-19 11:37:31', '0000-00-00 00:00:00', 'LOGIN', 1, '9f5127f373b43c0315a6a805c958b75112d17e503bdd7cacba67e86ac21d620f', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.114\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.114 on Windows 10 64-bit\"}', 0),
+(153, '2022-07-23 09:14:49', '2022-07-23 09:15:03', 'LOGIN', 1, '26c3f93ca159c86e45c2d317b946da17e149113e0cd3203bcb38d6afc01e0ac8', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.134\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.134 on Windows 10 64-bit\"}', 0),
+(154, '2022-07-23 09:15:21', '0000-00-00 00:00:00', 'LOGIN', 1, 'd92ac3c6e6293a8ffd8d07e4bfc48ba353cc3bedfece93010d1684d0c69a884f', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.134\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.134 on Windows 10 64-bit\"}', 0),
+(155, '2022-07-23 17:41:17', '0000-00-00 00:00:00', 'LOGIN', 1, '006d3a630d31b4676d5780c1697b08136e2af88f8c0021ca68e42fd6d14c4bd5', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.134\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.134 on Windows 10 64-bit\"}', 0),
+(156, '2022-07-26 21:14:13', '2022-07-26 21:14:57', 'LOGIN', 1, '96bef0b52b130b62b25aca15999c9da0dacdd15b00d35f204aa3de167e7e6bec', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.134\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.134 on Windows 10 64-bit\"}', 0),
+(157, '2022-07-26 21:15:05', '2022-07-26 21:16:32', 'LOGIN', 1, 'bde74b7849ce4abcb03588b0e8f9aca18e857d14b087323d80ab8c63f5578b4b', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.134\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.134 on Windows 10 64-bit\"}', 0),
+(158, '2022-07-26 21:16:58', '2022-07-26 22:30:47', 'LOGIN', 1, '3b866f4ae1c2dc23bc8d084090b55dc7a6fa1bfb57a1ad4b66e5ce91e28224fd', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.134\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.134 on Windows 10 64-bit\"}', 0),
+(159, '2022-07-26 22:32:22', '0000-00-00 00:00:00', 'LOGIN', 1, 'b2536c0e1acf36f2aab1cdf1c1ff19880125083480f9383a4f3edc8242b6c2f0', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.134\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.134 on Windows 10 64-bit\"}', 0),
+(160, '2022-07-27 19:45:56', '0000-00-00 00:00:00', 'LOGIN', 1, 'e854cc39538f636dfc3971a7e53a6efa4e8a5c7af0c82dfb412c582fc93a764d', '::1', '{\"device\":\"Chrome\",\"version\":\"103.0.5060.134\",\"layout\":\"Blink\",\"os\":{\"architecture\":64,\"family\":\"Windows\",\"version\":\"10\"},\"description\":\"Chrome 103.0.5060.134 on Windows 10 64-bit\"}', 0);
 
 --
 -- Indexes for dumped tables
@@ -607,12 +600,6 @@ ALTER TABLE `tbl_survey_dept`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_tmpl_body2`
---
-ALTER TABLE `tbl_tmpl_body2`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -638,7 +625,7 @@ ALTER TABLE `activity_log`
 -- AUTO_INCREMENT for table `quest_criteria`
 --
 ALTER TABLE `quest_criteria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `reset_code`
@@ -656,7 +643,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `survey_template`
 --
 ALTER TABLE `survey_template`
-  MODIFY `s_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `s_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `tbl_surveys_records`
@@ -671,12 +658,6 @@ ALTER TABLE `tbl_survey_dept`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `tbl_tmpl_body2`
---
-ALTER TABLE `tbl_tmpl_body2`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -686,7 +667,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_log`
 --
 ALTER TABLE `user_log`
-  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `user_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

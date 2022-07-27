@@ -22,6 +22,7 @@ if (isset($_GET['template_id_tl'])) {
 	// get data(id) from Template_List
 	$templ_id_frmTempList = $_GET['template_id_tl']; // template id
 
+	// Select data
 	$sql_select_template_manage_templ = "SELECT * FROM survey_template WHERE s_template_id = '$templ_id_frmTempList'";
 	$res_select_template_manage_templ = mysqli_query($db_connect, $sql_select_template_manage_templ);
 
